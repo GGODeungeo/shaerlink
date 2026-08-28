@@ -37,6 +37,17 @@ def _extract_price(card_text_lines: list[str]) -> Optional[int]:
     return min(prices) if prices else None
 
 
+def _extract_name(card) -> str:
+    # The real site renders the product name in a dedicated text component
+    # rather than the image's alt attribute (which is absent entirely).
+    # Fall back to alt text for simpler hand-written test fixtures.
+    name_el = card.find(attrs={"data-sentry-component": "LineClampTxt"})
+    if name_el is not None:
+        return name_el.get_text(strip=True)
+    img = card.find("img")
+    return img.get("alt", "").strip() if img else ""
+
+
 def parse_products(html: str) -> list[dict]:
     soup = BeautifulSoup(html, "html.parser")
     products = []
@@ -48,7 +59,7 @@ def parse_products(html: str) -> list[dict]:
             continue
         img = card.find("img")
         image_url = img.get("src", "") if img else ""
-        name = img.get("alt", "").strip() if img else ""
+        name = _extract_name(card)
         text_lines = [line for line in card.get_text("\n").split("\n") if line.strip()]
         price = _extract_price(text_lines)
         discount_match = DISCOUNT_RE.search(card.get_text(" "))
