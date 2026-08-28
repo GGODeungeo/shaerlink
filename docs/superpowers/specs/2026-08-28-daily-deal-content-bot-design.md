@@ -39,9 +39,11 @@ main.py
   └─ output/YYYY-MM-DD/NNN-상품명/{image.jpg, link.txt, captions.md} 저장
 ```
 
-각 모듈은 파일(JSON/이미지/마크다운)로만 통신한다. `scrape.py`의 출력 스키마
-(`products.json`)만 고정해두면, Phase 2에서 `scrape.py`를 공식 API 호출로 교체해도
-`generate.py`와 출력 구조는 그대로 재사용 가능하다.
+각 모듈은 `products.json` 스키마를 인터페이스로 공유한다 (실제 구현은 같은
+프로세스 안에서 딕셔너리를 그대로 주고받고, `products.json`은 스키마를 고정하는
+기록으로 파일에 남긴다). `scrape.py`의 출력 스키마만 고정해두면, Phase 2에서
+`scrape.py`를 공식 API 호출로 교체해도 `generate.py`와 출력 구조는 그대로 재사용
+가능하다.
 
 ## 컴포넌트
 
