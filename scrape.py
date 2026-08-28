@@ -23,23 +23,24 @@ CLIPBOARD_HOOK = """
 
 
 def is_logged_out(html: str) -> bool:
-    return "링크 발급" not in html
+    return "로그인" in html and "링크 발급" not in html
 
 
 def _extract_price(card_text_lines: list[str]) -> Optional[int]:
+    prices = []
     for line in card_text_lines:
         line = line.strip()
         if "당" in line:
             continue
         if PRICE_RE.match(line):
-            return int(line.replace(",", "").replace("원", ""))
-    return None
+            prices.append(int(line.replace(",", "").replace("원", "")))
+    return min(prices) if prices else None
 
 
 def parse_products(html: str) -> list[dict]:
     soup = BeautifulSoup(html, "html.parser")
     products = []
-    for button in soup.find_all(string=re.compile("링크 발급")):
+    for idx, button in enumerate(soup.find_all(string=re.compile("링크 발급"))):
         card = button.find_parent()
         while card is not None and card.find("img") is None:
             card = card.find_parent()
@@ -59,6 +60,7 @@ def parse_products(html: str) -> list[dict]:
             "price": price,
             "discountRate": discount_rate,
             "imageUrl": image_url,
+            "_buttonIndex": idx,
         })
     return products
 
@@ -70,12 +72,24 @@ def run_scrape(profile_dir: str, output_dir: Path) -> list[dict]:
         page.add_init_script(CLIPBOARD_HOOK)
         page.goto(URL)
         page.wait_for_load_state("networkidle")
+
+        previous_height = 0
+        for _ in range(20):  # hard cap so a real infinite-scroll page can't loop forever
+            page.keyboard.press("End")
+            page.wait_for_timeout(500)
+            current_height = page.evaluate("document.body.scrollHeight")
+            if current_height == previous_height:
+                break
+            previous_height = current_height
+
         html = page.content()
 
         if is_logged_out(html):
             context.close()
             raise RuntimeError(
-                "로그인 세션이 만료됐어요. `python login.py browser-profile`로 다시 로그인해주세요."
+                "로그인 세션이 만료됐거나 페이지가 제대로 로드되지 않았어요. "
+                "`python login.py browser-profile`로 다시 로그인해보고, 그래도 안 되면 "
+                "사이트 구조가 바뀌었는지 확인해주세요."
             )
 
         products = parse_products(html)
@@ -84,12 +98,14 @@ def run_scrape(profile_dir: str, output_dir: Path) -> list[dict]:
             raise RuntimeError("상품을 하나도 찾지 못했어요. 사이트 구조가 바뀌었을 수 있어요.")
 
         buttons = page.get_by_text("링크 발급")
-        for i, product in enumerate(products):
-            buttons.nth(i).click()
+        for product in products:
+            before = page.evaluate("window.__capturedLinks.length")
+            buttons.nth(product["_buttonIndex"]).click()
             page.wait_for_function(
-                "(n) => window.__capturedLinks.length > n", arg=i
+                "(n) => window.__capturedLinks.length > n", arg=before
             )
             product["shareLink"] = page.evaluate("window.__capturedLinks.at(-1)")
+            del product["_buttonIndex"]
 
         context.close()
 
