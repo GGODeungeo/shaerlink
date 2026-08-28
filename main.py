@@ -20,7 +20,9 @@ def slugify(name: str) -> str:
 
 def download_image(url: str, dest: Path) -> bool:
     try:
-        urllib.request.urlretrieve(url, dest)
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req) as response, open(dest, "wb") as f:
+            f.write(response.read())
         return True
     except Exception as e:
         print(f"이미지 다운로드 실패: {url} ({e})", file=sys.stderr)
@@ -39,20 +41,35 @@ def write_captions_md(dest: Path, captions: Optional[dict]) -> None:
 
 
 def main():
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        print("ANTHROPIC_API_KEY 환경변수가 설정되지 않았어요.", file=sys.stderr)
+        sys.exit(1)
+
     today = date.today().isoformat()
     output_dir = Path("output") / today
 
-    products = run_scrape(PROFILE_DIR, output_dir)
+    try:
+        products = run_scrape(PROFILE_DIR, output_dir)
+    except RuntimeError as e:
+        print(e, file=sys.stderr)
+        sys.exit(1)
+
     products = generate_all_captions(products)
 
+    image_failures = 0
     for i, product in enumerate(products, start=1):
         folder = output_dir / f"{i:03d}-{slugify(product['name'])}"
         folder.mkdir(parents=True, exist_ok=True)
-        download_image(product["imageUrl"], folder / "image.jpg")
+        if not download_image(product["imageUrl"], folder / "image.jpg"):
+            image_failures += 1
         (folder / "link.txt").write_text(product["shareLink"] + "\n", encoding="utf-8")
         write_captions_md(folder / "captions.md", product.get("captions"))
 
-    print(f"완료: {output_dir} ({len(products)}개 상품)")
+    caption_failures = sum(1 for p in products if p.get("captions") is None)
+    print(
+        f"완료: {output_dir} ({len(products)}개 상품, "
+        f"캡션 실패 {caption_failures}건, 이미지 실패 {image_failures}건)"
+    )
 
 
 if __name__ == "__main__":
