@@ -1,4 +1,7 @@
+import os
 import re
+import sys
+import anthropic
 
 PROMPT_TEMPLATE = """다음 상품에 대해 SNS 홍보 문구를 만들어줘.
 
@@ -20,6 +23,9 @@ PROMPT_TEMPLATE = """다음 상품에 대해 SNS 홍보 문구를 만들어줘.
 
 SECTION_RE = re.compile(r"^##\s*(threads|tiktok|youtube)\s*$", re.MULTILINE)
 
+MODEL = "claude-sonnet-5"
+_client = None
+
 
 def build_prompt(product: dict) -> str:
     return PROMPT_TEMPLATE.format(
@@ -35,3 +41,30 @@ def parse_caption_response(text: str) -> dict:
         content = parts[i + 1].strip()
         result[platform] = content
     return result
+
+
+def get_client():
+    global _client
+    if _client is None:
+        _client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+    return _client
+
+
+def generate_captions(product: dict) -> dict:
+    prompt = build_prompt(product)
+    response = get_client().messages.create(
+        model=MODEL,
+        max_tokens=600,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return parse_caption_response(response.content[0].text)
+
+
+def generate_all_captions(products: list[dict]) -> list[dict]:
+    for product in products:
+        try:
+            product["captions"] = generate_captions(product)
+        except Exception as e:
+            print(f"캡션 생성 실패: {product['name']} ({e})", file=sys.stderr)
+            product["captions"] = None
+    return products
