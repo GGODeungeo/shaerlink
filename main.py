@@ -41,10 +41,6 @@ def write_captions_md(dest: Path, captions: Optional[dict]) -> None:
 
 
 def main():
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        print("ANTHROPIC_API_KEY 환경변수가 설정되지 않았어요.", file=sys.stderr)
-        sys.exit(1)
-
     today = date.today().isoformat()
     output_dir = Path("output") / today
 
