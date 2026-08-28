@@ -54,10 +54,15 @@ def generate_captions(product: dict) -> dict:
     prompt = build_prompt(product)
     response = get_client().messages.create(
         model=MODEL,
-        max_tokens=600,
+        max_tokens=2000,
+        thinking={"type": "disabled"},
         messages=[{"role": "user", "content": prompt}],
     )
-    return parse_caption_response(response.content[0].text)
+    text = next(b.text for b in response.content if b.type == "text")
+    result = parse_caption_response(text)
+    if set(result) != {"threads", "tiktok", "youtube"}:
+        raise ValueError(f"섹션 누락 또는 형식 오류: {sorted(result)}")
+    return result
 
 
 def generate_all_captions(products: list[dict]) -> list[dict]:
