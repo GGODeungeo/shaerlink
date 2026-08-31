@@ -112,54 +112,63 @@
   color: var(--color-text-inverse);
 }
 
-.category-nav {
-  position: sticky;
-  top: 0;
-  z-index: 1;
+.category-list {
   display: flex;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-4);
-  overflow-x: auto;
-  scrollbar-width: none;
-  background: var(--color-bg);
-  border-bottom: 1px solid var(--color-bg-canvas);
-}
-
-.category-nav::-webkit-scrollbar {
-  display: none;
-}
-
-.category-nav__chip {
-  flex: 0 0 auto;
-  min-height: 44px;
-  padding: 0 var(--space-3);
-  border: none;
-  border-radius: 999px;
+  flex-direction: column;
+  gap: 1px;
+  margin: var(--space-3) var(--space-4) calc(var(--space-4) + 34px);
+  border-radius: 12px;
+  overflow: hidden;
   background: var(--color-bg-canvas);
+}
+
+.category-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: none;
+  background: var(--color-bg);
   color: var(--color-text-default);
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-subtitle);
-  white-space: nowrap;
+  text-align: left;
   cursor: pointer;
 }
 
-.product-section__title {
-  margin: 0;
-  padding: var(--space-4) var(--space-4) var(--space-2);
-  font-size: var(--font-size-subtitle);
-  font-weight: var(--font-weight-subtitle);
-  color: var(--color-text-strong);
+.category-page__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
 }
 
-.product-section:last-child .product-grid {
-  padding-bottom: calc(var(--space-4) + 34px);
+.category-page__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-left: calc(var(--space-2) * -1);
+  border: none;
+  background: none;
+  color: var(--color-text-strong);
+  cursor: pointer;
+}
+
+.category-page__title {
+  margin: 0;
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-title);
+  color: var(--color-text-strong);
 }
 
 .product-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-3);
-  padding: 0 var(--space-4) var(--space-2);
+  padding: 0 var(--space-4) calc(var(--space-4) + 34px);
 }
 
 .product-card {

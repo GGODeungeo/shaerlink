@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { CategoryNav } from './CategoryNav';
+import { CategoryPage } from './CategoryPage';
 import { Hero } from './Hero';
-import { ProductCard } from './ProductCard';
 import type { Product } from './types';
 import './App.css';
 
@@ -25,8 +25,11 @@ type LoadState =
   | { status: 'error' }
   | { status: 'ready'; products: Product[] };
 
+type Screen = { name: 'home' } | { name: 'category'; label: string };
+
 function App() {
   const [state, setState] = useState<LoadState>({ status: 'loading' });
+  const [screen, setScreen] = useState<Screen>({ name: 'home' });
 
   const fetchProducts = () => {
     fetch(DATA_URL)
@@ -44,6 +47,21 @@ function App() {
     setState({ status: 'loading' });
     fetchProducts();
   };
+
+  if (state.status === 'ready' && screen.name === 'category') {
+    const group = groupByCategory(state.products).find((g) => g.label === screen.label);
+    return (
+      <div className="canvas bg-canvas">
+        <div className="page-container">
+          <CategoryPage
+            label={screen.label}
+            products={group?.products ?? []}
+            onBack={() => setScreen({ name: 'home' })}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="canvas bg-canvas">
@@ -71,21 +89,10 @@ function App() {
           return (
             <>
               <Hero product={topProduct} />
-              <CategoryNav categories={groups.map((g) => g.label)} />
-              {groups.map((group) => (
-                <section
-                  key={group.label}
-                  id={`category-${group.label}`}
-                  className="product-section"
-                >
-                  <h2 className="product-section__title">{group.label}</h2>
-                  <div className="product-grid">
-                    {group.products.map((product) => (
-                      <ProductCard key={product.shareLink} product={product} />
-                    ))}
-                  </div>
-                </section>
-              ))}
+              <CategoryNav
+                categories={groups.map((g) => g.label)}
+                onSelect={(label) => setScreen({ name: 'category', label })}
+              />
             </>
           );
         })()}
