@@ -13,7 +13,11 @@
 
 body {
   margin: 0;
-  font-family: "Tossface", -apple-system, system-ui, "Malgun Gothic", sans-serif;
+  /* Tossface를 여기 앞세우지 않는다 — 이 폰트의 subset이 숫자·한글 코드포인트까지
+     glyph coverage를 주장해서(document.fonts.check로 확인됨) 실제 이모지가 없는
+     본문 텍스트까지 Tossface 렌더링으로 가로채 가늘고 흐릿하게 보이는 문제가
+     있었다. 이모지가 필요한 자리는 .tf 클래스로 명시적으로만 적용한다. */
+  font-family: -apple-system, system-ui, "Malgun Gothic", sans-serif;
   word-break: keep-all;
   overflow-wrap: break-word;
   letter-spacing: 0;

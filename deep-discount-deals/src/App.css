@@ -35,11 +35,23 @@
   font-weight: var(--font-weight-subtitle);
 }
 
+.discount-tier__title {
+  margin: 0;
+  padding: var(--space-4) var(--space-4) var(--space-2);
+  font-size: var(--font-size-subtitle);
+  font-weight: var(--font-weight-subtitle);
+  color: var(--color-text-strong);
+}
+
+.discount-tier:last-child .product-grid {
+  padding-bottom: calc(var(--space-4) + 34px);
+}
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-3);
-  padding: var(--space-2) var(--space-4) calc(var(--space-4) + 34px);
+  padding: 0 var(--space-4) var(--space-2);
 }
 
 .product-card {

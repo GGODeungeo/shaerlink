@@ -6,6 +6,21 @@ import './App.css';
 const DATA_URL =
   'https://raw.githubusercontent.com/GGODeungeo/shaerlink/main/app-data/products.json';
 
+const DISCOUNT_TIERS = [
+  { label: '90% 이상 특가', min: 90 },
+  { label: '70~89% 특가', min: 70 },
+  { label: '50~69% 특가', min: 0 },
+];
+
+function groupByDiscountTier(products: Product[]) {
+  const groups = DISCOUNT_TIERS.map((tier) => ({ label: tier.label, products: [] as Product[] }));
+  for (const product of products) {
+    const tierIndex = DISCOUNT_TIERS.findIndex((tier) => product.discountRate >= tier.min);
+    groups[tierIndex].products.push(product);
+  }
+  return groups.filter((group) => group.products.length > 0);
+}
+
 type LoadState =
   | { status: 'loading' }
   | { status: 'error' }
@@ -49,13 +64,17 @@ function App() {
           </div>
         )}
 
-        {state.status === 'ready' && (
-          <div className="product-grid">
-            {state.products.map((product) => (
-              <ProductCard key={product.shareLink} product={product} />
-            ))}
-          </div>
-        )}
+        {state.status === 'ready' &&
+          groupByDiscountTier(state.products).map((group) => (
+            <section key={group.label} className="discount-tier">
+              <h2 className="discount-tier__title">{group.label}</h2>
+              <div className="product-grid">
+                {group.products.map((product) => (
+                  <ProductCard key={product.shareLink} product={product} />
+                ))}
+              </div>
+            </section>
+          ))}
       </div>
     </div>
   );
