@@ -92,22 +92,22 @@ function App() {
                 onSelect={setSelectedCategory}
               />
               <div className="shop-content">
-                <div className="shop-content__header">
+                <div className="shop-content__banner">
                   <h2 className="shop-content__title">{activeLabel}</h2>
-                  <div className="sort-bar" role="group" aria-label="정렬">
-                    {SORT_OPTIONS.map((option) => (
-                      <button
-                        key={option.key}
-                        type="button"
-                        className={
-                          sort === option.key ? 'sort-bar__item sort-bar__item--active' : 'sort-bar__item'
-                        }
-                        onClick={() => setSort(option.key)}
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                  </div>
+                </div>
+                <div className="sort-bar" role="group" aria-label="정렬">
+                  {SORT_OPTIONS.map((option) => (
+                    <button
+                      key={option.key}
+                      type="button"
+                      className={
+                        sort === option.key ? 'sort-bar__item sort-bar__item--active' : 'sort-bar__item'
+                      }
+                      onClick={() => setSort(option.key)}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
                 </div>
 
                 <div className="product-grid">

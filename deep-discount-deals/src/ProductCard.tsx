@@ -18,6 +18,9 @@ export function ProductCard({ product }: { product: Product }) {
         <span className="product-card__discount">{product.discountRate}%</span>
         <span className="product-card__price">{product.price.toLocaleString()}원</span>
       </div>
+      {product.categoryRank !== undefined && (
+        <span className="product-card__rank">인기 {product.categoryRank}위</span>
+      )}
       <div className="product-card__title">{title}</div>
       {specs.length > 0 && <div className="product-card__specs">{specs.join(' · ')}</div>}
     </button>

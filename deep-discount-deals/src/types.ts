@@ -6,4 +6,5 @@ export type Product = {
   category: string;
   shareLink: string;
   reviewCount: number;
+  categoryRank?: number;
 };

@@ -36,8 +36,8 @@ def category_name(product: dict, category_map: dict) -> str:
     return "기타"
 
 
-def build_entry(product: dict, category_map: dict) -> dict:
-    return {
+def build_entry(product: dict, category_map: dict, category_rank: dict) -> dict:
+    entry = {
         "name": product["displayName"],
         "price": product["displayPrice"],
         "discountRate": product["discountRate"],
@@ -45,12 +45,18 @@ def build_entry(product: dict, category_map: dict) -> dict:
         "category": category_name(product, category_map),
         "reviewCount": product.get("reviewCount", 0),
     }
+    rank = category_rank.get(product["tacaItemId"])
+    if rank is not None and rank <= 10:
+        entry["categoryRank"] = rank
+    return entry
 
 
-def to_app_data(products: list, category_map: dict, publisher_id: str, token: str) -> list:
+def to_app_data(
+    products: list, category_map: dict, category_rank: dict, publisher_id: str, token: str
+) -> list:
     slim = []
     for p in products:
-        entry = build_entry(p, category_map)
+        entry = build_entry(p, category_map, category_rank)
         try:
             entry["shareLink"] = issue_link(token, p["tacaItemId"], publisher_id)
         except Exception as e:
@@ -65,10 +71,19 @@ def main():
     token = get_access_token()
     category_map = get_top_level_category_map(token)
 
+    best_category_lists = [
+        get_best_category_products(token, category_id)
+        for category_id in get_top_level_category_ids(token)
+    ]
+    category_rank = {}
+    for items in best_category_lists:
+        for item in items:
+            category_rank.setdefault(item["tacaItemId"], item["rank"])
+
     all_products = list(get_today_deals(token))
     all_products.extend(get_best_selling_products(token))
-    for category_id in get_top_level_category_ids(token):
-        all_products.extend(get_best_category_products(token, category_id))
+    for items in best_category_lists:
+        all_products.extend(items)
 
     merged = merge_unique(all_products)
     filtered = [p for p in merged if is_deep_discount(p)]
@@ -76,7 +91,9 @@ def main():
     if not filtered:
         raise SystemExit("할인율 50% 초과 상품을 하나도 찾지 못했어요.")
 
-    data = to_app_data(filtered, category_map, os.environ["SHARELINK_PUBLISHER_ID"], token)
+    data = to_app_data(
+        filtered, category_map, category_rank, os.environ["SHARELINK_PUBLISHER_ID"], token
+    )
 
     APP_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
     APP_DATA_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
