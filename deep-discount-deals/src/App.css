@@ -35,7 +35,7 @@
   font-weight: var(--font-weight-subtitle);
 }
 
-.discount-tier__title {
+.product-section__title {
   margin: 0;
   padding: var(--space-4) var(--space-4) var(--space-2);
   font-size: var(--font-size-subtitle);
@@ -43,7 +43,7 @@
   color: var(--color-text-strong);
 }
 
-.discount-tier:last-child .product-grid {
+.product-section:last-child .product-grid {
   padding-bottom: calc(var(--space-4) + 34px);
 }
 

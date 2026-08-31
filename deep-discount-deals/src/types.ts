@@ -3,5 +3,6 @@ export type Product = {
   price: number;
   discountRate: number;
   imageUrl: string;
+  category: string;
   shareLink: string;
 };
