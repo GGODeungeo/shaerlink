@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { CategoryNav } from './CategoryNav';
+import { Hero } from './Hero';
 import { ProductCard } from './ProductCard';
 import type { Product } from './types';
 import './App.css';
@@ -61,17 +63,32 @@ function App() {
           </div>
         )}
 
-        {state.status === 'ready' &&
-          groupByCategory(state.products).map((group) => (
-            <section key={group.label} className="product-section">
-              <h2 className="product-section__title">{group.label}</h2>
-              <div className="product-grid">
-                {group.products.map((product) => (
-                  <ProductCard key={product.shareLink} product={product} />
-                ))}
-              </div>
-            </section>
-          ))}
+        {state.status === 'ready' && (() => {
+          const groups = groupByCategory(state.products);
+          const topProduct = state.products.reduce((best, p) =>
+            p.discountRate > best.discountRate ? p : best
+          );
+          return (
+            <>
+              <Hero product={topProduct} />
+              <CategoryNav categories={groups.map((g) => g.label)} />
+              {groups.map((group) => (
+                <section
+                  key={group.label}
+                  id={`category-${group.label}`}
+                  className="product-section"
+                >
+                  <h2 className="product-section__title">{group.label}</h2>
+                  <div className="product-grid">
+                    {group.products.map((product) => (
+                      <ProductCard key={product.shareLink} product={product} />
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </>
+          );
+        })()}
       </div>
     </div>
   );
