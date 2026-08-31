@@ -33,28 +33,30 @@ function App() {
 
   return (
     <div className="canvas bg-canvas">
-      <header className="page-header">
-        <h1>반값 이상 특가</h1>
-      </header>
+      <div className="page-container">
+        <header className="page-header">
+          <h1>반값 이상 특가</h1>
+        </header>
 
-      {state.status === 'loading' && <p className="state-message">불러오는 중...</p>}
+        {state.status === 'loading' && <p className="state-message">불러오는 중...</p>}
 
-      {state.status === 'error' && (
-        <div className="state-message">
-          <p>상품을 불러오지 못했어요.</p>
-          <button type="button" className="retry-button" onClick={retry}>
-            다시 시도
-          </button>
-        </div>
-      )}
+        {state.status === 'error' && (
+          <div className="state-message">
+            <p>상품을 불러오지 못했어요.</p>
+            <button type="button" className="retry-button" onClick={retry}>
+              다시 시도
+            </button>
+          </div>
+        )}
 
-      {state.status === 'ready' && (
-        <div className="product-grid">
-          {state.products.map((product) => (
-            <ProductCard key={product.shareLink} product={product} />
-          ))}
-        </div>
-      )}
+        {state.status === 'ready' && (
+          <div className="product-grid">
+            {state.products.map((product) => (
+              <ProductCard key={product.shareLink} product={product} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
