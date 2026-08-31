@@ -9,15 +9,7 @@ PRICE_RE = re.compile(r"^[\d,]+원$")
 DISCOUNT_RE = re.compile(r"(\d+)%\s*특가")
 
 URL = "https://sharelink.toss.im/links/recommended-products?priceFilters=MIN_PRICE_30D"
-
-CLIPBOARD_HOOK = """
-window.__capturedLinks = [];
-const orig = navigator.clipboard.writeText.bind(navigator.clipboard);
-navigator.clipboard.writeText = (text) => {
-  window.__capturedLinks.push(text);
-  return orig(text);
-};
-"""
+LINK_ISSUE_URL_PART = "sharelink/link/issue"
 
 
 def is_logged_out(html: str) -> bool:
@@ -78,7 +70,6 @@ def run_scrape(profile_dir: str, output_dir: Path) -> list[dict]:
     with sync_playwright() as p:
         context = p.chromium.launch_persistent_context(profile_dir, headless=False)
         page = context.new_page()
-        page.add_init_script(CLIPBOARD_HOOK)
         page.goto(URL)
         page.wait_for_load_state("networkidle")
 
@@ -108,12 +99,10 @@ def run_scrape(profile_dir: str, output_dir: Path) -> list[dict]:
 
         buttons = page.get_by_text("링크 발급")
         for product in products:
-            before = page.evaluate("window.__capturedLinks.length")
-            buttons.nth(product["_buttonIndex"]).click()
-            page.wait_for_function(
-                "(n) => window.__capturedLinks.length > n", arg=before
-            )
-            product["shareLink"] = page.evaluate("window.__capturedLinks.at(-1)")
+            with page.expect_response(lambda r: LINK_ISSUE_URL_PART in r.url) as resp_info:
+                buttons.nth(product["_buttonIndex"]).click()
+            data = resp_info.value.json()
+            product["shareLink"] = data["success"]["shortUrl"]
             del product["_buttonIndex"]
 
         context.close()
