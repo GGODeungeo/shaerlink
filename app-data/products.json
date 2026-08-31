@@ -200,6 +200,14 @@
     "shareLink": "https://toss.im/_m/bBdwUfjh"
   },
   {
+    "name": "알프레미오 여행용 캐리어, 블랙, 315x220x510mm",
+    "price": 29900,
+    "discountRate": 81,
+    "imageUrl": "https://shopping.toss.im/live/temp/2025-09-18/58d59dbe-ca69-47b5-bdfa-485cbdbc1b9f.jpeg",
+    "category": "패션의류잡화",
+    "shareLink": "https://toss.im/_m/TPob2s51"
+  },
+  {
     "name": "아스파시아 바디미스트 퍼퓸 샤워코롱 돌체베르, 150ml, 1+1 구성, 총 2개",
     "price": 10000,
     "discountRate": 80,
@@ -214,14 +222,6 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NTczZjgz/QU5sREduaWtqK2xnQnJUWEQ3cDBacHpWQTVoeEpyMVhTaG0rWWEzK1FKNXk.png",
     "category": "패션의류잡화",
     "shareLink": "https://toss.im/_m/FExZUYci"
-  },
-  {
-    "name": "알프레미오 여행용 캐리어, 블랙, 315x220x510mm",
-    "price": 30790,
-    "discountRate": 80,
-    "imageUrl": "https://shopping.toss.im/live/temp/2025-09-18/58d59dbe-ca69-47b5-bdfa-485cbdbc1b9f.jpeg",
-    "category": "패션의류잡화",
-    "shareLink": "https://toss.im/_m/TPob2s51"
   },
   {
     "name": "동구밭 샴푸앤트리트먼트바 세트, 400g, 1세트",
@@ -393,7 +393,7 @@
   },
   {
     "name": "프리미엄 오토락 남성 가죽 벨트, 기본블랙 1개 + 삼선블랙 1개, 2개",
-    "price": 7296,
+    "price": 7220,
     "discountRate": 75,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NDc3Njgw/WGFlYlpqSkZSSW1aWmtMSm5iajZSL0FIeVhJUzVMTkpiTExKN1NQTHZKUT0.png",
     "category": "패션의류잡화",
@@ -408,8 +408,16 @@
     "shareLink": "https://toss.im/_m/zi5YBUBn"
   },
   {
+    "name": "착한버들 대형 3D 무중력 젤 쿠션, 2개",
+    "price": 7704,
+    "discountRate": 74,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/Y2MzMzI3/QUl6Y0dPeGMzS2p0ME4rNGpaR05xY2JUbUZNWkR4aExNWFN4ZUZNb1VZVkw.png",
+    "category": "가구/홈데코",
+    "shareLink": "https://toss.im/_m/T77zghjc"
+  },
+  {
     "name": "쿨링 젤방석, 블루, 35.5x29cm, 2개",
-    "price": 7584,
+    "price": 7505,
     "discountRate": 74,
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-06/672e1207-072b-4567-a7c0-e0f839ea6746.jpeg",
     "category": "가구/홈데코",
@@ -440,12 +448,12 @@
     "shareLink": "https://toss.im/_m/xTl6fQ7r"
   },
   {
-    "name": "착한버들 대형 3D 무중력 젤 쿠션, 2개",
-    "price": 7786,
+    "name": "접착식 귀이개, 80피스, 4세트",
+    "price": 5101,
     "discountRate": 73,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/Y2MzMzI3/QUl6Y0dPeGMzS2p0ME4rNGpaR05xY2JUbUZNWkR4aExNWFN4ZUZNb1VZVkw.png",
-    "category": "가구/홈데코",
-    "shareLink": "https://toss.im/_m/T77zghjc"
+    "imageUrl": "https://shopping.toss.im/live/temp/2025-01-23/dd3b3ce6-e1c3-45fe-81d0-f48c72c83511.jpeg",
+    "category": "생활용품",
+    "shareLink": "https://toss.im/_m/dPvnMBiB"
   },
   {
     "name": "휴비딕 무릎보호대, HS-2, 모던 그레이, 2개",
@@ -486,14 +494,6 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-05-28/505f2bd4-3e25-483d-aaff-b8b050d12087.jpeg",
     "category": "생활용품",
     "shareLink": "https://toss.im/_m/9M4KiZGu"
-  },
-  {
-    "name": "접착식 귀이개, 80피스, 4세트",
-    "price": 5155,
-    "discountRate": 72,
-    "imageUrl": "https://shopping.toss.im/live/temp/2025-01-23/dd3b3ce6-e1c3-45fe-81d0-f48c72c83511.jpeg",
-    "category": "생활용품",
-    "shareLink": "https://toss.im/_m/dPvnMBiB"
   },
   {
     "name": "심플쿡 냉동밥 전자레인지 용기, 인디핑크, 400ml, 24개",
@@ -792,7 +792,7 @@
     "shareLink": "https://toss.im/_m/ZseVcbrc"
   },
   {
-    "name": "메르헨트 퍼퓸 대용량 바디워시, 피치블라썸향, 1L, 2개",
+    "name": "메르헨트 퍼퓸 대용량 바디워시, 피치블라썸, 1L, 2개",
     "price": 9900,
     "discountRate": 67,
     "imageUrl": "https://shopping.toss.im/live/temp/2026-06-17/917781d0-9f69-4ac5-9a43-e79b0ec65aa3.jpeg",
@@ -800,7 +800,7 @@
     "shareLink": "https://toss.im/_m/HvnyvINo"
   },
   {
-    "name": "메르헨트 퍼퓸 대용량 바디워시, 호텔 딥 우드향, 1L, 2개",
+    "name": "메르헨트 퍼퓸 대용량 바디워시, 호텔 딥 우드, 1L, 2개",
     "price": 9900,
     "discountRate": 67,
     "imageUrl": "https://shopping.toss.im/live/temp/2026-06-17/f20454ba-50de-4383-ae2b-a5eaa2fbd352.jpeg",
@@ -1216,6 +1216,14 @@
     "shareLink": "https://toss.im/_m/5c2DK9bB"
   },
   {
+    "name": "고기중독 한입삼겹살, 500g, 2개",
+    "price": 15280,
+    "discountRate": 61,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/ZmFjMDkw/QU1rbnpabWVaVHBacGFGdExQYTI0Yk5hbWRKdHF4NGFaMEY1ckEwZTVOT3c.png",
+    "category": "식품",
+    "shareLink": "https://toss.im/_m/rbCyIich"
+  },
+  {
     "name": "스크래치 제로 두툼 마법수세미, 20개입, 1팩",
     "price": 11490,
     "discountRate": 61,
@@ -1230,6 +1238,14 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-07/9ddc1e81-e47e-45bb-b22d-fcf14f772c82.jpeg",
     "category": "출산/유아동",
     "shareLink": "https://toss.im/_m/bkBm1bjm"
+  },
+  {
+    "name": "예꼬맘 고고 1450 어린이 치약, 망고피치향, 60g, 10개입",
+    "price": 17900,
+    "discountRate": 61,
+    "imageUrl": "https://shopping.toss.im/live/temp/2024-10-17/6a9bafdc-31cf-4d24-8186-62ca9b5aca12.jpeg",
+    "category": "출산/유아동",
+    "shareLink": "https://toss.im/_m/V0lo9YGD"
   },
   {
     "name": "꽈배기 헤어밴드, 블랙",
@@ -1848,14 +1864,6 @@
     "shareLink": "https://toss.im/_m/rmdAbBND"
   },
   {
-    "name": "오염 방지 소재 이유식 보냉백, 그레이, 1개",
-    "price": 9900,
-    "discountRate": 52,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/NDA2NTU5/YmZITjVza3ZHVHNhWUhOSjBzL0cyUzc1cDdLOW83V21wYnhMekZLVTBscz0.png",
-    "category": "주방용품",
-    "shareLink": "https://toss.im/_m/D9bUxvh2"
-  },
-  {
     "name": "프리미엄 5A 천연 호안석 팔찌, 적호안석, 8mm",
     "price": 7800,
     "discountRate": 52,
@@ -1870,14 +1878,6 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/M2Q3NzI2/WTQ0czJaN1Q4elR1ZDl0bWUyU2I1MmxzNTNkNWJIczllV3g5L1hsc3h0OD0.png",
     "category": "식품",
     "shareLink": "https://toss.im/_m/zu7O5M6q"
-  },
-  {
-    "name": "스카이 케어 등 허리 온열 롤링 쿠션 마사지기, EM18, 베이지, 1개",
-    "price": 38900,
-    "discountRate": 51,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-28/00bc0e5a-996d-4378-88d6-b37d0410cbe1.jpeg",
-    "category": "가전/디지털",
-    "shareLink": "https://toss.im/_m/3ldeazXa"
   },
   {
     "name": "인사이디 듀얼 무선 전동 미니 마사지건, IMG-200, 화이트, 1개",
@@ -2046,6 +2046,14 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NzE0Mzlk/QUo4WVlsek9jdnd6U0hJQjg3MXprY2lGOGpQSEpYbThUZnhDYzhJRHEwNjI.png",
     "category": "생활용품",
     "shareLink": "https://toss.im/_m/5edS9UL9"
+  },
+  {
+    "name": "스포츠 쿠션 양말, 화이트, 장목, 10개",
+    "price": 10900,
+    "discountRate": 50,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/NGE5OGZk/QU9iT0EyVVNOM2kzWWN2Vmk2Y1hpSG04UU9MRVF5UmVNS3JweEdkVmEzVzU.png",
+    "category": "스포츠/레져",
+    "shareLink": "https://toss.im/_m/9As6UJq9"
   },
   {
     "name": "무선 자동걷기 만보기 기계 오토워킹 프로 듀얼, 레드, 1개",
