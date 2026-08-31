@@ -16,7 +16,8 @@ export function ProductCard({ product }: { product: Product }) {
           <span className="product-card__badge">{product.discountRate}% 특가</span>
           {product.categoryRank !== undefined && (
             <span className="product-card__badge product-card__badge--rank">
-              인기 {product.categoryRank}위
+              {product.rankCategory}
+              {product.categoryRank}위
             </span>
           )}
         </div>

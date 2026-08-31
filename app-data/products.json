@@ -6,7 +6,18 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/YTdiMWYx/QU5tWlpkdG1OR1ptbTV4Ym5INDgyWlJtekc1OFluVFo4ODZjMmx2S1FUVnY.png",
     "category": "뷰티",
     "reviewCount": 1444,
+    "rankCategory": "남성 2종 세트",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/7BKEMtd3"
+  },
+  {
+    "name": "글로우알엑스 에프터살롱 트리트먼트, 150ml, 10개",
+    "price": 22500,
+    "discountRate": 92,
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-07-01/8ba78a7b-71e1-427c-bd9d-c4ae4a221fd9.jpeg",
+    "category": "뷰티",
+    "reviewCount": 10,
+    "shareLink": "https://toss.im/_m/5nlPX8X4"
   },
   {
     "name": "2in1 에어슬림 무선청소기 YQ-669, 화이트, 1개",
@@ -14,7 +25,8 @@
     "discountRate": 91,
     "imageUrl": "https://shopping.toss.im/live/temp/2026-01-14/bfb30b83-e480-4039-9379-c84e8fab3835.png",
     "category": "가전/디지털",
-    "reviewCount": 3950,
+    "reviewCount": 3951,
+    "rankCategory": "핸디+스틱청소기",
     "categoryRank": 1,
     "shareLink": "https://toss.im/_m/PI5gkyNy"
   },
@@ -25,16 +37,9 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/NWFiYjA1/YlhPYjA4NGNmanlSdzVqR1QyeHRocEhCbko1bVBHTmhuSlpyYVpTMGt2RT0.png",
     "category": "식품",
     "reviewCount": 1662,
+    "rankCategory": "쏘팔메토",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/tS38b1Ay"
-  },
-  {
-    "name": "에이팔란스 제트 쿨링 휴대용 냉각 손선풍기 K300 Pro, 블랙, 1개",
-    "price": 9900,
-    "discountRate": 90,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/MmRjODJl/TThsL0V1RDJtY2NlVy9BK3c4TUg4UHc1a3dzRDlud2s3eU1EdmpqUXZFRT0.png",
-    "category": "가전/디지털",
-    "reviewCount": 1705,
-    "shareLink": "https://toss.im/_m/NPKIyXFs"
   },
   {
     "name": "행남자기 라인듀오 2인 홈세트, 14피스, 화이트, 1세트",
@@ -43,17 +48,9 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-06-23/f896f180-69ac-4666-98fd-f395a4e89425.jpeg",
     "category": "주방용품",
     "reviewCount": 478,
+    "rankCategory": "한식기세트",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/rFeKjfpn"
-  },
-  {
-    "name": "에이팔란스 제트 쿨링 휴대용 냉각 손선풍기 K300 Pro, 화이트, 1개",
-    "price": 9900,
-    "discountRate": 90,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/NzI2NGRk/QUw0NXlUS0l4OXVISVZuU09aTEhIR2FWZVBNUnBxTlpMcTNzWXBuaHNyeE8.png",
-    "category": "가전/디지털",
-    "reviewCount": 1630,
-    "categoryRank": 4,
-    "shareLink": "https://toss.im/_m/t82ZBlxC"
   },
   {
     "name": "라이녹스 클린 마스터 업소용 청소기, 주황, 12L",
@@ -62,7 +59,6 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/NWNiMjYz/QUtTZEp2bjNjTCtsU2hhRUxjNzAyN1JaR0JBZkNMYmY4di80cUkwQUs3TmI.png",
     "category": "가전/디지털",
     "reviewCount": 28,
-    "categoryRank": 9,
     "shareLink": "https://toss.im/_m/t944geN5"
   },
   {
@@ -72,6 +68,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/NDc5OGVj/QUo5bXFxbEFrVVJQdTNiOXpFd0JBalBWM3IvTXFpTkNBUlhjdWM2bU15VXo.png",
     "category": "가전/디지털",
     "reviewCount": 237,
+    "rankCategory": "고데기/매직기",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/9mbRuz1r"
   },
   {
@@ -89,27 +87,10 @@
     "discountRate": 88,
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-10/1e4fe51d-5eff-40b9-82e5-057e3a8529d9.png",
     "category": "생활용품",
-    "reviewCount": 5024,
+    "reviewCount": 5026,
+    "rankCategory": "일반 섬유유연제",
     "categoryRank": 2,
     "shareLink": "https://toss.im/_m/Jpmm6R7m"
-  },
-  {
-    "name": "필립스 오픈형 무선 블루투스 이어폰, TAT1138, 블랙, 1개",
-    "price": 9030,
-    "discountRate": 88,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/MjViY2Fj/QUpSbTN3dXVQTUhZUXBOcXhwVnJscWNzdE8wNHdrOEsxbDN5MjZjMEFTUlk.png",
-    "category": "가전/디지털",
-    "reviewCount": 44,
-    "shareLink": "https://toss.im/_m/VhlWWGF4"
-  },
-  {
-    "name": "로로보아 매직 스트레이트너, 베이지, 1개",
-    "price": 6090,
-    "discountRate": 87,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-01-28/c5f2c2d4-ba7b-43e3-b425-d2451f7cee4c.jpeg",
-    "category": "가전/디지털",
-    "reviewCount": 205,
-    "shareLink": "https://toss.im/_m/15bnZtW1"
   },
   {
     "name": "앙쥬 모이스처 알로에 폼클렌징, 100ml, 10개",
@@ -118,6 +99,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/Y2Q5N2Q5/QUpPMjhjUjY2VEQ3bkJZUEwyT0Q4SE1ZL00rQmd6dG5YbnpHR0xtWFVQZEc.png",
     "category": "뷰티",
     "reviewCount": 929,
+    "rankCategory": "클렌징 폼",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/LiEPodry"
   },
   {
@@ -127,15 +110,28 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2025-05-30/8051fbfa-7068-4023-940a-f6937917d578.png",
     "category": "뷰티",
     "reviewCount": 348,
+    "rankCategory": "아이크림",
+    "categoryRank": 4,
     "shareLink": "https://toss.im/_m/budlpCEz"
   },
   {
+    "name": "키친아트 스마트 무선 디지털 구강세정기 KIA-DC31W, 1개",
+    "price": 9900,
+    "discountRate": 85,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/ZDk2ZWEx/SmtZY2p6c1lQRGgvT2NabTgrTHAwbk94MStTclQwYk9tWE1rdWZONGVmQT0.png",
+    "category": "가전/디지털",
+    "reviewCount": 14,
+    "shareLink": "https://toss.im/_m/rwkUIt37"
+  },
+  {
     "name": "크리스찬딘 포 옴므 오드퍼퓸, 젠틀브리즈, 50ml, 1개",
-    "price": 8860,
+    "price": 8890,
     "discountRate": 85,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/N2IwN2E5/QUxENytrUzNxVCtmTDk3NTNQbkJmK0Y2VUVhZTRSeWx2bDlBTnVQZlJka0U.png",
     "category": "뷰티",
     "reviewCount": 1244,
+    "rankCategory": "오 드 퍼퓸",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/H2G23x4b"
   },
   {
@@ -145,6 +141,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NWJiYzA5/UGpVMnBha1lnNWVYaDI4RjJzR0xiWE9TY3pUVzFHL0xIYUg2SFNrdGhQbz0.png",
     "category": "주방용품",
     "reviewCount": 1260,
+    "rankCategory": "냉장고정리용기",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/x3mpWHcc"
   },
   {
@@ -154,6 +152,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ODA5NTUz/SFNlYkk0K1p6d1hHeDJ5RDA0UGpnL1BEc09GTmVjNTQ1YXg1OHJMYzVPMD0.png",
     "category": "주방용품",
     "reviewCount": 1199,
+    "rankCategory": "일반프라이팬",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/LP4Uq5Pe"
   },
   {
@@ -163,27 +163,9 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MjhhYjNh/SlRpWkpyVEZ0eXJZMTFZeW1iSTZXRzgzTGMrM1pFVG8wZWhJczBtVHMzWT0.png",
     "category": "주방용품",
     "reviewCount": 762,
+    "rankCategory": "가마솥",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/XbgFJnzi"
-  },
-  {
-    "name": "테팔 셰프드 프랑스 궁중팬, 28cm, 1개",
-    "price": 21400,
-    "discountRate": 83,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZTZjNTE5/VExiU2FTeVV0U2tTa3BWa1ZHbHNscGxwSnBhaksxclNqV3l0UzFLVVMwcz0.png",
-    "category": "주방용품",
-    "reviewCount": 1138,
-    "categoryRank": 4,
-    "shareLink": "https://toss.im/_m/ntGHfuOo"
-  },
-  {
-    "name": "케라시스 화이트 데이지 퍼퓸 샴푸, 1L, 1개 + 데미지 클리닉 트리트먼트, 300ml, 2개",
-    "price": 9975,
-    "discountRate": 83,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-14/6b11ec68-202a-4db8-849c-bb7ad460715e.png",
-    "category": "뷰티",
-    "reviewCount": 7820,
-    "categoryRank": 2,
-    "shareLink": "https://toss.im/_m/Jra4f48h"
   },
   {
     "name": "선쉐이드 자외선 완벽차단 햇빛가리개, 전좌석 올인원, 블랙, 4개입, 1세트",
@@ -192,34 +174,20 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-04-11/34ac5664-f6b1-4faf-b3f0-30cbed942c03.png",
     "category": "자동차용품",
     "reviewCount": 615,
+    "rankCategory": "햇빛가리개/커튼",
+    "categoryRank": 3,
     "shareLink": "https://toss.im/_m/1N11Oio8"
   },
   {
-    "name": "닥터오레고닌 오리밤 멀티스틱, 10g, 3개",
-    "price": 7900,
-    "discountRate": 82,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-03-30/bc0e9496-a896-4810-892f-b4b66ed61a60.jpeg",
-    "category": "뷰티",
-    "reviewCount": 5,
-    "shareLink": "https://toss.im/_m/llDkK13w"
-  },
-  {
-    "name": "디펜턴 토탈 솔루션 플러스 앰플 세럼, 30ml, 1개",
-    "price": 7900,
-    "discountRate": 82,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/ODEyMzc3/QUsxR3IwVHdWQlg0VmF2MkF5UDA4elNKQzAyTFJQa1VpN2NHZ2ZTL0JINEw.png",
-    "category": "뷰티",
-    "reviewCount": 248,
-    "shareLink": "https://toss.im/_m/LUxPYJ3b"
-  },
-  {
-    "name": "쉬블링로브 스포츠 힙색 BLZ0209, 블랙, FREE",
-    "price": 5900,
-    "discountRate": 82,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/MDdkMTA1/QUk0eU5IeWVjM2puOG1lanhvZk1SNDVlRE04Y09Ia2J1ZUdoTG5ZUGh2R3g.png",
-    "category": "스포츠/레져",
-    "reviewCount": 82,
-    "shareLink": "https://toss.im/_m/dFfh3CRo"
+    "name": "테팔 셰프드 프랑스 궁중팬, 28cm, 1개",
+    "price": 21400,
+    "discountRate": 83,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZTZjNTE5/VExiU2FTeVV0U2tTa3BWa1ZHbHNscGxwSnBhaksxclNqV3l0UzFLVVMwcz0.png",
+    "category": "주방용품",
+    "reviewCount": 1138,
+    "rankCategory": "궁중팬/웍",
+    "categoryRank": 2,
+    "shareLink": "https://toss.im/_m/ntGHfuOo"
   },
   {
     "name": "프로프룻 샤인머스켓, 특품, 2kg, 1박스",
@@ -227,7 +195,9 @@
     "discountRate": 82,
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-05/d1036994-fd95-42f5-82be-741dff71ead8.jpeg",
     "category": "식품",
-    "reviewCount": 1031,
+    "reviewCount": 1035,
+    "rankCategory": "포도",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/Tmv2QaV9"
   },
   {
@@ -237,6 +207,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ZjVmZjcy/WmsreHlkb1pUVGE5cGtJMnBTMDBObEpjdVkxTGs4NVpKYU5LV21aTHNhUT0.png",
     "category": "식품",
     "reviewCount": 242,
+    "rankCategory": "칼슘",
+    "categoryRank": 5,
     "shareLink": "https://toss.im/_m/HrTlv6Be"
   },
   {
@@ -264,6 +236,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MWIxNWY5/QUp6QjVkb2YzTHNDZllkd0tNQUVOVjdBL3lvckVsVUtGaS83MVIvK29DSXQ.png",
     "category": "식품",
     "reviewCount": 2220,
+    "rankCategory": "굴비",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/pJHgBBqj"
   },
   {
@@ -272,7 +246,8 @@
     "discountRate": 82,
     "imageUrl": "https://shopping.toss.im/live/temp/2025-07-23/b09a7cee-3f0c-4dc7-8e32-6a412bb7b102.jpeg",
     "category": "뷰티",
-    "reviewCount": 13409,
+    "reviewCount": 13412,
+    "rankCategory": "핸드워시",
     "categoryRank": 1,
     "shareLink": "https://toss.im/_m/1tDbNJHf"
   },
@@ -283,16 +258,9 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/OTMxNTFi/VUEvOWZLK3JMdFZWVlAyNjhIQnZyMWVMUjhldXY3bndWWEJHajFGUXVmQT0.png",
     "category": "뷰티",
     "reviewCount": 383,
+    "rankCategory": "2종 세트",
+    "categoryRank": 3,
     "shareLink": "https://toss.im/_m/tURDSnG5"
-  },
-  {
-    "name": "필립스 무선 블루투스 이어폰, TAT1108, 블랙, 1개",
-    "price": 16900,
-    "discountRate": 82,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/OTQ2NTYy/QUpUbXZndnVYc0hZUTRWNnhwWHlscWNzbEtVNHdrOGExbDIyeTZlMEFiUlk.png",
-    "category": "가전/디지털",
-    "reviewCount": 356,
-    "shareLink": "https://toss.im/_m/bRCNp8De"
   },
   {
     "name": "솜털 제거기 , 1개",
@@ -301,8 +269,20 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/YjQ0MDVk/U3pxQTFKS2F5eFdFSHIwQkZOMjJrMjRoZXZ0d1F3clVsMStaUVBEdTV2OD0.png",
     "category": "뷰티",
     "reviewCount": 583,
-    "categoryRank": 9,
+    "rankCategory": "제모용소품",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/Ra637jiw"
+  },
+  {
+    "name": "케라시스 화이트 데이지 퍼퓸 샴푸, 1L, 1개 + 데미지 클리닉 트리트먼트, 300ml, 2개",
+    "price": 10500,
+    "discountRate": 82,
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-14/6b11ec68-202a-4db8-849c-bb7ad460715e.png",
+    "category": "뷰티",
+    "reviewCount": 7820,
+    "rankCategory": "헤어세트",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/Jra4f48h"
   },
   {
     "name": "쉬블림로브 정전식 차량용 햇빛가리개, TS0010, 블랙, 4개",
@@ -311,7 +291,20 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/M2RmNjNj/QUxXanVjMXM0dFl3VUppVWg1VzJVWTgzUnNsek5PbVczWlk1N1licmhteXk.png",
     "category": "자동차용품",
     "reviewCount": 70,
+    "rankCategory": "햇빛가리개/커튼",
+    "categoryRank": 6,
     "shareLink": "https://toss.im/_m/jCAe52od"
+  },
+  {
+    "name": "센텔리안24 마데카 크림 타이트 리프팅, 50ml, 7개 + 15ml, 3개, 1세트",
+    "price": 59900,
+    "discountRate": 81,
+    "imageUrl": "https://shopping.toss.im/live/temp/2025-08-26/d94d88a1-68a0-4909-99bc-f08756d3ca08.jpeg",
+    "category": "뷰티",
+    "reviewCount": 710,
+    "rankCategory": "데이크림",
+    "categoryRank": 5,
+    "shareLink": "https://toss.im/_m/3fKfahls"
   },
   {
     "name": "프로프룻 햇 홍로사과, 3kg, 1박스",
@@ -320,16 +313,9 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-21/0edd85ca-5bac-4000-82b8-afc4b3102faf.jpeg",
     "category": "식품",
     "reviewCount": 118,
+    "rankCategory": "사과",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/D3sycfGf"
-  },
-  {
-    "name": "성주 꿀참외, 못난이, 랜덤혼합, 10kg, 1박스",
-    "price": 15500,
-    "discountRate": 81,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/YjJkY2Q1/SHR2MlMzS2p6ZG5kOExtOS9HWjVtbzVTZWhjL1Q1Qmx3N0hLeEd5RzBUST0.png",
-    "category": "식품",
-    "reviewCount": 4694,
-    "shareLink": "https://toss.im/_m/jcX3iMB4"
   },
   {
     "name": "지퍼 멀티 크로스백, 블랙, 1개",
@@ -347,7 +333,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-06-12/d4747ead-d7fa-41e1-9cd4-5805756ec0cb.jpeg",
     "category": "뷰티",
     "reviewCount": 172,
-    "categoryRank": 8,
+    "rankCategory": "선블록/선크림/선로션",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/1pfgoORu"
   },
   {
@@ -357,7 +344,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NWM3Njhi/QVA1TGN0WklrcVU0clNTdFkwRk5XczlhK2U2VVJDTzFacXY4cXRzVlVGVXQ.png",
     "category": "스포츠/레져",
     "reviewCount": 781,
-    "categoryRank": 4,
+    "rankCategory": "등산 슬링백",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/bBdwUfjh"
   },
   {
@@ -367,6 +355,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2025-09-18/58d59dbe-ca69-47b5-bdfa-485cbdbc1b9f.jpeg",
     "category": "패션의류잡화",
     "reviewCount": 63,
+    "rankCategory": "기내용 캐리어_하드",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/TPob2s51"
   },
   {
@@ -385,6 +375,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NTJmYmM1/ZW1Xemk1NUN4T1NVTHRwczA5THZoU3hzWVU1VGJqYWpwN1hqbEJrREFTWT0.png",
     "category": "식품",
     "reviewCount": 2961,
+    "rankCategory": "간장게장",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/dXmgqpVb"
   },
   {
@@ -394,16 +386,9 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NTczZjgz/QU5sREduaWtqK2xnQnJUWEQ3cDBacHpWQTVoeEpyMVhTaG0rWWEzK1FKNXk.png",
     "category": "패션의류잡화",
     "reviewCount": 78,
+    "rankCategory": "영유아동 양말",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/fOQmx4m8"
-  },
-  {
-    "name": "아스파시아 바디미스트 퍼퓸 샤워코롱 돌체베르, 150ml, 1+1 구성, 총 2개",
-    "price": 10000,
-    "discountRate": 80,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZWUyYWUy/ZHN2VTN0aytxVHUycDFyV2Eza3BKdVdrWGxtSTFoUTRmelN2eHl0UVVEND0.png",
-    "category": "뷰티",
-    "reviewCount": 2949,
-    "shareLink": "https://toss.im/_m/R5wKxMbx"
   },
   {
     "name": "아동 프리미엄 컬렉션 랜덤 삭스, 골고루, 4호, 7켤레",
@@ -415,13 +400,26 @@
     "shareLink": "https://toss.im/_m/FExZUYci"
   },
   {
-    "name": "발이 편한 카바 밴딩 중목 양말, 화이트, 10켤레",
-    "price": 4200,
-    "discountRate": 79,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/YTdhZGIx/QU9Yd3N3RXhqMDVUaWg4emhjUjRJSVJScTUxNnFoUUNOZi91QUlRaTQ5OTY.png",
-    "category": "패션의류잡화",
-    "reviewCount": 10759,
-    "shareLink": "https://toss.im/_m/Jr4J6dFi"
+    "name": "휴대용 무선 핸디 다리미 HG-Y01, 화이트, 1개",
+    "price": 18900,
+    "discountRate": 80,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/NmIwOGUz/QVBUREV6TnpqTXp4WHo2eDRqV2I0RG1YUm5oeVNiR1dETER4WFk5S1BMcGw.png",
+    "category": "가전/디지털",
+    "reviewCount": 301,
+    "rankCategory": "핸디형",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/1ECA3EQk"
+  },
+  {
+    "name": "아스파시아 바디미스트 퍼퓸 샤워코롱 돌체베르, 150ml, 1+1 구성, 총 2개",
+    "price": 10000,
+    "discountRate": 80,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZWUyYWUy/ZHN2VTN0aytxVHUycDFyV2Eza3BKdVdrWGxtSTFoUTRmelN2eHl0UVVEND0.png",
+    "category": "뷰티",
+    "reviewCount": 2949,
+    "rankCategory": "샤워코롱",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/R5wKxMbx"
   },
   {
     "name": "AHC 시즌13 프리미어 앰플 아이크림 라인 타이트닝, 12ml, 6개",
@@ -430,6 +428,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-13/1455fba1-3014-4f65-8735-3aecaab475f1.png",
     "category": "뷰티",
     "reviewCount": 322,
+    "rankCategory": "아이크림",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/jJiMQ8KD"
   },
   {
@@ -438,8 +438,19 @@
     "discountRate": 79,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MmFkYmY2/QU8yQm14c2htK003N0dTY0RNWU95ek44b09KQ2dZVng1bytSZjQ0eGVveWI.png",
     "category": "식품",
-    "reviewCount": 1014,
+    "reviewCount": 1015,
+    "rankCategory": "생고기",
+    "categoryRank": 4,
     "shareLink": "https://toss.im/_m/9ElXDspt"
+  },
+  {
+    "name": "에이팔란스 제트 쿨링 휴대용 냉각 손선풍기 K300 Pro, 화이트, 1개",
+    "price": 19900,
+    "discountRate": 79,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/NzI2NGRk/QUw0NXlUS0l4OXVISVZuU09aTEhIR2FWZVBNUnBxTlpMcTNzWXBuaHNyeE8.png",
+    "category": "가전/디지털",
+    "reviewCount": 1630,
+    "shareLink": "https://toss.im/_m/t82ZBlxC"
   },
   {
     "name": "동구밭 샴푸앤트리트먼트바 세트, 400g, 1세트",
@@ -448,7 +459,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/YTBlYzJh/ZHVTZHBneldPamJ6TStYTHpNNU1wbk96cXhDQ1RKWnRzc255MmVwVVRiWT0.png",
     "category": "뷰티",
     "reviewCount": 1054,
-    "categoryRank": 5,
+    "rankCategory": "샴푸바/헤어비누",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/3wkHPOfr"
   },
   {
@@ -458,6 +470,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-18/a309a0f9-6eb9-477f-b90c-c772dc7c69c7.jpeg",
     "category": "출산/유아동",
     "reviewCount": 20,
+    "rankCategory": "물티슈케이스",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/HjHyadGD"
   },
   {
@@ -467,6 +481,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ODJkYTE5/QUtYczBzQTIyYml0cTFvbTY0QVAvVnBxK3FuTGV3SkYrbGM5L3BEQXZDVDM.png",
     "category": "패션의류잡화",
     "reviewCount": 476,
+    "rankCategory": "여성 롱원피스(종아리아래)",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/xb2qy5Ho"
   },
   {
@@ -476,7 +492,20 @@
     "imageUrl": "https://shopping.toss.im/ml-vision/smart-crop/596cc6ef-9b64-4557-b5bb-8cb94ebc19d0.jpg",
     "category": "가전/디지털",
     "reviewCount": 320,
+    "rankCategory": "침구청소기",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/DcKatZqw"
+  },
+  {
+    "name": "훈씨네 남해산 활문어, 1kg, 1개",
+    "price": 19500,
+    "discountRate": 78,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/Y2U3NmJj/TXpPb1BYTTFTWnBtNlYyenpGVENJNnFOTVZ3RENwcFlVK2dER1hpT0E1ND0.png",
+    "category": "식품",
+    "reviewCount": 524,
+    "rankCategory": "문어",
+    "categoryRank": 2,
+    "shareLink": "https://toss.im/_m/V1prYg2w"
   },
   {
     "name": "낚시 벌초 해충 방충모자, 밀리터리",
@@ -485,7 +514,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MGQ1Yzk0/QU9majhmUHhEMzJzakh3MlpFZnp5ZlBiQjQ1YkhueVhHU3h3eFQ3MUJUams.png",
     "category": "반려/애완용품",
     "reviewCount": 177,
-    "categoryRank": 10,
+    "rankCategory": "양봉모자/잡화",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/tpZP2bt9"
   },
   {
@@ -495,6 +525,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NjBkMGQ5/QUpTbGNuU2w0ek5oNmVBY216eThySTB3OG5IalcxZDhleWxhL1d6T3JhWTg.png",
     "category": "뷰티",
     "reviewCount": 3182,
+    "rankCategory": "앰플",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/ZQdOLgyC"
   },
   {
@@ -504,7 +536,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MzFmZTZk/YWVocVE5Tm9ULzR1bDdXc0pwR21ROWwrUzFxYlBsVzg1RUdrb2UxVTIxWT0.png",
     "category": "주방용품",
     "reviewCount": 6957,
-    "categoryRank": 3,
+    "rankCategory": "주방가위/주방다용도가위",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/TijYxiHn"
   },
   {
@@ -514,8 +547,18 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/NGEyNDQ5/QU5zbmx2bHRpM3p2a3N6YmNUbU81Ty9POUV1VGo1eTN6V2J3TzVyYTlOUms.png",
     "category": "출산/유아동",
     "reviewCount": 136,
-    "categoryRank": 10,
+    "rankCategory": "유아칼슘/성장발육",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/FlmATg4q"
+  },
+  {
+    "name": "경남제약 맥주효모 비오틴셀렌, 550mg, 60정, 3개",
+    "price": 19900,
+    "discountRate": 77,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/YTViYTU5/QU9UTGJTT3hJNU1VYWNrd3lwTTJiWU0reGRvNHpiU000d1owdkNYOEpYTk8.png",
+    "category": "식품",
+    "reviewCount": 16,
+    "shareLink": "https://toss.im/_m/f5HlCKkx"
   },
   {
     "name": "나주배, 특품, 3kg, 6-9과, 1박스",
@@ -523,18 +566,10 @@
     "discountRate": 77,
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-25/f4ceae7a-3aea-4b3f-bbd6-c6f534652032.png",
     "category": "식품",
-    "reviewCount": 8,
+    "reviewCount": 10,
+    "rankCategory": "배",
+    "categoryRank": 3,
     "shareLink": "https://toss.im/_m/7Ke7iMph"
-  },
-  {
-    "name": "사운독스 노이즈 캔슬링 무선 이어폰, Y-07, 화이트, 1개",
-    "price": 19700,
-    "discountRate": 77,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/YjkxZWEw/QVBjR1kvL1J5ZndZR0luMlltSjJIWWZybEJpOTduUm1ZVFZVK1B4VndCY0Q.png",
-    "category": "가전/디지털",
-    "reviewCount": 4719,
-    "categoryRank": 2,
-    "shareLink": "https://toss.im/_m/zHqXmIiB"
   },
   {
     "name": "만능 분무기 노즐, 랜덤, 2세트",
@@ -544,6 +579,17 @@
     "category": "가구/홈데코",
     "reviewCount": 326,
     "shareLink": "https://toss.im/_m/bzsWPWgs"
+  },
+  {
+    "name": "사운독스 노이즈 캔슬링 무선 이어폰, Y-07, 화이트, 1개",
+    "price": 19800,
+    "discountRate": 77,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/YjkxZWEw/QVBjR1kvL1J5ZndZR0luMlltSjJIWWZybEJpOTduUm1ZVFZVK1B4VndCY0Q.png",
+    "category": "가전/디지털",
+    "reviewCount": 4721,
+    "rankCategory": "블루투스이어폰",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/zHqXmIiB"
   },
   {
     "name": "블로즈 엑소셀 마스크팩, 5매입, 1개",
@@ -561,17 +607,7 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-07-29/45fcf987-7836-4588-87de-8f1ad9b98fa0.png",
     "category": "출산/유아동",
     "reviewCount": 40,
-    "categoryRank": 6,
     "shareLink": "https://toss.im/_m/fYRwP5xo"
-  },
-  {
-    "name": "화이트벨라 마이크로 니들 패치, 12매입, 1박스",
-    "price": 10500,
-    "discountRate": 76,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/MDBiZmIy/QUk0R2RzWmNlS2ZBdVRaZ1J6LzQzd2ZWQXhCKzc4bmNSTUUvMy9DaXJTQ0o.png",
-    "category": "뷰티",
-    "reviewCount": 82,
-    "shareLink": "https://toss.im/_m/NYQSimI4"
   },
   {
     "name": "킥플립 미니 1집 Flip it, Kick it On Board ver 응그래 앨범, On Board ver, 디스크 1개",
@@ -583,51 +619,15 @@
     "shareLink": "https://toss.im/_m/vxhUkz51"
   },
   {
-    "name": "캔음료 보관랙 디스펜서, 중, 1개",
-    "price": 4720,
-    "discountRate": 76,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/YzE1YTY0/QUtsUlpPbnc5ckphVzVtTkxTMlRkc2xwTlZaWUJUdVZWVnRicStWcWtGS3U.png",
-    "category": "주방용품",
-    "reviewCount": 47,
-    "shareLink": "https://toss.im/_m/nxEpdTN"
-  },
-  {
     "name": "UV 자외선차단 방수 방풍 양우산, 네이비, 1개",
     "price": 7800,
     "discountRate": 76,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NGE0Zjkx/YmxOaDVtamI5K2IwemFWUG5zelhyYjlOMmg5UXZPQjRxL0dqOXRVRTN6TT0.png",
     "category": "패션의류잡화",
     "reviewCount": 1411,
-    "categoryRank": 8,
+    "rankCategory": "여성우양산겸용",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/DDV6OQ4b"
-  },
-  {
-    "name": "프로스펙스 액티브 슬개골 보호대, 블랙, 2개",
-    "price": 9800,
-    "discountRate": 75,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/YmRiYWM5/QU1tY2QzKzhUSmxtNXhqNG5qalBUQStjWjJlWlo1MllaV1daenpPeXlEVE0.png",
-    "category": "스포츠/레져",
-    "reviewCount": 1301,
-    "categoryRank": 8,
-    "shareLink": "https://toss.im/_m/XeF4PU2B"
-  },
-  {
-    "name": "해담옥 양념소불고기, 400g, 2팩",
-    "price": 8330,
-    "discountRate": 75,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-25/2ba460fe-83e0-4772-9a3d-aa0bc4ea6468.png",
-    "category": "식품",
-    "reviewCount": 8,
-    "shareLink": "https://toss.im/_m/Bu7urwUA"
-  },
-  {
-    "name": "베라 4ZERO 뽑아쓰는 미용티슈, 250매, 6팩",
-    "price": 5110,
-    "discountRate": 75,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/YjY0NWNi/ZS9oQTlrTDRTTDBtZ0ZpcFJJU1NEMHlza2c1b3JkS0VtaVFNSGJ0SEtlZz0.png",
-    "category": "생활용품",
-    "reviewCount": 1191,
-    "shareLink": "https://toss.im/_m/9MJtsOxx"
   },
   {
     "name": "제주 하우스감귤, 특품, 대과, 5kg, 1박스",
@@ -636,6 +636,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-24/ef16857f-13d1-4b36-a629-952e513d1236.jpeg",
     "category": "식품",
     "reviewCount": 217,
+    "rankCategory": "귤",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/Tr0flHFp"
   },
   {
@@ -645,6 +647,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-25/7fa684d4-4a11-4797-b5d5-940cfdeae072.jpeg",
     "category": "뷰티",
     "reviewCount": 157,
+    "rankCategory": "풋케어용품",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/BRcpiUos"
   },
   {
@@ -663,7 +667,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NTNlMjc0/YzFrczJhMDAyd3pMT1l6am1PYXlTYVl6cEprMkdkdHNNMmJiWk1rd21jWT0.png",
     "category": "주방용품",
     "reviewCount": 2255,
-    "categoryRank": 6,
+    "rankCategory": "밀폐용기/세트",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/5ESgOvOt"
   },
   {
@@ -676,13 +681,21 @@
     "shareLink": "https://toss.im/_m/jTlIrFqj"
   },
   {
+    "name": "베라 4ZERO 뽑아쓰는 미용티슈, 250매, 6팩",
+    "price": 5110,
+    "discountRate": 75,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/YjY0NWNi/ZS9oQTlrTDRTTDBtZ0ZpcFJJU1NEMHlza2c1b3JkS0VtaVFNSGJ0SEtlZz0.png",
+    "category": "생활용품",
+    "reviewCount": 1191,
+    "shareLink": "https://toss.im/_m/9MJtsOxx"
+  },
+  {
     "name": "발이 편한 카바 밴딩 중목 양말, 여성용, 그레이, 10켤레",
     "price": 4900,
     "discountRate": 75,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/YTdhZGIx/QU9Yd3N3RXhqMDVUaWg4emhjUjRJSVJScTUxNnFoUUNOZi91QUlRaTQ5OTY.png",
     "category": "패션의류잡화",
     "reviewCount": 122,
-    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/D00xket4"
   },
   {
@@ -692,17 +705,20 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NDc3Njgw/WGFlYlpqSkZSSW1aWmtMSm5iajZSL0FIeVhJUzVMTkpiTExKN1NQTHZKUT0.png",
     "category": "패션의류잡화",
     "reviewCount": 479,
-    "categoryRank": 9,
+    "rankCategory": "남성정장벨트",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/DMjoII8c"
   },
   {
-    "name": "일본식 의류용 방충 방습제, 장미향, 2ml, 48개입, 3개",
-    "price": 8900,
+    "name": "곰팡이 제거 발포 세탁조 클리너, 220g, 2박스",
+    "price": 12500,
     "discountRate": 74,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-25/fb125c1b-0d7c-4f59-97bd-1a432d5e83a9.png",
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/Zjk1ZTkw/TXNhWmVHd1BGbXpibGtqMjVoMDlaa3I0WVljZWVFOWNlQ2VIM3JraHVDRT0.png",
     "category": "생활용품",
-    "reviewCount": 0,
-    "shareLink": "https://toss.im/_m/zi5YBUBn"
+    "reviewCount": 877,
+    "rankCategory": "세탁조세정제",
+    "categoryRank": 2,
+    "shareLink": "https://toss.im/_m/n2WLJzBe"
   },
   {
     "name": "제주 순살갈치, 1kg, 2마리, 1팩",
@@ -710,7 +726,9 @@
     "discountRate": 74,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/OGYyMWE3/Q0grQzJ0ZkkwdE9nUzk5QVQ1c2Y3QTI3Ky85c08vQ2taUVAvTUVQbTgvZz0.png",
     "category": "식품",
-    "reviewCount": 1421,
+    "reviewCount": 1422,
+    "rankCategory": "갈치",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/bliZRPan"
   },
   {
@@ -732,13 +750,23 @@
     "shareLink": "https://toss.im/_m/3Tfo70x3"
   },
   {
+    "name": "성주 꿀참외, 랜덤과, 5kg, 1박스",
+    "price": 12600,
+    "discountRate": 74,
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-06-11/5fbd465a-2615-400a-8da7-6e46bfa944e1.jpeg",
+    "category": "식품",
+    "reviewCount": 5480,
+    "shareLink": "https://toss.im/_m/h98Ekwq7"
+  },
+  {
     "name": "착한버들 대형 3D 무중력 젤 쿠션, 2개",
     "price": 7704,
     "discountRate": 74,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/Y2MzMzI3/QUl6Y0dPeGMzS2p0ME4rNGpaR05xY2JUbUZNWkR4aExNWFN4ZUZNb1VZVkw.png",
     "category": "가구/홈데코",
     "reviewCount": 1670,
-    "categoryRank": 8,
+    "rankCategory": "자세보정방석",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/T77zghjc"
   },
   {
@@ -748,6 +776,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-06/672e1207-072b-4567-a7c0-e0f839ea6746.jpeg",
     "category": "가구/홈데코",
     "reviewCount": 188,
+    "rankCategory": "쿨방석/통풍방석",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/Zsey5dzd"
   },
   {
@@ -757,6 +787,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/YWU4MzA0/QVBUTDREL2t6emJzUitZeS9FZTMrVE83TmUvQXV6UUhnOWxRUEFmVndQdjQ.png",
     "category": "가전/디지털",
     "reviewCount": 1424,
+    "rankCategory": "블루투스이어폰",
+    "categoryRank": 3,
     "shareLink": "https://toss.im/_m/zBae9m3l"
   },
   {
@@ -766,6 +798,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-02-09/ea1e912c-3c31-4f97-bce9-d540bdefc74c.png",
     "category": "자동차용품",
     "reviewCount": 69,
+    "rankCategory": "허리/등받이쿠션",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/lA4vizse"
   },
   {
@@ -775,34 +809,9 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/OTU3NTY4/QUpoN1R0SkQ3ZjByM2hIRFhIRlcwTWFQbmp3N1d1SER6dWVHSHFPVVV1RmM.png",
     "category": "출산/유아동",
     "reviewCount": 276,
+    "rankCategory": "해열시트/해열용품",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/xTl6fQ7r"
-  },
-  {
-    "name": "리벤스 라벤더 바이올렛 물티슈, 100매, 10팩",
-    "price": 7900,
-    "discountRate": 73,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZmZmMTE0/QUpiRjF2T3ozbTBtYXhPTnJHMW5ONHl3ZkhJZWx1RmEwNGJ4blBOUzFLMXQ.png",
-    "category": "생활용품",
-    "reviewCount": 841,
-    "shareLink": "https://toss.im/_m/bvJSMabi"
-  },
-  {
-    "name": "클린보틀 변기세정제 클리너, 300g, 12개",
-    "price": 9990,
-    "discountRate": 73,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZWI4M2Q0/QUwyajJwa3RPYk9oL29NRGVEVmt5dG45azVrWlVJUWpldjZFQVhJQlV2NnQ.png",
-    "category": "생활용품",
-    "reviewCount": 127,
-    "shareLink": "https://toss.im/_m/xXDlqsEx"
-  },
-  {
-    "name": "접착식 귀이개, 80피스, 4세트",
-    "price": 5101,
-    "discountRate": 73,
-    "imageUrl": "https://shopping.toss.im/live/temp/2025-01-23/dd3b3ce6-e1c3-45fe-81d0-f48c72c83511.jpeg",
-    "category": "생활용품",
-    "reviewCount": 921,
-    "shareLink": "https://toss.im/_m/dPvnMBiB"
   },
   {
     "name": "휴비딕 무릎보호대, HS-2, 모던 그레이, 2개",
@@ -811,7 +820,40 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MzAwY2Mx/QUtIbjc0NDBQSHV3aEV3cU1kWHFyOEJRRHdCK1diaWhmaDRKU1JMeWdlUmQ.png",
     "category": "스포츠/레져",
     "reviewCount": 682,
+    "rankCategory": "무릎보호대",
+    "categoryRank": 3,
     "shareLink": "https://toss.im/_m/d3CYrv3v"
+  },
+  {
+    "name": "리벤스 라벤더 바이올렛 물티슈, 100매, 10팩",
+    "price": 7900,
+    "discountRate": 73,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZmZmMTE0/QUpiRjF2T3ozbTBtYXhPTnJHMW5ONHl3ZkhJZWx1RmEwNGJ4blBOUzFLMXQ.png",
+    "category": "생활용품",
+    "reviewCount": 841,
+    "rankCategory": "물티슈",
+    "categoryRank": 2,
+    "shareLink": "https://toss.im/_m/bvJSMabi"
+  },
+  {
+    "name": "고추장 찍어 먹는 멸치, 100g, 2팩",
+    "price": 5920,
+    "discountRate": 73,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/Y2Y5YWY3/QUpxa0h0RnBXcVQ0aDVnbVMzQ3JvdVdjVUxkYWtrU1RUVUZxbk1uYXFWOXQ.png",
+    "category": "식품",
+    "reviewCount": 1499,
+    "shareLink": "https://toss.im/_m/NC74dZ62"
+  },
+  {
+    "name": "접착식 귀이개, 80피스, 4세트",
+    "price": 5101,
+    "discountRate": 73,
+    "imageUrl": "https://shopping.toss.im/live/temp/2025-01-23/dd3b3ce6-e1c3-45fe-81d0-f48c72c83511.jpeg",
+    "category": "생활용품",
+    "reviewCount": 922,
+    "rankCategory": "귀이개 세트",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/dPvnMBiB"
   },
   {
     "name": "선쉐이드 티타늄 원터치 햇빛가리개, 블랙, 1개",
@@ -820,7 +862,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ZDM5MDQ1/QU5sU205dllrWjIycmFSdFplVkVRdFlrMzliV2xwUTRLWGd2K2ZLaGFxV3M.png",
     "category": "자동차용품",
     "reviewCount": 941,
-    "categoryRank": 2,
+    "rankCategory": "햇빛가리개/커튼",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/5ftNfSw3"
   },
   {
@@ -830,16 +873,20 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/OTRiMGNm/ZUg2WXNBdm1iQmp1TkVGaFFVQ3E3NUQ0VjdDdTBhaFdkNndMbXBWV2wwVT0.png",
     "category": "패션의류잡화",
     "reviewCount": 954,
+    "rankCategory": "여성 캐주얼 세트",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/jWAQajkh"
   },
   {
-    "name": "빌리스 홈 퍼펙트 듀얼 클린 캡슐세제 플로럴, 8g, 100개입, 2개",
+    "name": "세척사과 꿀사과, 2kg, 1박스",
     "price": 10900,
     "discountRate": 72,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/YzkyYTgz/QUxla3pYR3hoWG1IMTZReWJ6VGs1bk5Qc01hYzFMVG5tTTVrSFdiR3NCbG0.png",
-    "category": "생활용품",
-    "reviewCount": 170,
-    "shareLink": "https://toss.im/_m/tCOnWZri"
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-21/d289f62f-61d3-4143-b707-8a62b8fc5858.png",
+    "category": "식품",
+    "reviewCount": 1691,
+    "rankCategory": "사과",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/bck9Kels"
   },
   {
     "name": "가그린 스탠다드 컴팩트 미세모 칫솔, 16개입, 1팩",
@@ -848,6 +895,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-05-28/505f2bd4-3e25-483d-aaff-b8b050d12087.jpeg",
     "category": "생활용품",
     "reviewCount": 986,
+    "rankCategory": "칫솔",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/9M4KiZGu"
   },
   {
@@ -865,18 +914,66 @@
     "discountRate": 72,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/YzExY2Yw/WnhJenpCTzV6TlFlNzBEckR6TTNNZW5FemhieW1XSW5lUkM5eEkxMEdUcz0.png",
     "category": "주방용품",
-    "reviewCount": 180,
+    "reviewCount": 182,
+    "rankCategory": "칼세트",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/NFYs0Kd3"
   },
   {
-    "name": "맘스럽 베이킹소다, 파우치, 5kg, 1개",
-    "price": 3990,
+    "name": "헬로바이오 알파CD 원데이핏 알파시글로덱스트린, 3g, 14포, 12개",
+    "price": 29900,
     "discountRate": 71,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/NTBkNTA1/QUxEUmxodG5aR25talp5Mk9kWnlaUEZuampubVhqbVhHN0RSWnc1SlpMamg.png",
+    "imageUrl": "https://shopping.toss.im/live/temp/2025-11-05/00d4a0b2-f806-4ec8-affb-71f91babddf9.jpeg",
+    "category": "식품",
+    "reviewCount": 1425,
+    "shareLink": "https://toss.im/_m/hcDsZxln"
+  },
+  {
+    "name": "블루나 나우비데 물티슈 캡형, 50매, 12팩",
+    "price": 10990,
+    "discountRate": 71,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ODU1NWM1/VDBsMGJacVdzekZsNlU3VzBibU5LMUtXek00bklYS1dtM1N0S1c3VUF2UT0.png",
     "category": "생활용품",
-    "reviewCount": 6315,
-    "categoryRank": 4,
-    "shareLink": "https://toss.im/_m/7V64GAvn"
+    "reviewCount": 160,
+    "shareLink": "https://toss.im/_m/DP8QAYbg"
+  },
+  {
+    "name": "던킨블렌드 캡슐커피, 네스프레소 호환, 에스프레소, 20개입, 4개",
+    "price": 26890,
+    "discountRate": 71,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/MTg3Yzk0/TVoyWk0yT1pMbWRtbVN4elo1bDVKbVpOa3lUR2VkbU1tWjJSakpNWlpuTT0.png",
+    "category": "식품",
+    "reviewCount": 12,
+    "shareLink": "https://toss.im/_m/bdbair6h"
+  },
+  {
+    "name": "프롬더스킨 글루타치온 콜라겐 팩, 50g, 4개",
+    "price": 39600,
+    "discountRate": 71,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/MWE2MDli/RzZlVnArd3BJWGhEM3Q0V1hoT2o4WVd1N0E4NFNXdngyelBXbXJUcVZTbz0.png",
+    "category": "뷰티",
+    "reviewCount": 23,
+    "rankCategory": "필오프 마스크/팩",
+    "categoryRank": 3,
+    "shareLink": "https://toss.im/_m/pflvfVwy"
+  },
+  {
+    "name": "바이탈포션 슈퍼 레티알엔 앰플, 33ml, 1개",
+    "price": 7900,
+    "discountRate": 71,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZmI1MmI5/SXVTQ1ZPWURFenhWK0U5YkRQbHUzODVPdFRHOWlzK1k3bkt2ajFBaFVDRT0.png",
+    "category": "뷰티",
+    "reviewCount": 329,
+    "shareLink": "https://toss.im/_m/7kZOLUPz"
+  },
+  {
+    "name": "세척사과 꿀사과, 3kg, 1박스",
+    "price": 12900,
+    "discountRate": 71,
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-21/d289f62f-61d3-4143-b707-8a62b8fc5858.png",
+    "category": "식품",
+    "reviewCount": 4509,
+    "shareLink": "https://toss.im/_m/FdDfVKB9"
   },
   {
     "name": "로로보아 매직 스트레이트너, 핑크, 1개",
@@ -895,6 +992,28 @@
     "category": "뷰티",
     "reviewCount": 47,
     "shareLink": "https://toss.im/_m/HjpPKJj7"
+  },
+  {
+    "name": "맘스럽 베이킹소다, 파우치, 5kg, 1개",
+    "price": 3990,
+    "discountRate": 71,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/NTBkNTA1/QUxEUmxodG5aR25talp5Mk9kWnlaUEZuampubVhqbVhHN0RSWnc1SlpMamg.png",
+    "category": "생활용품",
+    "reviewCount": 6317,
+    "rankCategory": "베이킹소다",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/7V64GAvn"
+  },
+  {
+    "name": "프로스펙스 액티브 슬개골 보호대, 블랙, 2개",
+    "price": 11446,
+    "discountRate": 71,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/YmRiYWM5/QU1tY2QzKzhUSmxtNXhqNG5qalBUQStjWjJlWlo1MllaV1daenpPeXlEVE0.png",
+    "category": "스포츠/레져",
+    "reviewCount": 1301,
+    "rankCategory": "무릎보호대",
+    "categoryRank": 2,
+    "shareLink": "https://toss.im/_m/XeF4PU2B"
   },
   {
     "name": "보이넥스트도어 The Action Weverse Albums ver 더액션 위버스, 1세트",
@@ -921,6 +1040,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NTY5N2U2/QUx4eCtPUzBjems5aFRtdWMwWDVPUE5WN09kc2Z1ejFaSzZnSDVnZkFjT2E.png",
     "category": "주방용품",
     "reviewCount": 348,
+    "rankCategory": "양식커트러리/포크나이프세트",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/DE4wWh4b"
   },
   {
@@ -930,16 +1051,27 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-02-03/6056e799-0b98-4e7e-9895-8f5133db20b4.jpeg",
     "category": "출산/유아동",
     "reviewCount": 308,
+    "rankCategory": "물티슈케이스",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/pVYajQHu"
   },
   {
-    "name": "외갓집 진심 육개장, 600g, 3개",
-    "price": 8990,
+    "name": "탐나유 수미 햇감자, 중, 3kg, 1개",
+    "price": 5300,
     "discountRate": 70,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZGE1NWEw/T2h3UEtmbzVhVDJvUGExdGtQM2R2UVBrTnFVLzhXdTAvd083VWdBYi9NQT0.png",
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZmQ4OTFm/QU1pcFJ3ZHFqY01OSlpJSUtLenF1MWZvMjNHeW1rMzc0MFdYRnJtU0pBUnM.png",
     "category": "식품",
-    "reviewCount": 6349,
-    "shareLink": "https://toss.im/_m/rB6YfVSl"
+    "reviewCount": 912,
+    "shareLink": "https://toss.im/_m/LMrrDoNf"
+  },
+  {
+    "name": "휴플러스 바른목 EMS 마사지기, CORDZERO-ES4, 베이지, 1개",
+    "price": 35500,
+    "discountRate": 70,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZWIxOTE4/QUlEaVI4Tkg1eTVHTmc0L0R0a08yYmFZOXNaeFpkbE0yZmNabWsyelJHTTI.png",
+    "category": "가전/디지털",
+    "reviewCount": 409,
+    "shareLink": "https://toss.im/_m/HCgpK072"
   },
   {
     "name": "푸드센터 소갈비살, 200g, 5팩",
@@ -947,7 +1079,7 @@
     "discountRate": 70,
     "imageUrl": "https://shopping.toss.im/live/temp/2025-07-21/93a16065-9d8e-4a9a-83c8-c07c8cca1f2d.png",
     "category": "식품",
-    "reviewCount": 6287,
+    "reviewCount": 6289,
     "shareLink": "https://toss.im/_m/Fhb5HQUa"
   },
   {
@@ -960,21 +1092,14 @@
     "shareLink": "https://toss.im/_m/j0WPOp9C"
   },
   {
-    "name": "설탕바나나, 3kg, 1박스",
-    "price": 8900,
-    "discountRate": 70,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-06-09/d22aa28d-944e-4074-bd28-cf4de49d4c99.png",
-    "category": "식품",
-    "reviewCount": 1857,
-    "shareLink": "https://toss.im/_m/hbrMOpr4"
-  },
-  {
     "name": "전라도 총각김치, HACCP, 당일제조, 5kg, 1박스",
     "price": 20900,
     "discountRate": 70,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MjMzZTkx/QUxXOXNlS3ZhUklmSzFQMmFzTFUzT0MwUnY3R1YxSkRVWmhvSS9wMDh1MlY.png",
     "category": "식품",
     "reviewCount": 646,
+    "rankCategory": "총각김치",
+    "categoryRank": 5,
     "shareLink": "https://toss.im/_m/B3h7jvbd"
   },
   {
@@ -987,21 +1112,14 @@
     "shareLink": "https://toss.im/_m/Nz5Xo7en"
   },
   {
-    "name": "팅글탱글 PD 20W 고속 충전기 & PD 60W C to C 초고속 케이블, 오렌지, 1m, 1개",
-    "price": 8900,
-    "discountRate": 70,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-07-15/801afe1e-aef6-4713-ab0a-c5bd599f81d1.jpeg",
-    "category": "가전/디지털",
-    "reviewCount": 789,
-    "shareLink": "https://toss.im/_m/fCTA4zzd"
-  },
-  {
     "name": "폰박스 무선 흡착 마사지기, A30, 블랙, 1개",
     "price": 26174,
     "discountRate": 70,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/Y2ViZTEx/QU1jek1obzVqSmpoNXZObkxGdU1rSVlrNGN0NW01bW5wR1pEMnRPUkxEOVc.png",
     "category": "가전/디지털",
     "reviewCount": 423,
+    "rankCategory": "마사지기",
+    "categoryRank": 3,
     "shareLink": "https://toss.im/_m/t1BsXS3q"
   },
   {
@@ -1011,18 +1129,7 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NzdlYTVk/QU16bk0zRWM4VE15enQxSGtabWNKallhVE9kemt3ek5OakJoV01sbDhaOU0.png",
     "category": "문구/오피스",
     "reviewCount": 32,
-    "categoryRank": 9,
     "shareLink": "https://toss.im/_m/9yYImpxC"
-  },
-  {
-    "name": "빌리스홈 초고농축 올인원 캡슐세제 퍼펙트 클린 라벤더, 200개, 1600g, 1팩",
-    "price": 11800,
-    "discountRate": 70,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-07-23/055ff865-d00c-483d-8621-71cf4028d910.jpeg",
-    "category": "생활용품",
-    "reviewCount": 8992,
-    "categoryRank": 5,
-    "shareLink": "https://toss.im/_m/5UHuKICo"
   },
   {
     "name": "갓성비 스포츠 단목양말 대용량세트, 10켤레, FREE(250mm-275mm)",
@@ -1031,7 +1138,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-01-27/0fb955a2-f506-48fd-a7b6-18721e907a60.jpeg",
     "category": "스포츠/레져",
     "reviewCount": 1343,
-    "categoryRank": 7,
+    "rankCategory": "스포츠 양말",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/1TpNiuSk"
   },
   {
@@ -1041,6 +1149,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/ZTE4ZGEx/T2EwZVUrZTBLZS9HTS9QTUhuT1BEUG5EVkxDbERlclRWcndsUzZwUTNydz0.png",
     "category": "완구/취미",
     "reviewCount": 7,
+    "rankCategory": "액체괴물/슬라임(완제품)",
+    "categoryRank": 7,
     "shareLink": "https://toss.im/_m/30041WHf"
   },
   {
@@ -1050,7 +1160,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/MjYxOTdk/TTB5Ymsyd3NzOVQ1bHN4T3hoWXpvYkpyVER3MjhiQjdTU0gybFBLMGorTT0.png",
     "category": "음반/DVD",
     "reviewCount": 2,
-    "categoryRank": 4,
+    "rankCategory": "국내 가요",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/9l39utrn"
   },
   {
@@ -1060,7 +1171,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-06-10/af3285a1-d298-416f-a23e-9afc61e5f78c.jpeg",
     "category": "음반/DVD",
     "reviewCount": 1,
-    "categoryRank": 5,
+    "rankCategory": "국내 가요",
+    "categoryRank": 3,
     "shareLink": "https://toss.im/_m/nCTJ1lWp"
   },
   {
@@ -1070,7 +1182,6 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-04-30/906d0ae5-9e82-4284-855a-78e1c9a9630c.png",
     "category": "음반/DVD",
     "reviewCount": 1,
-    "categoryRank": 10,
     "shareLink": "https://toss.im/_m/hBbsTLbr"
   },
   {
@@ -1080,8 +1191,20 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/Y2UzMzhm/WjJPYldHWnlrMkRNeXpNaDNrbHpKWnBaWmFVNU5LUjg4NUxZNXBwWUZwND0.png",
     "category": "자동차용품",
     "reviewCount": 1131,
-    "categoryRank": 6,
+    "rankCategory": "햇빛가리개/커튼",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/74lzduX5"
+  },
+  {
+    "name": "캔음료 보관랙 디스펜서, 중, 1개",
+    "price": 5900,
+    "discountRate": 70,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/YzE1YTY0/QUtsUlpPbnc5ckphVzVtTkxTMlRkc2xwTlZaWUJUdVZWVnRicStWcWtGS3U.png",
+    "category": "주방용품",
+    "reviewCount": 47,
+    "rankCategory": "정리수납함/트레이",
+    "categoryRank": 2,
+    "shareLink": "https://toss.im/_m/nxEpdTN"
   },
   {
     "name": "DAYN 반달 크로스백, 블랙, 2개",
@@ -1090,7 +1213,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/NmQ4YzYy/SXhZUmVJWmlDNElJTGNvRVlnNEZHYWR5eFlrRlppZjJVcW1nbjZwZE5rUT0.png",
     "category": "패션의류잡화",
     "reviewCount": 14,
-    "categoryRank": 3,
+    "rankCategory": "여성크로스백",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/NzDWEC46"
   },
   {
@@ -1100,6 +1224,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ZGNlMTY0/QU9WbXVWeFl0RWEwbDJPcFh1UFdmQnlwVk96VTdrVHV4SXJjbjgzQ3hIRXI.png",
     "category": "패션의류잡화",
     "reviewCount": 1643,
+    "rankCategory": "튜브탑/브라탑",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/phHBQAry"
   },
   {
@@ -1109,25 +1235,20 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MjdmYjll/QUszVFhicnRHYVoycGZZaWZsSXRhK045Vml4YzRHRnc0dFVFeFIwWUNkNnA.png",
     "category": "패션의류잡화",
     "reviewCount": 1866,
+    "rankCategory": "여성 상하의 세트",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/xlckjt1B"
   },
   {
-    "name": "익스트림 눈건강 루테인 지아잔틴, 500mg, 30정, 2팩",
-    "price": 7900,
+    "name": "라온르 에어 BLDC 서큘레이터 S500, LAC-S500, 1개",
+    "price": 74900,
     "discountRate": 69,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-19/25545435-67a1-4ae9-8dd0-dde949eab6b0.jpeg",
-    "category": "식품",
-    "reviewCount": 0,
-    "shareLink": "https://toss.im/_m/PEncaf81"
-  },
-  {
-    "name": "페페브루노 엑스트라버진 올리브오일, 250ml, 4개",
-    "price": 17900,
-    "discountRate": 69,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-03-16/6b3ac7b0-1f59-4ba6-b60e-c1eea0620d21.jpeg",
-    "category": "식품",
-    "reviewCount": 837,
-    "shareLink": "https://toss.im/_m/pMUOzY3g"
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZDc4NTJj/QUtEdjQvd2ZmUDRIY1lNRC9JaDgvZ1AvZ2dIOEFHUC9BNi84d1B4VkEvK0Q.png",
+    "category": "가전/디지털",
+    "reviewCount": 561,
+    "rankCategory": "서큘레이터",
+    "categoryRank": 3,
+    "shareLink": "https://toss.im/_m/N2X4QQMp"
   },
   {
     "name": "맛장군 열무김치, 2kg, 1팩",
@@ -1137,15 +1258,6 @@
     "category": "식품",
     "reviewCount": 12278,
     "shareLink": "https://toss.im/_m/bore9Uph"
-  },
-  {
-    "name": "아이노 LCD 버튼형 휴대용 선풍기, ANFA-3K-14-YC, 3000mAh, 화이트, 1개",
-    "price": 7900,
-    "discountRate": 69,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-04/95d5f514-fb30-4eb5-9cdf-c45ab71ccd66.jpeg",
-    "category": "가전/디지털",
-    "reviewCount": 238,
-    "shareLink": "https://toss.im/_m/bwDfhncg"
   },
   {
     "name": "아이스쿨 시어서커 여름 쿨토시, 화이트",
@@ -1163,17 +1275,31 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/OTc3Mzll/WEF3ejFJQmp5Q2Q3dXpXWVZCRCs0NHpuQ0VOamZPTzgvQUFjUXhmejUvUT0.png",
     "category": "패션의류잡화",
     "reviewCount": 964,
-    "categoryRank": 10,
+    "rankCategory": "여성 상하의 세트",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/l72e6EOe"
   },
   {
-    "name": "로니웰 토탈케어 멀티비타민 20, 90정, 1병",
+    "name": "메르헨트 퍼퓸 대용량 바디워시, 호텔 딥 우드, 1L, 2개",
     "price": 9500,
     "discountRate": 68,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZGYxMzk5/RGpTZU1UalJhc2ZEeDdISUhoN1dvMXpoYXB6enhxMURUaDVVcUxseHFsWT0.png",
-    "category": "식품",
-    "reviewCount": 37,
-    "shareLink": "https://toss.im/_m/Tk57sjk3"
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-06-17/f20454ba-50de-4383-ae2b-a5eaa2fbd352.jpeg",
+    "category": "뷰티",
+    "reviewCount": 1095,
+    "rankCategory": "바디워시",
+    "categoryRank": 2,
+    "shareLink": "https://toss.im/_m/V3VbzQZz"
+  },
+  {
+    "name": "리벤스 로얄플러스 물티슈, 캡형, 70매, 10팩",
+    "price": 9800,
+    "discountRate": 68,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZDdjNzBj/TDJXKys3VE9kLy9hM3YrL3l0UC96NkY3M3Y0M0lXbjdKNkcyODFyVS8rMD0.png",
+    "category": "생활용품",
+    "reviewCount": 2830,
+    "rankCategory": "물티슈",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/vqzdI56h"
   },
   {
     "name": "잘말려 단단한 최상급 무안 일반양파, 소, 5kg, 1박스",
@@ -1191,6 +1317,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/YTYzNDM0/TVpadyt5MldId3p5YWVYekRKWmR5d3kwZUh5elM0K0hUTFRiUzB5MGNIaz0.png",
     "category": "뷰티",
     "reviewCount": 5,
+    "rankCategory": "선블록/선크림/선로션",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/VCtaWN46"
   },
   {
@@ -1209,7 +1337,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2025-07-17/9fc6341e-f3d8-4171-bafe-4c0e6a1436a8.jpeg",
     "category": "가구/홈데코",
     "reviewCount": 3208,
-    "categoryRank": 2,
+    "rankCategory": "일반손바늘",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/dEVsd3A3"
   },
   {
@@ -1219,6 +1348,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NGI0M2Q3/QUx0ZXhPTy9ITkpqVGJzNVRNZmp1Unpuakp3OW9jUTJMS0hoTll3MXJNcno.png",
     "category": "생활용품",
     "reviewCount": 1971,
+    "rankCategory": "면도기세트",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/vdCQstND"
   },
   {
@@ -1237,6 +1368,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MzJhNmNj/QU54eDhZbnpqTE1ZUERoR1BzUTJoRjRjRGxtRWNjRjVoNFlNc3d5ZStCMmY.png",
     "category": "가구/홈데코",
     "reviewCount": 225,
+    "rankCategory": "스툴",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/hfpYccxe"
   },
   {
@@ -1246,6 +1379,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2025-12-18/e6482fe2-4163-47d7-9943-09804cbf7c7c.png",
     "category": "뷰티",
     "reviewCount": 2733,
+    "rankCategory": "스킨/토너/화장수",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/BLsFefh2"
   },
   {
@@ -1255,6 +1390,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/M2Y3M2Y2/Tlo0K1B0anc0T21uQ3h1RGVKNXNQRXJ4a2RPM0RENXRVUHZCa2k4VVBtMD0.png",
     "category": "자동차용품",
     "reviewCount": 600,
+    "rankCategory": "스마트폰용",
+    "categoryRank": 3,
     "shareLink": "https://toss.im/_m/X8ADzk8h"
   },
   {
@@ -1264,16 +1401,20 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/Nzc2MTEy/Y0k0NjQyMkFEeis0UThjUmNRZWsxTTVsM1U2Z2tuWTdZQk9vSWRkTVhmWT0.png",
     "category": "주방용품",
     "reviewCount": 1826,
+    "rankCategory": "싱크대배수구용품",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/3uEedf4l"
   },
   {
-    "name": "나무팩토리 내시경 귀이개, 1개",
-    "price": 13000,
+    "name": "바리스타룰스 원데이 무라벨, 저당라떼, 350ml, 20개",
+    "price": 16200,
     "discountRate": 67,
-    "imageUrl": "https://shopping.toss.im/live/product/365401/722c085b-8e63-4e98-bca8-42777748a77d.jpg",
-    "category": "생활용품",
-    "reviewCount": 2521,
-    "shareLink": "https://toss.im/_m/ZseVcbrc"
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/M2E1ZjAy/S25UWWxIcFdhWk1hMWtvUVNrendtL3BrVE5SRE0xZUxtT3dzbEx4NGhhdz0.png",
+    "category": "식품",
+    "reviewCount": 6113,
+    "rankCategory": "커피음료",
+    "categoryRank": 4,
+    "shareLink": "https://toss.im/_m/FjK7tEbl"
   },
   {
     "name": "꿀브릭스 경북 햇 홍로사과, 고당도, 12과내외, 2kg, 1박스",
@@ -1300,6 +1441,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-06-23/0cd19b8b-2b07-42a4-9829-c78abef973c7.jpeg",
     "category": "뷰티",
     "reviewCount": 609,
+    "rankCategory": "일반샴푸",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/fOTuIDs9"
   },
   {
@@ -1309,17 +1452,9 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-06-17/917781d0-9f69-4ac5-9a43-e79b0ec65aa3.jpeg",
     "category": "뷰티",
     "reviewCount": 1923,
-    "categoryRank": 4,
+    "rankCategory": "바디워시",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/HvnyvINo"
-  },
-  {
-    "name": "메르헨트 퍼퓸 대용량 바디워시, 호텔 딥 우드, 1L, 2개",
-    "price": 9900,
-    "discountRate": 67,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-06-17/f20454ba-50de-4383-ae2b-a5eaa2fbd352.jpeg",
-    "category": "뷰티",
-    "reviewCount": 1095,
-    "shareLink": "https://toss.im/_m/V3VbzQZz"
   },
   {
     "name": "하루견과 The오리지널, 20g, 50봉",
@@ -1328,7 +1463,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NjQ0NDFm/UFo2MDZ3M3dtbnpjWTg3SDMrdHg0NGgwL3NGOUpEbzRjYVBtSTQ1VTVjdz0.png",
     "category": "식품",
     "reviewCount": 58,
-    "categoryRank": 8,
+    "rankCategory": "혼합견과/믹스넛",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/Tcs0AAqC"
   },
   {
@@ -1338,6 +1474,7 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/NDQ1MDQy/QU9XKytZTi8rQUllY01QKzhkK2N3WXRJSVF3L0loL1N3dC9RQ3Q4QU84dEs.png",
     "category": "완구/취미",
     "reviewCount": 58,
+    "rankCategory": "암링",
     "categoryRank": 1,
     "shareLink": "https://toss.im/_m/fZnCGMx9"
   },
@@ -1348,6 +1485,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/ZDg2NDVk/VlR1Y3pXcTJ1eXVybE9SckoxYWRTZFhXUzBGbHpUYmdtMHBGcXJKeDNqdz0.png",
     "category": "완구/취미",
     "reviewCount": 9,
+    "rankCategory": "물총",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/ddJxu4sh"
   },
   {
@@ -1357,6 +1496,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-12/68581e48-9e51-4393-94be-92ce08785ade.png",
     "category": "자동차용품",
     "reviewCount": 7,
+    "rankCategory": "스마트폰용",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/xxRcJMH9"
   },
   {
@@ -1366,16 +1507,18 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/Zjk0MzVh/T3phelovTkFiajgzZUptTDNiN25tREpIK0RUTHhHNU4rRFR4azdhYlBFZz0.png",
     "category": "자동차용품",
     "reviewCount": 1683,
+    "rankCategory": "기타세차도구/용품",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/ZFtYX0Nf"
   },
   {
-    "name": "홀리데이즈 브로멜라인 리얼 파인애플 발효효소, 3g, 30포, 2개",
-    "price": 9900,
+    "name": "오하브 보타닉바이옴 영양 보습 발효 세럼, 50ml, 2개",
+    "price": 39800,
     "discountRate": 66,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/ZWVmODYy/QUlhOHh1Nm5IUjU5WS9RZXVKcHg4TVA4R09jak9HTWhMd0EzQko3cmx0LzA.png",
-    "category": "식품",
-    "reviewCount": 44,
-    "shareLink": "https://toss.im/_m/97wwwPwj"
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/Zjc3ZTU0/QVA0SE1mSjhEK3Q4WS96Y2cveGpsN1M0dzI4ZUIyNzYwZnFVaDJicWxIbVo.png",
+    "category": "뷰티",
+    "reviewCount": 3,
+    "shareLink": "https://toss.im/_m/xaYGkJAo"
   },
   {
     "name": "다용도 채칼, 3.6x19cm, 2개",
@@ -1387,12 +1530,25 @@
     "shareLink": "https://toss.im/_m/vbPSwTa2"
   },
   {
+    "name": "설탕바나나, 3kg, 1박스",
+    "price": 9890,
+    "discountRate": 66,
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-06-09/d22aa28d-944e-4074-bd28-cf4de49d4c99.png",
+    "category": "식품",
+    "reviewCount": 1857,
+    "rankCategory": "바나나",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/hbrMOpr4"
+  },
+  {
     "name": "아침에 좋은빵 백프로 통밀식빵, 630g, 2개",
     "price": 9300,
     "discountRate": 66,
     "imageUrl": "https://shopping.toss.im/live/temp/2025-09-11/e6997ced-4107-49b3-947c-6213e668d801.jpeg",
     "category": "식품",
     "reviewCount": 2153,
+    "rankCategory": "식빵",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/zTMPBYFa"
   },
   {
@@ -1401,7 +1557,9 @@
     "discountRate": 66,
     "imageUrl": "https://shopping.toss.im/live/temp/2026-04-28/ed3268db-5022-4b1c-b0f1-628a2121bf0e.jpeg",
     "category": "식품",
-    "reviewCount": 511,
+    "reviewCount": 512,
+    "rankCategory": "다이어트쉐이크",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/dJFf1Kab"
   },
   {
@@ -1411,6 +1569,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-27/8ffdf117-8b24-431e-988b-2331642eb5aa.jpeg",
     "category": "주방용품",
     "reviewCount": 5,
+    "rankCategory": "채칼/슬라이서",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/jph8oIUf"
   },
   {
@@ -1419,7 +1579,9 @@
     "discountRate": 66,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/MTg5YWJl/WmFFYndadlA1TDVrTk50Ym04c2t0T2FXMDBzWjRTeTA4bHJUU3crMWJMUT0.png",
     "category": "식품",
-    "reviewCount": 142,
+    "reviewCount": 143,
+    "rankCategory": "기타맛우유",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/doXFwcal"
   },
   {
@@ -1428,8 +1590,30 @@
     "discountRate": 66,
     "imageUrl": "https://shopping.toss.im/live/temp/2026-04-28/d505180e-cd17-4640-9e56-b244ffb3c96e.jpeg",
     "category": "식품",
-    "reviewCount": 483,
+    "reviewCount": 484,
     "shareLink": "https://toss.im/_m/BwRyr7UA"
+  },
+  {
+    "name": "바리스타룰스 원데이 무라벨, 디카페인 아메리카노, 350ml, 20개",
+    "price": 16900,
+    "discountRate": 66,
+    "imageUrl": "https://shopping.toss.im/live/temp/2025-06-25/e768bc07-15bb-4cc6-919d-703742181018.jpeg",
+    "category": "식품",
+    "reviewCount": 2141,
+    "rankCategory": "커피음료",
+    "categoryRank": 5,
+    "shareLink": "https://toss.im/_m/DCOq73Hi"
+  },
+  {
+    "name": "황쉐프 무 동치미, 5kg, 1개",
+    "price": 8490,
+    "discountRate": 66,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/OWM0Nzgx/QUxZNThqb2VlTjVsbUd6OEI3cHRUNFduNURlY1BER0NrckNtV2xvZlJ1cjE.png",
+    "category": "식품",
+    "reviewCount": 713,
+    "rankCategory": "물김치/동치미",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/J3YSEfin"
   },
   {
     "name": "보이넥스트도어 1집 스튜디오 앨범 SWEET HOME ver, 1개",
@@ -1438,7 +1622,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-06-13/28922357-36d3-4d09-b14d-8506aa992910.jpeg",
     "category": "음반/DVD",
     "reviewCount": 7,
-    "categoryRank": 3,
+    "rankCategory": "국내 가요",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/7IVoF2cm"
   },
   {
@@ -1448,6 +1633,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/NjNhYjRl/Wnh5N0c0MXNUbVp6bmJtMm5OUG1KZUp6R2NrcHkyTnpmaVRZRHJXMEorRT0.png",
     "category": "음반/DVD",
     "reviewCount": 3,
+    "rankCategory": "국내 가요",
+    "categoryRank": 7,
     "shareLink": "https://toss.im/_m/j3a6d8Mu"
   },
   {
@@ -1457,7 +1644,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/OGVlNmMx/QUw0ZDA3bjVtem5kR0V5ZTVxMHp5MmFhYkROc1lmUGNtU09jYzBtWXZaMjI.png",
     "category": "자동차용품",
     "reviewCount": 436,
-    "categoryRank": 5,
+    "rankCategory": "차량용탈취제",
+    "categoryRank": 3,
     "shareLink": "https://toss.im/_m/FDti4jM4"
   },
   {
@@ -1467,7 +1655,6 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MDRlZjUx/SjEvTytiVnFlZ2pucll2Tm83MFVINThnZWVGNDhHbnVvNGJqUjQ0d1BQST0.png",
     "category": "자동차용품",
     "reviewCount": 309,
-    "categoryRank": 10,
     "shareLink": "https://toss.im/_m/nTko0Gs7"
   },
   {
@@ -1480,22 +1667,35 @@
     "shareLink": "https://toss.im/_m/L7AbGpHn"
   },
   {
-    "name": "풋시톨 발각질 제거제 + 풋파일 1개",
-    "price": 8900,
+    "name": "팬택 100W C to C 초고속 충전 실리콘 케이블, 화이트, 2m, 1개",
+    "price": 5900,
     "discountRate": 65,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/NjZjNDBk/UEtkZkZtbkdrUDRzcTlWbzdzdDZVODhJU3VWSFZzVlVxS1ZQQy9CYUNLYz0.png",
-    "category": "뷰티",
-    "reviewCount": 300,
-    "shareLink": "https://toss.im/_m/5nP8Kb51"
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ODkzNjcz/R0hPbkR2S21kTnVQSkxkY21tSG5uanp4eHc2ODRVT090TFFZMjhzT3VHRT0.png",
+    "category": "가전/디지털",
+    "reviewCount": 60,
+    "rankCategory": "충전 케이블",
+    "categoryRank": 5,
+    "shareLink": "https://toss.im/_m/9ZeB0dAD"
   },
   {
-    "name": "한예지 가든 플라워 3겹 천연펄프 화장지, 30m, 30롤, 2팩",
-    "price": 12900,
+    "name": "국내산 고당도 샤인머스켓, 4-6수, 2kg, 1개",
+    "price": 10500,
     "discountRate": 65,
-    "imageUrl": "https://shopping.toss.im/live/temp/2025-12-02/5e5f2029-7f7c-4511-bbc1-606a56a117b1.jpeg",
-    "category": "생활용품",
-    "reviewCount": 15387,
-    "shareLink": "https://toss.im/_m/Lbfi0BEs"
+    "imageUrl": "https://shopping.toss.im/live/product/20575939/8ef4b8f9-47e5-486c-b76e-3d2eb845383f.jpeg",
+    "category": "식품",
+    "reviewCount": 1,
+    "shareLink": "https://toss.im/_m/FC5IxaAt"
+  },
+  {
+    "name": "이씨네 전라도 겉절이, 2kg, 1개",
+    "price": 10300,
+    "discountRate": 65,
+    "imageUrl": "https://shopping.toss.im/c5144cbd-cfc0-4303-843c-1941d29bf5ef.jpg",
+    "category": "식품",
+    "reviewCount": 1212,
+    "rankCategory": "겉절이김치",
+    "categoryRank": 4,
+    "shareLink": "https://toss.im/_m/XTpGbQMu"
   },
   {
     "name": "뉴포츠 쿨링 냉감 아이스 베개커버, 핑크, 45x70cm, 2개",
@@ -1504,7 +1704,6 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MDBlOGI1/QU5WcytCYUU0U1B4SGwvM0REZ2VSZm5xOE04QmNCZU9mcG5zem1aeG80Mko.png",
     "category": "가구/홈데코",
     "reviewCount": 76,
-    "categoryRank": 4,
     "shareLink": "https://toss.im/_m/32URVxj7"
   },
   {
@@ -1514,7 +1713,6 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/YTRlNzY0/Q1lZOHNMR1BrTTRSMFJqSXpFQm55WXhzeGpFWTVLem1TeGZWamlWREdwTT0.png",
     "category": "가구/홈데코",
     "reviewCount": 849,
-    "categoryRank": 7,
     "shareLink": "https://toss.im/_m/vgCli51b"
   },
   {
@@ -1524,6 +1722,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/Y2JmY2U4/SE9Qbk16R21HODdQQm16eGFPVzlNNllaNDh6ejJXOU9HV2t6Sk9XOEhQTT0.png",
     "category": "음반/DVD",
     "reviewCount": 0,
+    "rankCategory": "국내 가요",
+    "categoryRank": 8,
     "shareLink": "https://toss.im/_m/R4mXqWxx"
   },
   {
@@ -1533,16 +1733,29 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/MzA3NDky/TCthWG9zdFFiWWkyd0ZQQ3FlREVjRUk1SWg4UkQ0aUhGVU4rNGYvMC8vdz0.png",
     "category": "주방용품",
     "reviewCount": 1119,
+    "rankCategory": "일식도",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/5beyHiiB"
   },
   {
-    "name": "할리스 시그니처 아메리카노 미니(다크), 0.9g, 130개, 2팩",
-    "price": 22900,
+    "name": "흑돼지 일품삼겹, 구이용, 1kg, 1팩",
+    "price": 12900,
     "discountRate": 64,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-21/b5d63ff1-7a55-4d3a-98b9-237a959d53b6.jpeg",
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/N2FmZWQ1/SkpZaGpqN0NwSER6WFZNT1ljNjRaWVptY3lQVWtlYTNpeG9IRURzL00vQT0.png",
     "category": "식품",
-    "reviewCount": 7,
-    "shareLink": "https://toss.im/_m/718eWwuy"
+    "reviewCount": 851,
+    "rankCategory": "생고기",
+    "categoryRank": 3,
+    "shareLink": "https://toss.im/_m/bJEx9gH"
+  },
+  {
+    "name": "케라시스 퍼퓸 바이올렛 로즈 샴푸, 1L, 2개 + 린스, 1L, 1개",
+    "price": 12900,
+    "discountRate": 64,
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-06-08/493663c4-090f-4fc1-a94e-b86fe61c2883.png",
+    "category": "뷰티",
+    "reviewCount": 219,
+    "shareLink": "https://toss.im/_m/TeFvi0Bj"
   },
   {
     "name": "경북 홍로사과, 14-16과, 2kg, 1박스",
@@ -1550,7 +1763,7 @@
     "discountRate": 64,
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-14/477ae75a-02ab-449d-ab8d-131c9c98fb91.jpeg",
     "category": "식품",
-    "reviewCount": 745,
+    "reviewCount": 746,
     "shareLink": "https://toss.im/_m/dPSrQJld"
   },
   {
@@ -1560,17 +1773,9 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-07-24/073cc754-8f05-4f27-a27b-0ec69e77ec3e.jpeg",
     "category": "가구/홈데코",
     "reviewCount": 132,
+    "rankCategory": "옷핀/브로치핀",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/1Cx3kayn"
-  },
-  {
-    "name": "에어보나 리모컨 수납형 선풍기, AB-E500FF, 1개",
-    "price": 38800,
-    "discountRate": 64,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-05-13/a2f276ad-6a28-4e14-8448-eecedcd5e64d.jpeg",
-    "category": "가전/디지털",
-    "reviewCount": 1208,
-    "categoryRank": 6,
-    "shareLink": "https://toss.im/_m/Phywijz3"
   },
   {
     "name": "비하겐 ZETTA GaN PD PPS 고속 충전기, TZWC-PD35ACA, 35W, 2포트, 화이트, 1개",
@@ -1578,7 +1783,9 @@
     "discountRate": 64,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NjY3ZmIy/Zm1ucFNzbGFHbE5XcDdTMHBEU3RUa3RJV250ZWoxZURwUFNrZks5Qlc4cz0.png",
     "category": "가전/디지털",
-    "reviewCount": 175,
+    "reviewCount": 177,
+    "rankCategory": "충전기",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/L21EOtri"
   },
   {
@@ -1588,6 +1795,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-11/f0dc5414-28ce-45d7-87db-aa185bca66cb.png",
     "category": "가전/디지털",
     "reviewCount": 143,
+    "rankCategory": "블루투스이어폰",
+    "categoryRank": 4,
     "shareLink": "https://toss.im/_m/dMh0w1st"
   },
   {
@@ -1597,6 +1806,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MDUwNThj/YmtGVmsxdHBaYkNwWUtLMlR0aFhPOTNrSzhtYnQyNWZzN2xFUVhVYW1xVT0.png",
     "category": "스포츠/레져",
     "reviewCount": 173,
+    "rankCategory": "팔토시/쿨토시",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/T3YXyWys"
   },
   {
@@ -1615,6 +1826,7 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/MDMzNTZl/SmJadGs1dG1telRHMjVKSlVtdEpteXhrSnJSaG10d2tsYVNzMWxwMFd6cz0.png",
     "category": "음반/DVD",
     "reviewCount": 0,
+    "rankCategory": "댄스",
     "categoryRank": 1,
     "shareLink": "https://toss.im/_m/RNNOvR0l"
   },
@@ -1625,6 +1837,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/ZDAyMDJi/QU9mR3VNTHVPczh4WnpGbWsybHZiU2FsdkxlYzBzdGFTVzB0QkIzVDFGSDg.png",
     "category": "주방용품",
     "reviewCount": 309,
+    "rankCategory": "수저통",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/TrgAmLcg"
   },
   {
@@ -1643,53 +1857,18 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-01-27/174eb908-8b28-4f4e-b0f2-82b13fb140f0.jpeg",
     "category": "패션의류잡화",
     "reviewCount": 162,
+    "rankCategory": "남녀공용양말세트",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/9AKdRahx"
   },
   {
-    "name": "바지락 조개젓, 500g, 1개",
-    "price": 7700,
+    "name": "VT 시카 콜라겐 아이크림, 15ml, 2개",
+    "price": 19500,
     "discountRate": 63,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/OWMyM2I5/WG1HTFBvWVJ4YVJadzJIa0lscTNZYjB2QTJYL01RRFJWejV5T203Z0xCWT0.png",
-    "category": "식품",
-    "reviewCount": 2037,
-    "shareLink": "https://toss.im/_m/XVzrXaGt"
-  },
-  {
-    "name": "에어르 슬릭 청소기, 샌드스톤, 1개",
-    "price": 218000,
-    "discountRate": 63,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZTQ4YmRk/QUtDQmpobGZkdkdGb0VFVmRsKytxb21nVVIxV2U2OTBpVlZRaVZTcXI2cXI.png",
-    "category": "가전/디지털",
-    "reviewCount": 208,
-    "shareLink": "https://toss.im/_m/djFp2Zpd"
-  },
-  {
-    "name": "파이토메이드 고칼슘&비타민D 두유 21곡 미숫가루, 190ml, 24개",
-    "price": 5700,
-    "discountRate": 63,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-06-16/b1e9c145-5424-4198-9449-4beace9264e8.jpeg",
-    "category": "식품",
-    "reviewCount": 460,
-    "shareLink": "https://toss.im/_m/ZGdJ9m5r"
-  },
-  {
-    "name": "Bhc 뿌링팝콘, 60g, 12개",
-    "price": 7900,
-    "discountRate": 63,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/ZDcyZDAw/QVBNN055dy9KSTdaZ2VORDVpemJlcHZ5T0VLMFJjNnN6a2hrSVNGcktkN2U.png",
-    "category": "식품",
-    "reviewCount": 258,
-    "shareLink": "https://toss.im/_m/LbnQHb9A"
-  },
-  {
-    "name": "스프렉스 핸디형 욕실 물기제거 밀대, BR-E1000, 2개",
-    "price": 2880,
-    "discountRate": 63,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/OTRlYmVi/QUtyR1VqSnR1VmlGTWd6bTB0MWp0NmxqbVo3MlR5WWttdHJ4TGFiVlhQc3Q.png",
-    "category": "생활용품",
-    "reviewCount": 2130,
-    "categoryRank": 9,
-    "shareLink": "https://toss.im/_m/LtpcgPGs"
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/YzY4MDY1/WGcvdExJMnhIdHRpVkdNa0ZDNk1uT3VSSHRNUWJ1TXNuYXNjMit1UjQ2UT0.png",
+    "category": "뷰티",
+    "reviewCount": 13,
+    "shareLink": "https://toss.im/_m/fCYUo8rm"
   },
   {
     "name": "산지직송 고당도 샤인머스켓, 2kg, 1박스",
@@ -1706,7 +1885,7 @@
     "discountRate": 63,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/MWJkZjAx/QUl1SkozcmRlMmtJMUEwMUtRcWxHUWptOVZ5dnZSV3VyVnhVSHJSUkR1Lys.png",
     "category": "식품",
-    "reviewCount": 687,
+    "reviewCount": 688,
     "shareLink": "https://toss.im/_m/JigoSkqe"
   },
   {
@@ -1716,8 +1895,20 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-07-28/b46b0807-79af-4919-92ff-2b20cc6d592e.jpeg",
     "category": "가전/디지털",
     "reviewCount": 279,
-    "categoryRank": 5,
+    "rankCategory": "드라이어",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/NHouof51"
+  },
+  {
+    "name": "스프렉스 핸디형 욕실 물기제거 밀대, BR-E1000, 2개",
+    "price": 2880,
+    "discountRate": 63,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/OTRlYmVi/QUtyR1VqSnR1VmlGTWd6bTB0MWp0NmxqbVo3MlR5WWttdHJ4TGFiVlhQc3Q.png",
+    "category": "생활용품",
+    "reviewCount": 2131,
+    "rankCategory": "밀대/청소포",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/LtpcgPGs"
   },
   {
     "name": "이브네 코트니 생리대, 대형, 14매입, 4팩",
@@ -1726,7 +1917,7 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/YjVjMzMx/SVIrZVJTSzMzMFZrdW1tdjY2V0s4WmRCeXJQVVdEdHUzWVEvUU5WRVZPWT0.png",
     "category": "생활용품",
     "reviewCount": 575,
-    "shareLink": "https://toss.im/_m/VXEVm9e3"
+    "shareLink": "https://toss.im/_m/BWln3mBj"
   },
   {
     "name": "차량 스크래치 복구왁스, 120g, 1세트",
@@ -1735,34 +1926,29 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MzljZGJi/ZU5PV3J0NWVhV0ZYenI0T0VMdUovNzRoSzB6dHROWlRNL1FmbWl3RjRQUT0.png",
     "category": "자동차용품",
     "reviewCount": 315,
+    "rankCategory": "페인트/흠집 제거",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/noTmct1b"
   },
   {
-    "name": "싱하 유자소다 제로 탄산음료, 330ml, 24개",
-    "price": 17900,
+    "name": "메이홉 BLDC 알루미늄 헤어드라이어, MA-0500, 메탈실버, 1개",
+    "price": 43800,
     "discountRate": 62,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/ZWQ4NjEw/QUkwcjhyYmcvUEIrU2ZsNWxsdmhOcmFYNmFkSm44RWZneC9GYjhQWjVOaDg.png",
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-29/dbd3994c-5348-4a35-b32c-90fcf44f966f.jpeg",
+    "category": "가전/디지털",
+    "reviewCount": 31,
+    "shareLink": "https://toss.im/_m/7GohyLhs"
+  },
+  {
+    "name": "광동 광옥고 보력환, 3.75g, 30환, 1세트",
+    "price": 18600,
+    "discountRate": 62,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/YjgzYTJk/QUplMnd5U2Z0bncreThONC9MUmVLVWxhMC9JYnJXbUdsbHg0aDZHWHBYaDg.png",
     "category": "식품",
-    "reviewCount": 6,
-    "shareLink": "https://toss.im/_m/dbrAIuVz"
-  },
-  {
-    "name": "3M 스카치 원터치 테이프 디스펜서, 블루, 1개 + 증정 리필 테이프, 2롤",
-    "price": 12900,
-    "discountRate": 62,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-19/fc66cc16-d2cc-4dc9-83ad-912dec2021c6.jpeg",
-    "category": "생활용품",
-    "reviewCount": 1,
-    "shareLink": "https://toss.im/_m/TmqjMQbm"
-  },
-  {
-    "name": "필테스 자외선 차단 에어쿨링 마스크, 화이트, FREE, 2개",
-    "price": 7400,
-    "discountRate": 62,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-07-19/cb3c2cda-eb7b-439e-9365-1470753d0f15.png",
-    "category": "스포츠/레져",
-    "reviewCount": 33,
-    "shareLink": "https://toss.im/_m/BUSsK1Op"
+    "reviewCount": 19,
+    "rankCategory": "건강환",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/rMmVY25B"
   },
   {
     "name": "못난이 부사사과, 10kg, 1박스",
@@ -1780,17 +1966,31 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-04/8ffd41d8-5878-47be-a3c0-4e8b1f0ebb59.jpeg",
     "category": "스포츠/레져",
     "reviewCount": 187,
+    "rankCategory": "트위스트운동기구",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/LLYoZ9Hn"
   },
   {
-    "name": "브메르 노버클 슬개골 무릎보호대, 블랙, FREE, 2개",
-    "price": 14750,
+    "name": "서해안 제철 활 숫꽃게, 9-15미, 3kg, 1팩",
+    "price": 29900,
     "discountRate": 62,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-21/7d6b6b76-f29f-4974-931b-769cc9a90c8c.png",
-    "category": "스포츠/레져",
-    "reviewCount": 292,
-    "categoryRank": 6,
-    "shareLink": "https://toss.im/_m/7n2mQqHi"
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-26/78bf0d7d-b66d-49ba-b01d-b64968f20798.png",
+    "category": "식품",
+    "reviewCount": 0,
+    "rankCategory": "꽃게",
+    "categoryRank": 5,
+    "shareLink": "https://toss.im/_m/9pahWuoC"
+  },
+  {
+    "name": "빌리스홈 초고농축 올인원 캡슐세제 퍼펙트 클린 라벤더, 200개, 1600g, 1팩",
+    "price": 14900,
+    "discountRate": 62,
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-07-23/055ff865-d00c-483d-8621-71cf4028d910.jpeg",
+    "category": "생활용품",
+    "reviewCount": 8992,
+    "rankCategory": "캡슐세제",
+    "categoryRank": 2,
+    "shareLink": "https://toss.im/_m/5UHuKICo"
   },
   {
     "name": "바른 돼지국밥, 500g, 1개",
@@ -1808,35 +2008,29 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-06-15/f3aaa8a2-871e-4215-b4af-c56cb3440548.png",
     "category": "주방용품",
     "reviewCount": 1025,
-    "categoryRank": 5,
+    "rankCategory": "일회용수세미",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/vGOQUPbr"
   },
   {
-    "name": "웅진식품 가야G워터 생수 무라벨, 2L, 24개",
-    "price": 10400,
-    "discountRate": 61,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZDYzMmU4/QU9EeEdvNFNrVWdudUxRcUk1SE1tVUM2Ty9yR2ZmUm40MlRXVkNOVnF3MTQ.png",
-    "category": "식품",
-    "reviewCount": 1198,
-    "shareLink": "https://toss.im/_m/7aj0ZxL9"
-  },
-  {
-    "name": "에그리시칠리아 피스타치오 크림, 200g, 1개",
+    "name": "피죤 드릴펑, 1L, 3개 + 2L, 1개",
     "price": 9900,
     "discountRate": 61,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-06-05/6a65b77f-cc2f-4b9a-8620-43085babf4de.jpeg",
-    "category": "식품",
-    "reviewCount": 50,
-    "shareLink": "https://toss.im/_m/DsHrTX1h"
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-02-20/8967c0a1-3e5f-4929-a496-26d84cacbef8.jpeg",
+    "category": "생활용품",
+    "reviewCount": 3151,
+    "rankCategory": "배수구세정제",
+    "categoryRank": 2,
+    "shareLink": "https://toss.im/_m/xpyGg5rm"
   },
   {
-    "name": "SOOM 키친타올, 3겹, 100매, 12팩",
-    "price": 5800,
+    "name": "머리마루 문어 괄사, 레몬옐로우, 2개",
+    "price": 10000,
     "discountRate": 61,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-13/2427814c-eaf1-4694-8412-2ce556cd94f3.jpeg",
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-05-19/828a2b5e-beeb-46f4-a46d-e86fd10ad5d2.jpeg",
     "category": "생활용품",
-    "reviewCount": 24,
-    "shareLink": "https://toss.im/_m/BNiYPKEu"
+    "reviewCount": 39,
+    "shareLink": "https://toss.im/_m/D7md7aQp"
   },
   {
     "name": "에브리워터 무라벨, 500ml, 40개",
@@ -1844,18 +2038,10 @@
     "discountRate": 61,
     "imageUrl": "https://shopping.toss.im/live/temp/2026-02-17/32d41410-98f1-42d9-a442-9e8820fad904.jpeg",
     "category": "식품",
-    "reviewCount": 57464,
+    "reviewCount": 57465,
+    "rankCategory": "국산생수",
     "categoryRank": 3,
     "shareLink": "https://toss.im/_m/5c2DK9bB"
-  },
-  {
-    "name": "소고기 구이모듬, 1kg, 1개",
-    "price": 34900,
-    "discountRate": 61,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-24/65fa8b11-6e89-4865-bda1-f7f3203013d9.png",
-    "category": "식품",
-    "reviewCount": 5,
-    "shareLink": "https://toss.im/_m/96yMEqFu"
   },
   {
     "name": "순수공감 프라임 물티슈, 캡형, 70gsm, 72매, 10팩",
@@ -1864,6 +2050,7 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-07/9ddc1e81-e47e-45bb-b22d-fcf14f772c82.jpeg",
     "category": "출산/유아동",
     "reviewCount": 3329,
+    "rankCategory": "유아물티슈",
     "categoryRank": 1,
     "shareLink": "https://toss.im/_m/bkBm1bjm"
   },
@@ -1874,6 +2061,7 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-07-30/13c13abd-479e-43e2-a7b7-ee51aaa98988.jpeg",
     "category": "생활용품",
     "reviewCount": 9170,
+    "rankCategory": "일반 섬유유연제",
     "categoryRank": 1,
     "shareLink": "https://toss.im/_m/jtzTmiLj"
   },
@@ -1884,6 +2072,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MTA0ZDll/REdPMGxISExTMk9PSFBDY1dlT09rYktjVzJlUFFhU1ljYXRiWjQ1VXBKdz0.png",
     "category": "식품",
     "reviewCount": 645,
+    "rankCategory": "커피음료",
+    "categoryRank": 9,
     "shareLink": "https://toss.im/_m/hmvYIXan"
   },
   {
@@ -1896,22 +2086,35 @@
     "shareLink": "https://toss.im/_m/VvNntNEs"
   },
   {
-    "name": "고기중독 한입삼겹살, 500g, 4개",
-    "price": 22880,
+    "name": "해성물산 서리태 콩조림, 1kg, 1개",
+    "price": 6500,
     "discountRate": 61,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/Yzg3ZWVl/U2FOZHNSNXpPbHFsTk8wczl1YXg0VnJaemt5ckRwamt4WGlzVEY3QVdiST0.png",
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZWRmNzE1/QU5iYXdSdHBBTC8ybkdMaDdYOEpBclhRd09KRFMzTS9rL0hvWEtmTzAvNHA.png",
     "category": "식품",
-    "reviewCount": 2358,
-    "shareLink": "https://toss.im/_m/BVbpao9A"
+    "reviewCount": 387,
+    "rankCategory": "조림반찬",
+    "categoryRank": 3,
+    "shareLink": "https://toss.im/_m/1Z1A8km8"
   },
   {
-    "name": "옆잠 허리통증 완화 골반 정렬 쿠션, 허니콤 화이트, 약 21 × 17 × 14cm",
-    "price": 9900,
+    "name": "그레인온 골드 카무트 브랜드밀효소G, 2g, 30포, 3박스",
+    "price": 22900,
     "discountRate": 61,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-06-30/a0d6ed83-46e8-4be2-b9bf-2926c19f58c6.jpeg",
-    "category": "가구/홈데코",
-    "reviewCount": 249,
-    "shareLink": "https://toss.im/_m/5mzd2SNj"
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZmM3ODRi/Q0dSYm1hVXRyVFF4emMyMm9aYW1GTE1Ta2tadVVtaE1XeWxqTEdrdFZtaz0.png",
+    "category": "식품",
+    "reviewCount": 596,
+    "rankCategory": "효소",
+    "categoryRank": 3,
+    "shareLink": "https://toss.im/_m/hYXkmscb"
+  },
+  {
+    "name": "25년 햇 우엉 국내산 우엉, 실속형 차용 많이 굵음, 2kg, 1박스",
+    "price": 9990,
+    "discountRate": 61,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/MWIwMDBl/QUlkY1pYYUpGdUx2eEsybW8vc2ZIbUkyU25mQ1NkWjhORGQ4RUhuNEcvRUI.png",
+    "category": "식품",
+    "reviewCount": 1120,
+    "shareLink": "https://toss.im/_m/tvJGjCrh"
   },
   {
     "name": "잡초제거기 제초호미 잡초제거 풀뽑는 원예 호미, 2개",
@@ -1920,6 +2123,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ODZiMjU0/WlA0MmZaNER6R04yc3p0eEdIRUJlQUM0RGxnZkpYK1JmOHZubzlQTWdjND0.png",
     "category": "가구/홈데코",
     "reviewCount": 862,
+    "rankCategory": "호미/괭이",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/hgduOFgx"
   },
   {
@@ -1929,6 +2134,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/YmY4ZDhl/QUxnUmZuTVhxOGpjdys2bHFUZ1VubVBtUStIY0hhMFp0a2JUeG12b1ZEbjA.png",
     "category": "반려/애완용품",
     "reviewCount": 162,
+    "rankCategory": "건식사료",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/twoVeXWa"
   },
   {
@@ -1938,6 +2145,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MTFiOTYy/QVBmMEI4VGVqdy9GWGcvMEhJanpDdVBjODV4ai84eXI3MUFVZHp4UkZQMGM.png",
     "category": "생활용품",
     "reviewCount": 559,
+    "rankCategory": "드레스퍼퓸",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/LKnYMwqC"
   },
   {
@@ -1955,7 +2164,7 @@
     "discountRate": 61,
     "imageUrl": "https://shopping.toss.im/live/temp/2025-07-15/92d3f5bc-3923-4969-8513-c7c9407d9070.jpeg",
     "category": "스포츠/레져",
-    "reviewCount": 1895,
+    "reviewCount": 1896,
     "shareLink": "https://toss.im/_m/5A9Hzu1w"
   },
   {
@@ -1983,6 +2192,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2024-10-17/6a9bafdc-31cf-4d24-8186-62ca9b5aca12.jpeg",
     "category": "출산/유아동",
     "reviewCount": 2,
+    "rankCategory": "불소함유",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/V0lo9YGD"
   },
   {
@@ -1992,43 +2203,98 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NTMxMzE3/STNIYXpySXhidTdUdU1hdXlhaWViaHpNZVN6RHpFcVlId3o0ZVlYekpjTT0.png",
     "category": "패션의류잡화",
     "reviewCount": 415,
+    "rankCategory": "여성머리끈",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/3zYbAtgm"
   },
   {
-    "name": "농가살리기 통팥호박찰시루떡, 1kg, 1박스",
-    "price": 11900,
+    "name": "로투스 비스코프 샌드 바닐라맛, 150g, 9개",
+    "price": 15900,
     "discountRate": 60,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/YzZjYmJj/YzV3SFAvRFdqOGcwcjhKcFZ6TTRsR0xtbFJJcFM5Nm5GVmxqaEpsS1lKVT0.png",
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-07-27/cc9a864c-18bd-4f9b-9087-da5a46e42f05.jpeg",
     "category": "식품",
-    "reviewCount": 1591,
-    "shareLink": "https://toss.im/_m/VNOTTcmr"
+    "reviewCount": 356,
+    "rankCategory": "샌드/산도",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/BvYcN25r"
   },
   {
-    "name": "디네르 에클라 드 레브, 50ml, 1개",
-    "price": 46900,
+    "name": "동아제약 비타그란 비타민C 1000, 200정, 1개",
+    "price": 9990,
     "discountRate": 60,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/MjZjMDY5/QUx6ZStrdlI1SVJyYXBXdGczRjJ6cjFDenZkeWl0bXpKa1UxNnFRSEcwQ1Q.png",
-    "category": "뷰티",
-    "reviewCount": 49,
-    "shareLink": "https://toss.im/_m/rdrdTlyx"
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-07-13/35456443-13df-4fd4-af99-a37b733c9c99.jpeg",
+    "category": "식품",
+    "reviewCount": 327,
+    "shareLink": "https://toss.im/_m/Dn5lopAt"
   },
   {
-    "name": "동아제약 가그린, 오리지널, 750ml, 4개",
+    "name": "폰타나 파스타소스, 뽀모도로, 600g, 1병 + 아라비아따, 600g, 1병 + 크림치즈로제, 600g, 1병",
     "price": 13900,
     "discountRate": 60,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-21/1a551438-1eaa-4a4e-a612-5fc898d4678b.jpeg",
-    "category": "생활용품",
-    "reviewCount": 181,
-    "shareLink": "https://toss.im/_m/zsLecwND"
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/MzdmNjQ4/VExWVFBtazV6dU1aNGN2bEdlWEpkbGp0TzlzRm9XTHRMY0J5clk5aG5Wbz0.png",
+    "category": "식품",
+    "reviewCount": 665,
+    "rankCategory": "파스타소스",
+    "categoryRank": 3,
+    "shareLink": "https://toss.im/_m/zPIN0AMu"
   },
   {
-    "name": "진품 경기미, 2025년산, 상등급, 4kg, 1개",
-    "price": 10900,
+    "name": "모나리자 보타닉포레 순수, 3겹, 27m, 30롤, 3팩",
+    "price": 28900,
     "discountRate": 60,
-    "imageUrl": "https://shopping.toss.im/ml-vision/smart-crop/068fa173-347e-478f-be10-5dda908d6b57.jpg",
-    "category": "식품",
-    "reviewCount": 0,
-    "shareLink": "https://toss.im/_m/1UdUl89w"
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-18/facf0f71-d9fb-40a6-b4aa-7601ae357dbb.jpeg",
+    "category": "생활용품",
+    "reviewCount": 89,
+    "shareLink": "https://toss.im/_m/TG9zzRzD"
+  },
+  {
+    "name": "팬톤 LCD 디스플레이 노이즈캔슬링 블루투스 이어폰, BT350A, 화이트, 1개",
+    "price": 15900,
+    "discountRate": 60,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/YWI5MGJm/RTN1VlMyekVVNldUZHNxMGF2dTlTNjBibHNuVmFXV21jclNTVjYxVVRaaz0.png",
+    "category": "가전/디지털",
+    "reviewCount": 2,
+    "shareLink": "https://toss.im/_m/TC6u7oH8"
+  },
+  {
+    "name": "비시나 기미크림, 50ml, 1개",
+    "price": 39000,
+    "discountRate": 60,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/YzA3Yzkz/QU10c1VqTk5vaWxUdkptVXlGSldXMjJ0Y3NXMGRvdTYwbzFzM1NuTGxDYlc.png",
+    "category": "뷰티",
+    "reviewCount": 32,
+    "shareLink": "https://toss.im/_m/BMRl7Bln"
+  },
+  {
+    "name": "쿠오레 인덕션 쿠커 CKI-D10W, 일반형, 화이트, 1개",
+    "price": 34900,
+    "discountRate": 60,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/MzA4YmU4/VGMrU2NTMCs4Tnc2TzN5MHVuc05wUFBoQzB2RnRJdEx4YVR6UzF0SjlMUT0.png",
+    "category": "가전/디지털",
+    "reviewCount": 2,
+    "shareLink": "https://toss.im/_m/7DUEKk2r"
+  },
+  {
+    "name": "돌체구스토 커피머신 지니오 S 터치, 화이트",
+    "price": 78900,
+    "discountRate": 60,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/NTQ4MTQz/Y3AvNnQ0M24vLzVtV1BkL0ZvLys5ZTNpNlQ4eUhOYmx6dXZwdnpGVS8vMD0.png",
+    "category": "가전/디지털",
+    "reviewCount": 11,
+    "rankCategory": "캡슐커피머신",
+    "categoryRank": 5,
+    "shareLink": "https://toss.im/_m/z3XoFBR5"
+  },
+  {
+    "name": "깔끔 화장품 정리대, 화이트, 25x16x11cm, 1개",
+    "price": 5350,
+    "discountRate": 60,
+    "imageUrl": "https://shopping.toss.im/live/product/471659/d2d55882-3762-4e43-b15d-45a48642b090.jpeg",
+    "category": "생활용품",
+    "reviewCount": 3825,
+    "rankCategory": "화장품정리대",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/FSS9wMBe"
   },
   {
     "name": "자석 고정클립, 실버, 3개입, 2세트",
@@ -2037,7 +2303,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/NDY1MTM5/U3VjM3Rwcno2bWtwUEw2V3ozbXJTZVdrVkI2WFZVMUxOcUdxbWxWSzFXMD0.png",
     "category": "가구/홈데코",
     "reviewCount": 210,
-    "categoryRank": 5,
+    "rankCategory": "바지후크/마이깡",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/1pgyKYy8"
   },
   {
@@ -2051,21 +2318,12 @@
   },
   {
     "name": "포근 발밑 동물 발매트, 60cm x 40cm, 토끼 1개 + 랜덤 1개, 2개",
-    "price": 9801,
+    "price": 9900,
     "discountRate": 60,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ZTlmOTk5/QU56SFdqaWxzVnNPQlBIeVdxVkxsTEVxeDJFdFVyUnRKWHhqMGpvclN2SWE.png",
     "category": "가구/홈데코",
     "reviewCount": 44,
     "shareLink": "https://toss.im/_m/ROJc96Oo"
-  },
-  {
-    "name": "디센느 와이드쿨 넥밴드 냉각 선풍기, DSF7, 6000mAh, 다크 그레이, 1개",
-    "price": 32571,
-    "discountRate": 60,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-07-10/41b8f08f-79a0-487c-bd8d-7ce0d12bdce4.jpeg",
-    "category": "가전/디지털",
-    "reviewCount": 205,
-    "shareLink": "https://toss.im/_m/xAnoEACo"
   },
   {
     "name": "멈칫 스테이퍼퓸 + 핸드크림 세트, 밤쉘, 80ml + 30ml, 1개",
@@ -2074,6 +2332,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/NDc5NTY2/VkxtdVJ1TXpYb25tVHFrMFY0K3hjVzU4VjR1cDBSWXB1SFJUaDE2MHFIUT0.png",
     "category": "뷰티",
     "reviewCount": 242,
+    "rankCategory": "향수선물세트",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/VT1BGFP4"
   },
   {
@@ -2092,8 +2352,16 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ZDIxMmQy/QU4wSldHNEM0Qzg3ZVE2QURiRi9FdUpXZ1d3ZkNQNDlicUZEVUlCVVAyLys.png",
     "category": "스포츠/레져",
     "reviewCount": 1821,
-    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/R3G8CXyd"
+  },
+  {
+    "name": "브메르 노버클 슬개골 무릎보호대, 블랙, FREE, 2개",
+    "price": 15750,
+    "discountRate": 60,
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-21/7d6b6b76-f29f-4974-931b-769cc9a90c8c.png",
+    "category": "스포츠/레져",
+    "reviewCount": 292,
+    "shareLink": "https://toss.im/_m/7n2mQqHi"
   },
   {
     "name": "무릎보호 실리콘 탄력 밴드, 스킨, FREE, 1개",
@@ -2102,16 +2370,9 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MGY0ODA4/T0Y5akZYeWlvOXc0eGM4NHl6OW5Cak0vaU01TWpJNHhaaDZISXpHY3g5OD0.png",
     "category": "스포츠/레져",
     "reviewCount": 310,
+    "rankCategory": "무릎보호대",
+    "categoryRank": 5,
     "shareLink": "https://toss.im/_m/hCFX4Sxx"
-  },
-  {
-    "name": "페페브루노 엑스트라버진 올리브 오일, 1L, 2개",
-    "price": 27900,
-    "discountRate": 60,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZjA2ZGYw/QU9oYzVEKy9zcHczbGZCenlVS1ByTFpBanp5MDcveUxTNVZEK2J5VlVuUzg.png",
-    "category": "식품",
-    "reviewCount": 1493,
-    "shareLink": "https://toss.im/_m/JXMkICi3"
   },
   {
     "name": "니트릴 고무장갑, 반투명, S, 10개",
@@ -2120,7 +2381,6 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-07-09/09bd458e-bb3a-41ab-b03f-1a538194ea0f.jpeg",
     "category": "주방용품",
     "reviewCount": 77,
-    "categoryRank": 10,
     "shareLink": "https://toss.im/_m/tPrMHvHz"
   },
   {
@@ -2133,31 +2393,13 @@
     "shareLink": "https://toss.im/_m/rf2C2YGz"
   },
   {
-    "name": "20년 장인김치 전라도식 배추김치, 10kg, 1박스",
-    "price": 26900,
+    "name": "퍼실 파워젤 딥클린, 2.5L, 1개 + 리필, 2L, 1개",
+    "price": 22400,
     "discountRate": 59,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/YTg3YzE0/QUxJenp3OERLK00zNGFzT3M2NU5EQU5FZWg0cHNHMTA3ZHZNV1NVWEd2MDI.png",
-    "category": "식품",
-    "reviewCount": 14412,
-    "shareLink": "https://toss.im/_m/jqZHbnw3"
-  },
-  {
-    "name": "티젠 콤부차 요구르트맛, 5g, 30개입, 2박스 + 요구르트 보틀, 490ml, 1개",
-    "price": 16900,
-    "discountRate": 59,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/OTE0ZDI4/Zk1PV2VKbVR5bXhuTTh0TE5NWTVpZEpHbkxPZGFXVzJuVG5XcG1Wcm5Xaz0.png",
-    "category": "식품",
-    "reviewCount": 23,
-    "shareLink": "https://toss.im/_m/1qeXDb3w"
-  },
-  {
-    "name": "아키클래식 범퍼 트레이너, 트리플블랙, 230mm, 1켤레",
-    "price": 69000,
-    "discountRate": 59,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/YmUyYWRm/QVBrbUJuZENvYnFCbXBuUW5zVG9KN0ovVnZWU1ZCNEpFeXRSS1Uxa0QzZXU.png",
-    "category": "패션의류잡화",
-    "reviewCount": 1,
-    "shareLink": "https://toss.im/_m/htkucbCn"
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/ZDQ4YjU0/QU1lYjJYYThaM3BrVHNsZGl3L25zNk16SkdRNThwUkptNWxVam5XdFVERU8.png",
+    "category": "생활용품",
+    "reviewCount": 10,
+    "shareLink": "https://toss.im/_m/9qbuf8j3"
   },
   {
     "name": "제이킨 피부괄사 3종, 전신괄사 + 문어괄사 + 하트괄사, 1세트",
@@ -2166,6 +2408,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/YmI1NGJk/QUpobU9jOXRzYlNac25uSVpEbW03Wm1lVTF0TXkweFlNekR6VXNubkhLY00.png",
     "category": "생활용품",
     "reviewCount": 2841,
+    "rankCategory": "괄사용품",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/tRkEwIY1"
   },
   {
@@ -2192,7 +2436,7 @@
     "discountRate": 59,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/YWUyMjY0/QU9Mc0Fidm53NlVKQ0h2SzFpNlUvVEdCU1JiZVBYTHhSZENKcFVvbmFabG4.png",
     "category": "식품",
-    "reviewCount": 2124,
+    "reviewCount": 2125,
     "shareLink": "https://toss.im/_m/p2bjIfpy"
   },
   {
@@ -2202,26 +2446,18 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NGIyYTA2/Q1U2MmpMYWF5VEhaWVRiT2g0N1p0RGh4dzNQRmpqVE1pM1BMT3p6a05NUT0.png",
     "category": "반려/애완용품",
     "reviewCount": 5,
-    "categoryRank": 9,
     "shareLink": "https://toss.im/_m/Zw2OdKd8"
   },
   {
-    "name": "주방 후드 필터, 10m, 2개",
-    "price": 8491,
-    "discountRate": 58,
-    "imageUrl": "https://shopping.toss.im/live/product/272069/c1e6d8da-a7f4-4157-b56b-068851ad24b4.png",
-    "category": "주방용품",
-    "reviewCount": 345,
-    "shareLink": "https://toss.im/_m/LJ2Tivc7"
-  },
-  {
-    "name": "프랜더마 혼합자차 아쿠아 선크림, 400ml, 1개",
-    "price": 19800,
-    "discountRate": 58,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/N2JlMmY1/QWZ2K1BQK0Q0ZU1JZlA0ODk0TVA4QWg4OEErdlFRLzRWYXZ3RDZwVUgvZz0.png",
-    "category": "뷰티",
-    "reviewCount": 10,
-    "shareLink": "https://toss.im/_m/hxkguCiw"
+    "name": "20년 장인김치 전라도식 배추김치, 10kg, 1박스",
+    "price": 26990,
+    "discountRate": 59,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/YTg3YzE0/QUxJenp3OERLK00zNGFzT3M2NU5EQU5FZWg0cHNHMTA3ZHZNV1NVWEd2MDI.png",
+    "category": "식품",
+    "reviewCount": 14412,
+    "rankCategory": "포기김치",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/jqZHbnw3"
   },
   {
     "name": "제주 하우스감귤 노지감귤, 중대과, 5kg, 1박스",
@@ -2239,6 +2475,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NmZiNjg5/T3N5MlptbDVZbjVoNGFOdW45SDNqRllUWWg0ZmV6ViszS0F6OGNnWDU0az0.png",
     "category": "가구/홈데코",
     "reviewCount": 110,
+    "rankCategory": "쿨방석/통풍방석",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/dBq9nfgh"
   },
   {
@@ -2248,45 +2486,25 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-07-15/fa661f35-9949-4488-8770-e687705b1ef8.jpeg",
     "category": "여행/취미",
     "reviewCount": 0,
-    "categoryRank": 4,
     "shareLink": "https://toss.im/_m/5AHjnxw8"
   },
   {
-    "name": "경면주사 팔찌, 대일여래(양띠, 원숭이띠), 8mm, Free size",
-    "price": 9025,
-    "discountRate": 58,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/MzMyMWZm/QUxhWGFTdHBhU0U4eGdlOFRKN0VWc3kxak5PazNwaFB0Q2hrMHBJaDA3MXI.png",
-    "category": "완구/취미",
-    "reviewCount": 41,
-    "categoryRank": 3,
-    "shareLink": "https://toss.im/_m/NC6c2OIa"
-  },
-  {
-    "name": "면 와이드 나시, 챠콜, M",
-    "price": 8010,
+    "name": "파파네정육점 손질 소갈비살, 미국산, 200g, 5개",
+    "price": 29493,
     "discountRate": 57,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZDQ2ZDMw/QU44bTMwbGg0TlZwTHB6ZVluZWVxKy9GZUpTMXF4WjAwRjNyd3k1bzFiTXE.png",
-    "category": "패션의류잡화",
-    "reviewCount": 5,
-    "shareLink": "https://toss.im/_m/jOFxW5bq"
-  },
-  {
-    "name": "정성곳간 명인 강순의 국내산 뼈없는 소갈비찜, 500g, 6개",
-    "price": 54900,
-    "discountRate": 57,
-    "imageUrl": "https://shopping.toss.im/live/temp/2025-12-11/d0db8f56-b9b1-49d4-8d40-20f91ec4a3ea.jpeg",
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/M2RlYmY1/QUo1Z3R5eE5Nako0ZTlPY09XWTdPYkVjTHRqNUhDdzhlVHcrOG5rOEhocmI.png",
     "category": "식품",
-    "reviewCount": 6,
-    "shareLink": "https://toss.im/_m/LykWSmH9"
+    "reviewCount": 1948,
+    "shareLink": "https://toss.im/_m/H6n4Kckx"
   },
   {
-    "name": "바른 돼지국밥, 500g, 5개",
-    "price": 11380,
+    "name": "프리미엄 수용성 강황 커큐민 정, 60정, 1개",
+    "price": 10700,
     "discountRate": 57,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-06-15/fc748c01-e1e5-4ced-899e-85bb69ecf463.jpeg",
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ODVjYWI3/YlV1VEZ2UE9UWWFKSzV4eDNuazVzMldNNDBtVHRFanRMSEhiTWM1d0pNND0.png",
     "category": "식품",
-    "reviewCount": 2110,
-    "shareLink": "https://toss.im/_m/jARCmjq7"
+    "reviewCount": 8,
+    "shareLink": "https://toss.im/_m/XEoBv4li"
   },
   {
     "name": "깨끗한나라 아껴쓰는 키친타월, 140매, 8롤, 1팩",
@@ -2294,7 +2512,9 @@
     "discountRate": 57,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NWM4YTdm/WkdCY2I3T2ZwWlBPNTg1dDhWRFErNHpacndkMnAxdjVtYm4yL0FWUUx5cz0.png",
     "category": "생활용품",
-    "reviewCount": 453,
+    "reviewCount": 454,
+    "rankCategory": "롤키친타올",
+    "categoryRank": 3,
     "shareLink": "https://toss.im/_m/hyhrpwb3"
   },
   {
@@ -2313,17 +2533,9 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-06-26/d43d0b7e-e844-494a-8235-234771c48112.jpeg",
     "category": "생활용품",
     "reviewCount": 1949,
-    "categoryRank": 10,
+    "rankCategory": "일반 섬유유연제",
+    "categoryRank": 3,
     "shareLink": "https://toss.im/_m/nOIjQ9st"
-  },
-  {
-    "name": "나우푸드 마그네슘 350mg, 60정, 2병",
-    "price": 22000,
-    "discountRate": 56,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-01-12/2c85ebfb-e3f6-44f2-b83e-63b93af2938a.jpeg",
-    "category": "식품",
-    "reviewCount": 27,
-    "shareLink": "https://toss.im/_m/PlRCrxS4"
   },
   {
     "name": "해남 꿀고구마 베니하루카, 한입, 3kg, 1개",
@@ -2331,17 +2543,10 @@
     "discountRate": 56,
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-14/840e2a89-b75d-405f-a357-072045130238.jpeg",
     "category": "식품",
-    "reviewCount": 1089,
+    "reviewCount": 1090,
+    "rankCategory": "꿀고구마",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/reEbItFd"
-  },
-  {
-    "name": "맘스럽 드라이시트, 블루밍 코튼, 건조기용, 250매, 1개",
-    "price": 6930,
-    "discountRate": 56,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-07-30/64c112da-fcba-414b-b360-bbe5a680b79d.jpeg",
-    "category": "생활용품",
-    "reviewCount": 959,
-    "shareLink": "https://toss.im/_m/DJBqebjw"
   },
   {
     "name": "맛팜 옛고을 찰순대, 400g, 1개 + 푸짐한 내장 모둠, 500g, 1개",
@@ -2353,22 +2558,14 @@
     "shareLink": "https://toss.im/_m/ntsbh5G3"
   },
   {
-    "name": "전라도 배추김치 겉절이, 국내산, 2kg, 1박스",
-    "price": 9500,
-    "discountRate": 56,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-12/ce50ca72-45ca-4792-bc5a-3c5d1261e93c.jpeg",
-    "category": "식품",
-    "reviewCount": 312,
-    "shareLink": "https://toss.im/_m/DH6mOGAo"
-  },
-  {
     "name": "힐튼 눕자마자 저세상 베개, 화이트, 1개",
     "price": 9450,
     "discountRate": 56,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MGY2MzE3/QU5qRG5tczhtelNjTVp1MjJaWk94c3ZMUEVzeGF6eHBuRFU4TFp5MDRaWmo.png",
     "category": "가구/홈데코",
     "reviewCount": 826,
-    "categoryRank": 6,
+    "rankCategory": "일반베개",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/3rFLSsx9"
   },
   {
@@ -2378,8 +2575,27 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-05-12/4bb0063f-2fac-483b-a92b-4be6ed548b4f.jpeg",
     "category": "문구/오피스",
     "reviewCount": 8,
-    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/HZ603Vux"
+  },
+  {
+    "name": "맘스럽 드라이시트, 블루밍 코튼, 건조기용, 250매, 1개",
+    "price": 6930,
+    "discountRate": 56,
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-07-30/64c112da-fcba-414b-b360-bbe5a680b79d.jpeg",
+    "category": "생활용품",
+    "reviewCount": 962,
+    "rankCategory": "시트 섬유유연제",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/DJBqebjw"
+  },
+  {
+    "name": "경면주사 팔찌, 대일여래(양띠, 원숭이띠), 8mm, Free size",
+    "price": 9500,
+    "discountRate": 56,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/MzMyMWZm/QUxhWGFTdHBhU0U4eGdlOFRKN0VWc3kxak5PazNwaFB0Q2hrMHBJaDA3MXI.png",
+    "category": "완구/취미",
+    "reviewCount": 41,
+    "shareLink": "https://toss.im/_m/NC6c2OIa"
   },
   {
     "name": "카몽 접이식 우산형 앞유리 햇빛가리개, 대형, 1세트",
@@ -2388,6 +2604,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ZTgyZTU1/QU5CT3FGeFVyYlh2Ylc1VXQ2bHJibFpOS1E5YUZ0RlZxckxKVkw3WmZMSnA.png",
     "category": "자동차용품",
     "reviewCount": 152,
+    "rankCategory": "햇빛가리개/커튼",
+    "categoryRank": 4,
     "shareLink": "https://toss.im/_m/Vxto0Ugc"
   },
   {
@@ -2409,58 +2627,53 @@
     "shareLink": "https://toss.im/_m/1eES1WI"
   },
   {
-    "name": "서울우유 고칼슘 무가당 블랙9곡 두유, 190ml, 32개",
-    "price": 13400,
+    "name": "외갓집 소갈비탕, 650g, 2팩",
+    "price": 8980,
     "discountRate": 55,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/MDljNzQz/QU1INzJlWU5ack5EWVNYNWljalpERFN6ZGo5T0h3YkI4dkgwbjlqaGdYd0g.png",
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/NGM0OWVk/QUpqWUxNaHRaS0dreHoyMnlESHN6TVo4TVJOZ205THdFUmt6VDhMd2g2dzg.png",
     "category": "식품",
-    "reviewCount": 674,
-    "shareLink": "https://toss.im/_m/L8JKE6zd"
+    "reviewCount": 2128,
+    "rankCategory": "즉석탕/찌개",
+    "categoryRank": 6,
+    "shareLink": "https://toss.im/_m/PXV8RWVo"
   },
   {
-    "name": "청춘농가 활숫꽃게, 1kg, 1박스",
-    "price": 13500,
+    "name": "미트프로젝트 더블 시즈닝 BBQ 폭립, 500g, 2개",
+    "price": 12800,
     "discountRate": 55,
-    "imageUrl": "https://shopping.toss.im/live/temp/2025-08-22/bbd98159-801f-44a3-acff-581c230cdc19.jpeg",
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-07-07/0a780c14-36ce-4fdd-99af-d97b78ba2cf4.png",
     "category": "식품",
-    "reviewCount": 173,
-    "shareLink": "https://toss.im/_m/hKqxTmWu"
+    "reviewCount": 0,
+    "shareLink": "https://toss.im/_m/P4rxYZ4B"
   },
   {
-    "name": "리벤스 스타리안 스텐 통3중 IH 인덕션 후라이팬, 24cm, 1개",
-    "price": 17900,
+    "name": "베베쿡 사르르쿵 미니, 바나나 15g 3개 + 딸기 15g 3개 + 꼬소미콘칩 구운옥수수맛, 15g, 3개",
+    "price": 7990,
     "discountRate": 55,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/MzA5Njkz/QUxNN1VmcGpZN2NEeU56VzZ5cFN4amFhMUd6Y0hIWnloYTNjVXJ6VEViMUU.png",
-    "category": "주방용품",
-    "reviewCount": 23,
-    "shareLink": "https://toss.im/_m/j9eXKQUy"
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-19/ea6c4e7b-c15a-4c97-8630-d96f9bb57724.jpeg",
+    "category": "반려/애완용품",
+    "reviewCount": 0,
+    "shareLink": "https://toss.im/_m/nUpIpHFC"
   },
   {
-    "name": "동국제약 마데카 더마 쉴드 세이프 톤업 선크림, 40ml, 2개 + 20ml, 2개",
-    "price": 24900,
+    "name": "주리에떼 여성 골드 데일리 클로버 클리앙 체인 금 팔찌, 옐로우, 14K, 19cm, 1개",
+    "price": 179310,
     "discountRate": 55,
-    "imageUrl": "https://shopping.toss.im/live/temp/2025-04-29/99eab8a1-1e55-48aa-87c6-8418b244fd31.jpeg",
-    "category": "뷰티",
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-07/0f3e6cc8-4940-4a89-9555-ea62440541d2.png",
+    "category": "패션의류잡화",
+    "reviewCount": 0,
+    "shareLink": "https://toss.im/_m/tIxHvwc6"
+  },
+  {
+    "name": "대림바스 비데, DDS-S1700, 1개",
+    "price": 129000,
+    "discountRate": 55,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZGRhZWIw/QUpzMnlUbExHZVlacGxtMjVwdG1XZVl0NDV6YjFNbHFTV01NcFMxYU5Gclc.png",
+    "category": "가전/디지털",
     "reviewCount": 75,
-    "shareLink": "https://toss.im/_m/hTX2xG2v"
-  },
-  {
-    "name": "루드반 트레일 러닝 조끼, 화이트, FREE, 1개",
-    "price": 15900,
-    "discountRate": 55,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-02-27/75defef3-a02a-4421-9e00-8814dc00b183.png",
-    "category": "스포츠/레져",
-    "reviewCount": 34,
-    "shareLink": "https://toss.im/_m/Vqp83Abr"
-  },
-  {
-    "name": "스파클 생수, 무라벨, 2L, 24개",
-    "price": 8990,
-    "discountRate": 55,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-03-18/268e4c6a-1595-43e9-9c1b-f101e5774429.jpeg",
-    "category": "식품",
-    "reviewCount": 48659,
-    "shareLink": "https://toss.im/_m/BQNR8zox"
+    "rankCategory": "전원식 비데",
+    "categoryRank": 2,
+    "shareLink": "https://toss.im/_m/neYtfZ67"
   },
   {
     "name": "아침농산 찰흑미, 500g, 4개",
@@ -2469,16 +2682,18 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-06-14/c7f4df72-5796-420b-9301-087e1d1c83a7.jpeg",
     "category": "식품",
     "reviewCount": 2805,
+    "rankCategory": "흑미",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/N99o3ib1"
   },
   {
-    "name": "외갓집 소갈비탕, 650g, 4팩",
-    "price": 17980,
+    "name": "리버티 입는오버나이트, 4매, 대형, 5팩",
+    "price": 10900,
     "discountRate": 55,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/OTM1MGU4/RnM5MDJscHNVblR1T1diVCtIeWl5dVg1RHMwVjhUU3ZmNEhBVFFBSGJWTT0.png",
-    "category": "식품",
-    "reviewCount": 2803,
-    "shareLink": "https://toss.im/_m/TeBSJq0q"
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/NjAwNTZl/QU94d083bldsdjFhNVU3dVpoM2VyWDVJdFBkZTkybjVuYnNMbjN2WkNYYWw.png",
+    "category": "생활용품",
+    "reviewCount": 541,
+    "shareLink": "https://toss.im/_m/bNxPQFQp"
   },
   {
     "name": "아스파시아 모이스트 업 페이스 미스트 알로에, 150ml, 1+1 구성, 총 2개",
@@ -2487,6 +2702,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-05-08/59a26a03-9718-4476-b36a-d7c975777b01.png",
     "category": "뷰티",
     "reviewCount": 597,
+    "rankCategory": "미스트",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/hdiAFvT"
   },
   {
@@ -2496,7 +2713,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/NzJkZjY3/QUlDWXlwek16NDU4R2VzYTFweHpMSGd4T09YR2NwVGdaeG9WNWNmV3RCTWM.png",
     "category": "생활용품",
     "reviewCount": 3459,
-    "categoryRank": 7,
+    "rankCategory": "각티슈/미용티슈",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/j6kInA7r"
   },
   {
@@ -2506,17 +2724,9 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2025-08-05/31a53c86-314c-4984-b70e-4dd4ae83c4e4.jpeg",
     "category": "자동차용품",
     "reviewCount": 244,
-    "shareLink": "https://toss.im/_m/tnPRtOri"
-  },
-  {
-    "name": "맥스앤맥스 이지밀 냉동밥&국 소분 밀폐용기 세트, 아이보리, 350ml, 6개+ 올리브그린, 700ml, 4개",
-    "price": 8900,
-    "discountRate": 55,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/Njc3ZGYx/QUpzOFNkazlwRTdLL0d3enROYkdjMHVaSEp6YkpNWTVMVXpNMjlLTFBiSWs.png",
-    "category": "주방용품",
-    "reviewCount": 114,
+    "rankCategory": "햇빛가리개/커튼",
     "categoryRank": 8,
-    "shareLink": "https://toss.im/_m/hxfKhnjw"
+    "shareLink": "https://toss.im/_m/tnPRtOri"
   },
   {
     "name": "여성 끈나시, 블랙, FREE, 4개",
@@ -2525,7 +2735,6 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ZWZjODA4/QU9HRDZwTEFBL09IajN5am5BVjlyejcrQUwzcC8xamc0d0RGeGl0SEZTcmM.png",
     "category": "패션의류잡화",
     "reviewCount": 6,
-    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/LYzidYY1"
   },
   {
@@ -2535,7 +2744,6 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ZWM2MWI4/ZVpubk04eG0zbXc1bXpQTVpzd3pOY3pNWjJhWXpNN3pNeXlaSm5lWlJOTT0.png",
     "category": "패션의류잡화",
     "reviewCount": 898,
-    "categoryRank": 6,
     "shareLink": "https://toss.im/_m/hHpaAZ87"
   },
   {
@@ -2554,7 +2762,20 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/ZWI5ZDQy/YVh0Tzdaa21WNHl5c1RiV3NpeGNhVzNyYk1yVEsxeTVYVmpqVml6bXMwMD0.png",
     "category": "패션의류잡화",
     "reviewCount": 231,
+    "rankCategory": "파우치세트",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/1QWwUAGC"
+  },
+  {
+    "name": "맥스앤맥스 향균 그린 김치통, 2.9L 1개 + 4.5L 1개, 1세트",
+    "price": 11900,
+    "discountRate": 54,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZjA5MTNi/QUtLMVVzT2JUY2xQVStZYjhWWUd5cGFxMUQ0MGhRdjVqUlJrWSt0NGhCUXA.png",
+    "category": "주방용품",
+    "reviewCount": 199,
+    "rankCategory": "김치통/누름독",
+    "categoryRank": 2,
+    "shareLink": "https://toss.im/_m/nWInBp6c"
   },
   {
     "name": "바로담은 배추겉절이, 1kg, 2개",
@@ -2590,6 +2811,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/YjhhMzZk/THU2SGRLQ2F6RVpzUGlhLzRodzVXUGJlQjFyQkNsdkpBVDRoaDdQNEdhND0.png",
     "category": "식품",
     "reviewCount": 4119,
+    "rankCategory": "단무지/피클/절임반찬",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/7p5EP1as"
   },
   {
@@ -2598,7 +2821,7 @@
     "discountRate": 54,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/YjM4MDY0/ZW15MThmWGpjczZ0SGNTSG53d2UvaDYwK0lmNzNIaG5ZVkFOZVZWK291QT0.png",
     "category": "식품",
-    "reviewCount": 151,
+    "reviewCount": 152,
     "shareLink": "https://toss.im/_m/BMGWTO9x"
   },
   {
@@ -2608,7 +2831,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2025-08-14/e8362a82-30fd-4ff6-9e19-0633be7adeff.jpeg",
     "category": "문구/오피스",
     "reviewCount": 252,
-    "categoryRank": 3,
+    "rankCategory": "정보보안스탬프/롤러",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/lspQTKry"
   },
   {
@@ -2618,6 +2842,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NGI2NWY3/YXgvdlpwODJ0SzBkNkxuVzh4NEhTSDVweUczSjdHMk5aWVo4dkd5WjRkTT0.png",
     "category": "문구/오피스",
     "reviewCount": 30,
+    "rankCategory": "파우치형",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/FK8vbyI"
   },
   {
@@ -2627,17 +2853,7 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2025-04-21/9c7059d3-4838-4f15-bd30-6818d6a06256.png",
     "category": "반려/애완용품",
     "reviewCount": 2,
-    "categoryRank": 5,
     "shareLink": "https://toss.im/_m/HMFTCB87"
-  },
-  {
-    "name": "미소 강아지 기능성 사료, 장건강/유산균, 2kg, 1개",
-    "price": 10500,
-    "discountRate": 54,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/YzU2ZTI0/TDNUUEk2a210RjYyejhHUGRMcytjSm1qeWE3blRrTVBlbFMwV3JaVVM2VT0.png",
-    "category": "반려/애완용품",
-    "reviewCount": 5,
-    "shareLink": "https://toss.im/_m/5LkuuLOe"
   },
   {
     "name": "디포아 스포츠 헤어밴드, 블랙 FREE 2개 + 그레이 FREE 2개, 4개",
@@ -2646,18 +2862,9 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-06-22/9b2c9830-195a-46a9-a136-89b722d1dc6b.jpeg",
     "category": "스포츠/레져",
     "reviewCount": 838,
+    "rankCategory": "스포츠 아대/헤어밴드",
     "categoryRank": 1,
     "shareLink": "https://toss.im/_m/POyxTs8c"
-  },
-  {
-    "name": "바리스타룰스 원데이 무라벨, 아메리카노, 350ml, 20개",
-    "price": 22900,
-    "discountRate": 54,
-    "imageUrl": "https://shopping.toss.im/live/temp/2025-06-23/63c350e7-bdb7-484c-a4f5-ba1697cd9fb5.jpeg",
-    "category": "식품",
-    "reviewCount": 19020,
-    "categoryRank": 9,
-    "shareLink": "https://toss.im/_m/Tf2Zp1GD"
   },
   {
     "name": "신발 꾸미기 크록 샌들 장식 파츠 세트, 실버하트곰돌",
@@ -2666,6 +2873,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/NzI0ZGRm/SnRJWGlaN0VLaVlyU1E1UTMwN1JhZjlzTU9UMk5ReUVmV1lkV3hGYmNUND0.png",
     "category": "완구/취미",
     "reviewCount": 1,
+    "rankCategory": "펜던트/장식",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/dougFXOe"
   },
   {
@@ -2675,45 +2884,29 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ZTFlMDVh/QUpzZWJNNGs4VE5abXpOM0hOak95emF1WjQ5amN5a2N4a21NR2FZZGsyTko.png",
     "category": "자동차용품",
     "reviewCount": 198,
+    "rankCategory": "차량용선풍기",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/Ztz8cVjm"
   },
   {
-    "name": "메르헨트 데오 프레쉬 차량용 고체탈취제, 에어리 허브, 250g, 2개",
-    "price": 13900,
+    "name": "푸드앳홈 명태회무침, 1kg, 1개",
+    "price": 15900,
     "discountRate": 53,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-07-21/bd5e48ac-f86b-4726-96ce-d02507919079.jpeg",
-    "category": "자동차용품",
-    "reviewCount": 210,
-    "categoryRank": 3,
-    "shareLink": "https://toss.im/_m/HEKDZcHo"
-  },
-  {
-    "name": "고기중독 통 삼겹살, 2kg, 1개",
-    "price": 23300,
-    "discountRate": 53,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZTI0ZDUx/YWFWL0Z1YkRUVHpKSnNXVHVUeVRiTWVHZVR6Q2NRK0diUzJscnBhVTBsaz0.png",
+    "imageUrl": "https://shopping.toss.im/live/product/57609/6d62b623-d7be-4494-a51c-679007c8d4a5.jpg",
     "category": "식품",
-    "reviewCount": 1202,
-    "shareLink": "https://toss.im/_m/3iWjPBfr"
+    "reviewCount": 2496,
+    "shareLink": "https://toss.im/_m/F1Qv7Xxj"
   },
   {
-    "name": "하림펫푸드 밥이보약 DOG, 튼튼한 관절, 전연령, 3.4kg, 1개",
-    "price": 19900,
+    "name": "푸드앳홈 궁채 알마늘 장아찌, 1kg, 1팩",
+    "price": 6900,
     "discountRate": 53,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-02-23/fb3b6550-df7d-48f1-9f77-15ed60ce9c6f.jpeg",
-    "category": "반려/애완용품",
-    "reviewCount": 137,
-    "categoryRank": 4,
-    "shareLink": "https://toss.im/_m/rIRPuQs4"
-  },
-  {
-    "name": "맥스앤맥스 이지밀 냉동밥&국 소분 밀폐용기 세트, 아이보리, 350ml, 12개+ 올리브그린, 700ml, 8개",
-    "price": 13900,
-    "discountRate": 53,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-03/a8c0ca14-34eb-45c6-bede-da24aaf71a61.jpeg",
-    "category": "주방용품",
-    "reviewCount": 403,
-    "shareLink": "https://toss.im/_m/FjoguGYl"
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/NmRmNWQ5/TGFRMlVxZHpuSndoNmM5SU1HWkxISjRrMDV2MHRHVVBXajRYVmlqY0NXST0.png",
+    "category": "식품",
+    "reviewCount": 1254,
+    "rankCategory": "단무지/피클/절임반찬",
+    "categoryRank": 3,
+    "shareLink": "https://toss.im/_m/rhyPuglx"
   },
   {
     "name": "센토 인텐스 프리미엄 대용량 디퓨저, 일랑일랑, 550ml, 3개",
@@ -2731,7 +2924,20 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ZTE2ZGQx/QUxGSCtzWTNrRkZxUk93VHE2NngyeUcyTTZ3c1ZLMTFZZDZ3VXB0SkN0YWw.png",
     "category": "가구/홈데코",
     "reviewCount": 391,
+    "rankCategory": "스탠드행거",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/vMqa0w1r"
+  },
+  {
+    "name": "하림펫푸드 밥이보약 DOG, 튼튼한 관절, 전연령, 3.4kg, 1개",
+    "price": 19900,
+    "discountRate": 53,
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-02-23/fb3b6550-df7d-48f1-9f77-15ed60ce9c6f.jpeg",
+    "category": "반려/애완용품",
+    "reviewCount": 137,
+    "rankCategory": "기능성 사료",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/rIRPuQs4"
   },
   {
     "name": "C2Y 퓨어 아쿠아 휩 페이셜 비누, 100g, 10개",
@@ -2739,8 +2945,9 @@
     "discountRate": 53,
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ZTNlYjZk/QUpKZHB0YWdWYi9ma2tIcHRra0Y2MlVFVWV1Mm9FRzJ5U1RicXBTb1NWVHI.png",
     "category": "뷰티",
-    "reviewCount": 2329,
-    "categoryRank": 3,
+    "reviewCount": 2331,
+    "rankCategory": "클렌징 비누",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/PRlILdnn"
   },
   {
@@ -2750,8 +2957,18 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-01-02/387be3ab-6425-4464-8b70-d7431389b44c.jpeg",
     "category": "뷰티",
     "reviewCount": 7648,
-    "categoryRank": 7,
+    "rankCategory": "시트 마스크/팩",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/fvpbjGKt"
+  },
+  {
+    "name": "페페브루노 엑스트라버진 올리브 오일, 1L, 2개",
+    "price": 32880,
+    "discountRate": 53,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/ZjA2ZGYw/QU9oYzVEKy9zcHczbGZCenlVS1ByTFpBanp5MDcveUxTNVZEK2J5VlVuUzg.png",
+    "category": "식품",
+    "reviewCount": 1493,
+    "shareLink": "https://toss.im/_m/JXMkICi3"
   },
   {
     "name": "UFO 사이클론 스마트 센서 시크 플라잉 장난감, 핑크, 1개",
@@ -2760,6 +2977,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MjI3OTAw/QU1zK1poa05tNW1IOWxtU1p2SmtUWjhQNXJaK3ZKN0w2VUpabVpHL0plWnU.png",
     "category": "완구/취미",
     "reviewCount": 3,
+    "rankCategory": "어린이RC동물",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/bh9l7x8c"
   },
   {
@@ -2769,6 +2988,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/N2Q0ODY3/QUpQY2JHN3A4ZmJ4YnRGaldiMHVsNGZhRGxwY1p0TnRMNWw1OXJRSDRadEo.png",
     "category": "음반/DVD",
     "reviewCount": 1,
+    "rankCategory": "국내 가요",
+    "categoryRank": 9,
     "shareLink": "https://toss.im/_m/Z5fMgRLz"
   },
   {
@@ -2778,34 +2999,49 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MjQxZGVl/QUtkS25GdXoySTVwZFl0bE5xbG1ZN0ZPcDFTc2dtRzd4THMwMVhaVjFDeXI.png",
     "category": "자동차용품",
     "reviewCount": 58,
+    "rankCategory": "스마트폰용",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/pbjTDkIk"
   },
   {
-    "name": "마더스홈 매일 빨아쓰는 피그먼트 순면 베개커버, 밴드형, 민트그린, 40x60cm, 2개",
-    "price": 9900,
+    "name": "맛생각 시골 전통 된장찌개, 600g, 5개",
+    "price": 16500,
     "discountRate": 52,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-03-30/9724dd6e-89a2-4d5b-a08e-0c8a2cb9e50f.jpeg",
-    "category": "가구/홈데코",
-    "reviewCount": 572,
-    "shareLink": "https://toss.im/_m/3xgmOajc"
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-06-15/a8bbce69-1c12-4b6f-915a-53a9bbc47f2f.jpeg",
+    "category": "식품",
+    "reviewCount": 7465,
+    "rankCategory": "즉석탕/찌개",
+    "categoryRank": 2,
+    "shareLink": "https://toss.im/_m/LuINHF16"
   },
   {
-    "name": "아욱 다슬기 해장국, 500g, 5팩",
-    "price": 21900,
+    "name": "서울우유 고칼슘 검은콩 블랙9곡 두유, 190ml, 32개",
+    "price": 14400,
     "discountRate": 52,
-    "imageUrl": "https://shopping.toss.im/live/temp/2025-10-02/6c4f2f71-f345-40ac-bc9a-65fe40601adb.jpeg",
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/MzkzNTNl/QUtUV3pIRmVRcTk1SGxROW83bGs2Nm5sSmVteDlhejRpVGwwT3dZZUVWYis.png",
     "category": "식품",
-    "reviewCount": 1740,
-    "shareLink": "https://toss.im/_m/XYAJLxOe"
+    "reviewCount": 212,
+    "shareLink": "https://toss.im/_m/BRCzM02w"
   },
   {
-    "name": "빌트루 유기농 NFC 착즙 100% 블루베리즙 스틱, 20g, 14포, 3박스",
-    "price": 18900,
+    "name": "혼카레 도쿄식 정통 민찌카레, 오리지널, 210g, 7개",
+    "price": 22900,
     "discountRate": 52,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/OGM5YWZl/WkhScWZHclVQTlRPMUc1NGFuWnlsRHFVUHNmSldjT0g4SFN4K0orQnAwYz0.png",
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-07-22/04c50d62-afa7-4143-b0a2-2a788d03421d.jpeg",
     "category": "식품",
-    "reviewCount": 12,
-    "shareLink": "https://toss.im/_m/tEiBPzFx"
+    "reviewCount": 82,
+    "shareLink": "https://toss.im/_m/L5wHPO4w"
+  },
+  {
+    "name": "메이홉 멀티트리머 그루밍 패키지, MA-0600, 오로라 화이트, 1세트",
+    "price": 16900,
+    "discountRate": 52,
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-04/fc27f536-3245-41ec-a365-8267ab335269.jpeg",
+    "category": "생활용품",
+    "reviewCount": 93,
+    "rankCategory": "트리머",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/PkYqNjO"
   },
   {
     "name": "나이키 에브리데이 쿠션 크루삭스, SX7664-100, 화이트, L, 6켤레",
@@ -2822,17 +3058,8 @@
     "discountRate": 52,
     "imageUrl": "https://shopping.toss.im/live/temp/2025-08-28/fef8b62d-0dd2-46df-964a-f1f286744d10.jpeg",
     "category": "식품",
-    "reviewCount": 218,
+    "reviewCount": 219,
     "shareLink": "https://toss.im/_m/7LvWZdFp"
-  },
-  {
-    "name": "맛생각 시골 전통 된장찌개, 600g, 5개",
-    "price": 16500,
-    "discountRate": 52,
-    "imageUrl": "https://shopping.toss.im/live/temp/2026-06-15/a8bbce69-1c12-4b6f-915a-53a9bbc47f2f.jpeg",
-    "category": "식품",
-    "reviewCount": 7463,
-    "shareLink": "https://toss.im/_m/LuINHF16"
   },
   {
     "name": "에이스 퍼플리 라벤더 액체 세탁세제, 실내건조, 2.5L, 4병, 1박스",
@@ -2841,7 +3068,20 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/NzY5MTkz/ZmpUNEpGaTBFUE5TZGdHVGNkTDd5dXAwTTVhcjFBQldSVUMxaXhXTG5EUT0.png",
     "category": "생활용품",
     "reviewCount": 1209,
+    "rankCategory": "액상세제",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/b3PhQNj7"
+  },
+  {
+    "name": "자동 변기세정제 맥스, 320g, 4개",
+    "price": 7118,
+    "discountRate": 52,
+    "imageUrl": "https://shopping.toss.im/live/temp/2026-08-26/4e3daee7-51fd-498a-b856-0a5fae0723e1.png",
+    "category": "생활용품",
+    "reviewCount": 8245,
+    "rankCategory": "변기세정제",
+    "categoryRank": 1,
+    "shareLink": "https://toss.im/_m/vRBHNjHd"
   },
   {
     "name": "THOUGHTFUL DUCK 무타공 휴대용 책상 가방걸이, 옐로우, 1개",
@@ -2850,7 +3090,18 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/ODc5MDI4/QU93K1RwWXplS0JKVG9VVHZqazY3RVBDeEpPN1AwRm94TkMrR0Q0dXdXOFA.png",
     "category": "문구/오피스",
     "reviewCount": 4,
+    "rankCategory": "메모홀더/집게",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/fNgmJDND"
+  },
+  {
+    "name": "미소 강아지 기능성 사료, 장건강/유산균, 2kg, 1개",
+    "price": 10900,
+    "discountRate": 52,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/v2/YzU2ZTI0/TDNUUEk2a210RjYyejhHUGRMcytjSm1qeWE3blRrTVBlbFMwV3JaVVM2VT0.png",
+    "category": "반려/애완용품",
+    "reviewCount": 5,
+    "shareLink": "https://toss.im/_m/5LkuuLOe"
   },
   {
     "name": "피죤 무때 제로 락스세제 욕실청소용, 500ml, 4개",
@@ -2859,6 +3110,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-08-03/8b87b40d-da62-44e8-b844-ea26d90b9a82.jpeg",
     "category": "생활용품",
     "reviewCount": 9063,
+    "rankCategory": "욕실세정제",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/7XGlvpI5"
   },
   {
@@ -2868,7 +3121,6 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/MTlhZGY3/UmFlYlVqVHBTMU5WcEs1YmRxbEpSaHEwcGN0SlVsS252RmkxcTB1V0xuUT0.png",
     "category": "스포츠/레져",
     "reviewCount": 114,
-    "categoryRank": 3,
     "shareLink": "https://toss.im/_m/RLqQqTOe"
   },
   {
@@ -2899,13 +3151,15 @@
     "shareLink": "https://toss.im/_m/Psdf3ycl"
   },
   {
-    "name": "돈시몬 착즙 토마토 주스, 1L, 6개",
-    "price": 21900,
+    "name": "오레오 아이스크림 샌드위치, 110ml, 8개",
+    "price": 16900,
     "discountRate": 51,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/M2Q3NzI2/WTQ0czJaN1Q4elR1ZDl0bWUyU2I1MmxzNTNkNWJIczllV3g5L1hsc3h0OD0.png",
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/NTliZjc0/UE50NWpNOW4yenZqcFE3ZTgvRTV4cDd4a21aRHBPT3h3Y1FObkpZeE1tWT0.png",
     "category": "식품",
-    "reviewCount": 144,
-    "shareLink": "https://toss.im/_m/zu7O5M6q"
+    "reviewCount": 63,
+    "rankCategory": "아이스크림 샌드",
+    "categoryRank": 6,
+    "shareLink": "https://toss.im/_m/3PWGbIH3"
   },
   {
     "name": "세상별미 호풍미고구마 당근고구마, 특상, 고당도, 햇, 산지직송, 3kg, 1개",
@@ -2932,6 +3186,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ODYzMzc3/WTlaQTlZT2ZORnRZYS9QaXNFRHgzY0tOQXdsbmNqd2tIV1hBbWcyV0t6MD0.png",
     "category": "생활용품",
     "reviewCount": 742,
+    "rankCategory": "플라스틱 리빙박스",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/fCVI8FVz"
   },
   {
@@ -2941,7 +3197,20 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NjE4MjY1/YlVzWnpFdXNrbm1uTlV4bkQ1SlNscVBVQjVVY2YxMzVjK0cxRDhrODNwST0.png",
     "category": "식품",
     "reviewCount": 10612,
+    "rankCategory": "열무김치",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/pHwnMk9w"
+  },
+  {
+    "name": "국내산 햇 고바멸치, 1.5kg, 1개",
+    "price": 13670,
+    "discountRate": 51,
+    "imageUrl": "https://shopping.toss.im/live/taca/ai/NDFmZTA3/QXNzMTRxcm43Wm5FTm1BeXZVVkNqNU9Rd213cGU1OTNrTzh3TDIrVWpIND0.png",
+    "category": "식품",
+    "reviewCount": 462,
+    "rankCategory": "멸치",
+    "categoryRank": 4,
+    "shareLink": "https://toss.im/_m/llP7SUQf"
   },
   {
     "name": "인사이디 듀얼 무선 전동 미니 마사지건, IMG-200, 화이트, 1개",
@@ -2950,6 +3219,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2026-07-09/c676c7aa-7b2f-4157-a5d2-2389a5bcdb71.jpeg",
     "category": "가전/디지털",
     "reviewCount": 251,
+    "rankCategory": "마사지기",
+    "categoryRank": 2,
     "shareLink": "https://toss.im/_m/JBfKwzgc"
   },
   {
@@ -2959,6 +3230,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NGY0ZTRl/QUxyclhSUjM3c2tWWDM0WkFWd1dmV3RBRmYvcVNCWFgrazBCNnRWVmE2dVU.png",
     "category": "문구/오피스",
     "reviewCount": 127,
+    "rankCategory": "볼펜",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/HP8Whjo3"
   },
   {
@@ -2968,6 +3241,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/OWJiYjc4/QUpmaCswYVhoNDRPR0EreEhvNTdoWHp1WWMzdy9YQmJwKzBCSW5jQUdmMkI.png",
     "category": "반려/애완용품",
     "reviewCount": 27,
+    "rankCategory": "미용가위",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/tkNit4wd"
   },
   {
@@ -2977,6 +3252,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2025-05-07/92ce0e73-8be2-4d96-a5f8-3a7d6f348d84.jpeg",
     "category": "뷰티",
     "reviewCount": 2565,
+    "rankCategory": "컬크림",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/7XZ4lvcg"
   },
   {
@@ -2986,7 +3263,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/NWI1ZDM4/QUtnZnk4OXRPRUZEK0svUC9EeHlhRG5Iaml4eVEyV1VIejNReHNaTE9Yc2E.png",
     "category": "스포츠/레져",
     "reviewCount": 924,
-    "categoryRank": 9,
+    "rankCategory": "훌라후프",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/pEv63ujm"
   },
   {
@@ -3005,6 +3283,8 @@
     "imageUrl": "https://shopping.toss.im/live/taca/ai/ZDFmOGE1/SGd6T0Q5TUt1WVZ1Vjk4ci81VjM2dWYwem5zTUxZNFdqZ09ZUVRuZ2ZZND0.png",
     "category": "완구/취미",
     "reviewCount": 13,
+    "rankCategory": "불교 용품",
+    "categoryRank": 4,
     "shareLink": "https://toss.im/_m/dPTvR1zd"
   },
   {
@@ -3014,16 +3294,8 @@
     "imageUrl": "https://shopping.toss.im/live/temp/2025-12-30/52daaa77-b542-4a9a-ae03-8edb9f4db85d.png",
     "category": "출산/유아동",
     "reviewCount": 27,
+    "rankCategory": "유아씨리얼/퍼프",
+    "categoryRank": 1,
     "shareLink": "https://toss.im/_m/JczDVivx"
-  },
-  {
-    "name": "쿨스카프 냉감 넥쿨러, 블루, 100cm, 3개",
-    "price": 8900,
-    "discountRate": 51,
-    "imageUrl": "https://shopping.toss.im/live/taca/ai/MTQ1MjQ3/QU5wQ096Ujh0WVRFSnd6VGc5NVpkYnpwOEp1aG5vL0taZWw0RExJVHhOY3M.png",
-    "category": "패션의류잡화",
-    "reviewCount": 36,
-    "categoryRank": 7,
-    "shareLink": "https://toss.im/_m/flyYOyt9"
   }
 ]

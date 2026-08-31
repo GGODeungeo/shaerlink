@@ -2,6 +2,7 @@ import build_app_data as bad
 from build_app_data import (
     build_entry,
     category_name,
+    deepest_category_id,
     is_deep_discount,
     merge_unique,
     to_app_data,
@@ -62,12 +63,26 @@ def test_build_entry_defaults_review_count_to_zero_when_missing():
     assert build_entry(product, {}, {})["reviewCount"] == 0
 
 
-def test_build_entry_includes_category_rank_only_within_top_10():
+def test_build_entry_includes_rank_badge_only_within_top_10():
     product = {"tacaItemId": 1, "displayName": "상품명", "displayPrice": 1000,
                "discountRate": 61, "thumbnailUrl": "https://x", "categoryIds": []}
-    assert build_entry(product, {}, {1: 3})["categoryRank"] == 3
-    assert "categoryRank" not in build_entry(product, {}, {1: 11})
+    entry = build_entry(product, {}, {1: ("국산생수", 3)})
+    assert entry["categoryRank"] == 3
+    assert entry["rankCategory"] == "국산생수"
+
+    out_of_range = build_entry(product, {}, {1: ("국산생수", 11)})
+    assert "categoryRank" not in out_of_range
+    assert "rankCategory" not in out_of_range
+
     assert "categoryRank" not in build_entry(product, {}, {})
+
+
+def test_deepest_category_id_picks_max_level_known_id():
+    meta = {5: {"level": 1, "displayName": "식품"}, 27491: {"level": 5, "displayName": "국산생수"}}
+    product = {"categoryIds": [5, 27491, 999]}
+    assert deepest_category_id(product, meta) == 27491
+    assert deepest_category_id({"categoryIds": [999]}, meta) is None
+    assert deepest_category_id({"categoryIds": []}, meta) is None
 
 
 def test_to_app_data_sorts_by_discount_desc_and_skips_failed_link_issuance(monkeypatch):

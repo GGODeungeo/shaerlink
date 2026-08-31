@@ -172,6 +172,7 @@
   position: absolute;
   top: var(--space-2);
   left: var(--space-2);
+  right: var(--space-2);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -179,12 +180,16 @@
 }
 
 .product-card__badge {
+  max-width: 100%;
   padding: 2px var(--space-2);
   border-radius: 6px;
   background: var(--color-danger);
   color: var(--color-text-inverse);
   font-size: var(--font-size-caption);
   font-weight: var(--font-weight-subtitle);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .product-card__badge--rank {

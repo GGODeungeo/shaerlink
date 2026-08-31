@@ -7,6 +7,7 @@ from sharelink_api import (
     get_access_token,
     get_best_category_products,
     get_best_selling_products,
+    get_category_meta_map,
     get_today_deals,
     get_top_level_category_ids,
     get_top_level_category_map,
@@ -36,7 +37,17 @@ def category_name(product: dict, category_map: dict) -> str:
     return "기타"
 
 
-def build_entry(product: dict, category_map: dict, category_rank: dict) -> dict:
+def deepest_category_id(product: dict, category_meta: dict):
+    """The most specific (deepest-level) categoryId a product is tagged
+    under, e.g. '국산생수' rather than the broad '식품' root - used to scope
+    rank badges narrowly. Returns None if no tagged id is known."""
+    known = [c for c in product.get("categoryIds", []) if c in category_meta]
+    if not known:
+        return None
+    return max(known, key=lambda c: category_meta[c]["level"])
+
+
+def build_entry(product: dict, category_map: dict, rank_badges: dict) -> dict:
     entry = {
         "name": product["displayName"],
         "price": product["displayPrice"],
@@ -45,18 +56,21 @@ def build_entry(product: dict, category_map: dict, category_rank: dict) -> dict:
         "category": category_name(product, category_map),
         "reviewCount": product.get("reviewCount", 0),
     }
-    rank = category_rank.get(product["tacaItemId"])
-    if rank is not None and rank <= 10:
-        entry["categoryRank"] = rank
+    badge = rank_badges.get(product["tacaItemId"])
+    if badge is not None:
+        label, rank = badge
+        if rank <= 10:
+            entry["rankCategory"] = label
+            entry["categoryRank"] = rank
     return entry
 
 
 def to_app_data(
-    products: list, category_map: dict, category_rank: dict, publisher_id: str, token: str
+    products: list, category_map: dict, rank_badges: dict, publisher_id: str, token: str
 ) -> list:
     slim = []
     for p in products:
-        entry = build_entry(p, category_map, category_rank)
+        entry = build_entry(p, category_map, rank_badges)
         try:
             entry["shareLink"] = issue_link(token, p["tacaItemId"], publisher_id)
         except Exception as e:
@@ -70,19 +84,16 @@ def to_app_data(
 def main():
     token = get_access_token()
     category_map = get_top_level_category_map(token)
+    category_meta = get_category_meta_map(token)
 
-    best_category_lists = [
+    root_category_lists = [
         get_best_category_products(token, category_id)
         for category_id in get_top_level_category_ids(token)
     ]
-    category_rank = {}
-    for items in best_category_lists:
-        for item in items:
-            category_rank.setdefault(item["tacaItemId"], item["rank"])
 
     all_products = list(get_today_deals(token))
     all_products.extend(get_best_selling_products(token))
-    for items in best_category_lists:
+    for items in root_category_lists:
         all_products.extend(items)
 
     merged = merge_unique(all_products)
@@ -91,8 +102,19 @@ def main():
     if not filtered:
         raise SystemExit("할인율 50% 초과 상품을 하나도 찾지 못했어요.")
 
+    specific_ids = {
+        cid
+        for cid in (deepest_category_id(p, category_meta) for p in filtered)
+        if cid is not None
+    }
+    rank_badges = {}
+    for category_id in specific_ids:
+        label = category_meta[category_id]["displayName"]
+        for item in get_best_category_products(token, category_id):
+            rank_badges.setdefault(item["tacaItemId"], (label, item["rank"]))
+
     data = to_app_data(
-        filtered, category_map, category_rank, os.environ["SHARELINK_PUBLISHER_ID"], token
+        filtered, category_map, rank_badges, os.environ["SHARELINK_PUBLISHER_ID"], token
     )
 
     APP_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
