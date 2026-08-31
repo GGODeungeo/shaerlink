@@ -85,9 +85,8 @@
 
 .shop-content__header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
+  flex-direction: column;
+  gap: var(--space-1);
   padding: var(--space-3) var(--space-3) var(--space-2);
 }
 
@@ -100,12 +99,13 @@
 
 .sort-bar {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-1);
 }
 
 .sort-bar__item {
   min-height: 44px;
-  padding: 0 var(--space-3);
+  padding: 0 var(--space-2);
   border: none;
   border-radius: 999px;
   background: var(--color-bg-canvas);
@@ -191,13 +191,22 @@
   color: var(--color-text-strong);
 }
 
-.product-card__name {
-  margin: var(--space-1) var(--space-2) var(--space-2);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-body);
+.product-card__title {
+  margin: var(--space-1) var(--space-2) 0;
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-subtitle);
   color: var(--color-text-default);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.product-card__specs {
+  margin: 2px var(--space-2) var(--space-2);
+  font-size: var(--font-size-caption);
+  color: var(--color-text-hint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

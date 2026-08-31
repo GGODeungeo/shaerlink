@@ -43,6 +43,7 @@ def build_entry(product: dict, category_map: dict) -> dict:
         "discountRate": product["discountRate"],
         "imageUrl": product["thumbnailUrl"],
         "category": category_name(product, category_map),
+        "reviewCount": product.get("reviewCount", 0),
     }
 
 

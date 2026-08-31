@@ -24,23 +24,26 @@ type LoadState =
   | { status: 'error' }
   | { status: 'ready'; products: Product[] };
 
-type SortKey = 'discount' | 'price';
+type SortKey = 'recommend' | 'discount' | 'price';
 
 const SORT_OPTIONS: { key: SortKey; label: string }[] = [
+  { key: 'recommend', label: '추천순' },
   { key: 'discount', label: '할인율순' },
-  { key: 'price', label: '가격순' },
+  { key: 'price', label: '낮은 가격순' },
 ];
 
 function sortProducts(products: Product[], sort: SortKey) {
-  return [...products].sort((a, b) =>
-    sort === 'discount' ? b.discountRate - a.discountRate : a.price - b.price
-  );
+  return [...products].sort((a, b) => {
+    if (sort === 'discount') return b.discountRate - a.discountRate;
+    if (sort === 'price') return a.price - b.price;
+    return b.reviewCount - a.reviewCount;
+  });
 }
 
 function App() {
   const [state, setState] = useState<LoadState>({ status: 'loading' });
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [sort, setSort] = useState<SortKey>('discount');
+  const [sort, setSort] = useState<SortKey>('recommend');
 
   const fetchProducts = () => {
     fetch(DATA_URL)
@@ -106,6 +109,7 @@ function App() {
                     ))}
                   </div>
                 </div>
+
                 <div className="product-grid">
                   {sortProducts(activeGroup?.products ?? [], sort).map((product) => (
                     <ProductCard key={product.shareLink} product={product} />

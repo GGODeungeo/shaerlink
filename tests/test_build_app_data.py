@@ -37,6 +37,7 @@ def test_build_entry_maps_api_fields_to_app_data_fields():
         "discountRate": 61,
         "thumbnailUrl": "https://x",
         "categoryIds": [5],
+        "reviewCount": 342,
     }
     assert build_entry(product, {5: "식품"}) == {
         "name": "상품명",
@@ -44,7 +45,19 @@ def test_build_entry_maps_api_fields_to_app_data_fields():
         "discountRate": 61,
         "imageUrl": "https://x",
         "category": "식품",
+        "reviewCount": 342,
     }
+
+
+def test_build_entry_defaults_review_count_to_zero_when_missing():
+    product = {
+        "displayName": "상품명",
+        "displayPrice": 12000,
+        "discountRate": 61,
+        "thumbnailUrl": "https://x",
+        "categoryIds": [],
+    }
+    assert build_entry(product, {})["reviewCount"] == 0
 
 
 def test_to_app_data_sorts_by_discount_desc_and_skips_failed_link_issuance(monkeypatch):

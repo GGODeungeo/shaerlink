@@ -5,4 +5,5 @@ export type Product = {
   imageUrl: string;
   category: string;
   shareLink: string;
+  reviewCount: number;
 };
