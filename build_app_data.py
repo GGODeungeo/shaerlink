@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 from pathlib import Path
 
 from sharelink_api import (
@@ -34,19 +35,26 @@ def category_name(product: dict, category_map: dict) -> str:
     return "기타"
 
 
+def build_entry(product: dict, category_map: dict) -> dict:
+    return {
+        "name": product["displayName"],
+        "price": product["displayPrice"],
+        "discountRate": product["discountRate"],
+        "imageUrl": product["thumbnailUrl"],
+        "category": category_name(product, category_map),
+    }
+
+
 def to_app_data(products: list, category_map: dict, publisher_id: str, token: str) -> list:
     slim = []
     for p in products:
-        slim.append(
-            {
-                "name": p["displayName"],
-                "price": p["displayPrice"],
-                "discountRate": p["discountRate"],
-                "imageUrl": p["thumbnailUrl"],
-                "category": category_name(p, category_map),
-                "shareLink": issue_link(token, p["tacaItemId"], publisher_id),
-            }
-        )
+        entry = build_entry(p, category_map)
+        try:
+            entry["shareLink"] = issue_link(token, p["tacaItemId"], publisher_id)
+        except Exception as e:
+            print(f"링크 발급 실패, 건너뜀: {entry['name']} ({e})", file=sys.stderr)
+            continue
+        slim.append(entry)
     slim.sort(key=lambda p: -p["discountRate"])
     return slim
 
