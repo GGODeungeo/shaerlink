@@ -204,10 +204,9 @@
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-body);
   color: var(--color-text-default);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .product-card__specs {
