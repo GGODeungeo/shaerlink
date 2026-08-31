@@ -24,9 +24,23 @@ type LoadState =
   | { status: 'error' }
   | { status: 'ready'; products: Product[] };
 
+type SortKey = 'discount' | 'price';
+
+const SORT_OPTIONS: { key: SortKey; label: string }[] = [
+  { key: 'discount', label: '할인율순' },
+  { key: 'price', label: '가격순' },
+];
+
+function sortProducts(products: Product[], sort: SortKey) {
+  return [...products].sort((a, b) =>
+    sort === 'discount' ? b.discountRate - a.discountRate : a.price - b.price
+  );
+}
+
 function App() {
   const [state, setState] = useState<LoadState>({ status: 'loading' });
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [sort, setSort] = useState<SortKey>('discount');
 
   const fetchProducts = () => {
     fetch(DATA_URL)
@@ -75,9 +89,25 @@ function App() {
                 onSelect={setSelectedCategory}
               />
               <div className="shop-content">
-                <h2 className="shop-content__title">{activeLabel}</h2>
+                <div className="shop-content__header">
+                  <h2 className="shop-content__title">{activeLabel}</h2>
+                  <div className="sort-bar" role="group" aria-label="정렬">
+                    {SORT_OPTIONS.map((option) => (
+                      <button
+                        key={option.key}
+                        type="button"
+                        className={
+                          sort === option.key ? 'sort-bar__item sort-bar__item--active' : 'sort-bar__item'
+                        }
+                        onClick={() => setSort(option.key)}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
                 <div className="product-grid">
-                  {activeGroup?.products.map((product) => (
+                  {sortProducts(activeGroup?.products ?? [], sort).map((product) => (
                     <ProductCard key={product.shareLink} product={product} />
                   ))}
                 </div>

@@ -12,7 +12,10 @@ export function ProductCard({ product }: { product: Product }) {
         <img src={product.imageUrl} alt="" className="product-card__image" />
         <span className="product-card__badge">{product.discountRate}% 특가</span>
       </div>
-      <div className="product-card__price">{product.price.toLocaleString()}원</div>
+      <div className="product-card__price-row">
+        <span className="product-card__discount">{product.discountRate}%</span>
+        <span className="product-card__price">{product.price.toLocaleString()}원</span>
+      </div>
       <div className="product-card__name">{product.name}</div>
     </button>
   );
