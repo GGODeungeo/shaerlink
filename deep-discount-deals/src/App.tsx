@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CategoryNav } from './CategoryNav';
 import { CategoryPage } from './CategoryPage';
-import { Hero } from './Hero';
 import type { Product } from './types';
 import './App.css';
 
@@ -81,21 +80,12 @@ function App() {
           </div>
         )}
 
-        {state.status === 'ready' && (() => {
-          const groups = groupByCategory(state.products);
-          const topProduct = state.products.reduce((best, p) =>
-            p.discountRate > best.discountRate ? p : best
-          );
-          return (
-            <>
-              <Hero product={topProduct} />
-              <CategoryNav
-                categories={groups.map((g) => g.label)}
-                onSelect={(label) => setScreen({ name: 'category', label })}
-              />
-            </>
-          );
-        })()}
+        {state.status === 'ready' && (
+          <CategoryNav
+            categories={groupByCategory(state.products).map((g) => g.label)}
+            onSelect={(label) => setScreen({ name: 'category', label })}
+          />
+        )}
       </div>
     </div>
   );
