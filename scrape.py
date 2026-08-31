@@ -1,7 +1,7 @@
 import json
 import re
 from pathlib import Path
-from typing import Optional
+from typing import Callable, Optional
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 
@@ -66,7 +66,11 @@ def parse_products(html: str) -> list[dict]:
     return products
 
 
-def run_scrape(profile_dir: str, output_dir: Path) -> list[dict]:
+def run_scrape(
+    profile_dir: str,
+    output_dir: Path,
+    filter_fn: Optional[Callable[[list], list]] = None,
+) -> list[dict]:
     with sync_playwright() as p:
         context = p.chromium.launch_persistent_context(profile_dir, headless=False)
         page = context.new_page()
@@ -96,6 +100,12 @@ def run_scrape(profile_dir: str, output_dir: Path) -> list[dict]:
         if not products:
             context.close()
             raise RuntimeError("상품을 하나도 찾지 못했어요. 사이트 구조가 바뀌었을 수 있어요.")
+
+        if filter_fn is not None:
+            products = filter_fn(products)
+            if not products:
+                context.close()
+                raise RuntimeError("필터링 후 남은 상품이 없어요.")
 
         buttons = page.get_by_text("링크 발급")
         for product in products:
