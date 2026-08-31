@@ -11,14 +11,12 @@ DISCOUNT_RE = re.compile(r"(\d+)%\s*특가")
 URL = "https://sharelink.toss.im/links/recommended-products?priceFilters=MIN_PRICE_30D"
 
 CLIPBOARD_HOOK = """
-() => {
-  window.__capturedLinks = [];
-  const orig = navigator.clipboard.writeText.bind(navigator.clipboard);
-  navigator.clipboard.writeText = (text) => {
-    window.__capturedLinks.push(text);
-    return orig(text);
-  };
-}
+window.__capturedLinks = [];
+const orig = navigator.clipboard.writeText.bind(navigator.clipboard);
+navigator.clipboard.writeText = (text) => {
+  window.__capturedLinks.push(text);
+  return orig(text);
+};
 """
 
 
