@@ -3,3 +3,4 @@ __pycache__/
 output/
 browser-profile/
 .env
+.DS_Store
