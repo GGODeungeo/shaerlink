@@ -10,7 +10,8 @@ from build_app_data import (
 
 def test_is_deep_discount_threshold():
     assert is_deep_discount({"discountRate": 49}) is False
-    assert is_deep_discount({"discountRate": 50}) is True
+    assert is_deep_discount({"discountRate": 50}) is False
+    assert is_deep_discount({"discountRate": 51}) is True
     assert is_deep_discount({"discountRate": 90}) is True
 
 

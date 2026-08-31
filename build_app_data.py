@@ -6,6 +6,7 @@ from pathlib import Path
 from sharelink_api import (
     get_access_token,
     get_best_category_products,
+    get_best_selling_products,
     get_today_deals,
     get_top_level_category_ids,
     get_top_level_category_map,
@@ -17,7 +18,7 @@ APP_DATA_PATH = Path("app-data/products.json")
 
 
 def is_deep_discount(product: dict) -> bool:
-    return product["discountRate"] >= MIN_DISCOUNT
+    return product["discountRate"] > MIN_DISCOUNT
 
 
 def merge_unique(*item_lists: list) -> list:
@@ -64,6 +65,7 @@ def main():
     category_map = get_top_level_category_map(token)
 
     all_products = list(get_today_deals(token))
+    all_products.extend(get_best_selling_products(token))
     for category_id in get_top_level_category_ids(token):
         all_products.extend(get_best_category_products(token, category_id))
 
@@ -71,7 +73,7 @@ def main():
     filtered = [p for p in merged if is_deep_discount(p)]
 
     if not filtered:
-        raise SystemExit("할인율 50% 이상 상품을 하나도 찾지 못했어요.")
+        raise SystemExit("할인율 50% 초과 상품을 하나도 찾지 못했어요.")
 
     data = to_app_data(filtered, category_map, os.environ["SHARELINK_PUBLISHER_ID"], token)
 

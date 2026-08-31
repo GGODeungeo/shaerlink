@@ -69,34 +69,31 @@ def get_top_level_category_ids(token: str) -> list:
     return [root["categoryId"] for root in roots]
 
 
-def get_today_deals(token: str) -> list:
+def _paginate(token: str, path: str, size: int) -> list:
     items = []
     cursor = None
     while True:
-        path = "/products/today-deals?size=30"
+        page_path = f"{path}?size={size}"
         if cursor:
-            path += f"&cursor={urllib.parse.quote(cursor)}"
-        data = _get(token, path)["success"]
+            page_path += f"&cursor={urllib.parse.quote(cursor)}"
+        data = _get(token, page_path)["success"]
         items.extend(data["items"])
         if not data["hasNext"]:
             break
         cursor = data["nextCursor"]
     return items
+
+
+def get_today_deals(token: str) -> list:
+    return _paginate(token, "/products/today-deals", size=30)
 
 
 def get_best_category_products(token: str, category_id: int) -> list:
-    items = []
-    cursor = None
-    while True:
-        path = f"/products/best-categories/{category_id}?size=100"
-        if cursor:
-            path += f"&cursor={urllib.parse.quote(cursor)}"
-        data = _get(token, path)["success"]
-        items.extend(data["items"])
-        if not data["hasNext"]:
-            break
-        cursor = data["nextCursor"]
-    return items
+    return _paginate(token, f"/products/best-categories/{category_id}", size=100)
+
+
+def get_best_selling_products(token: str) -> list:
+    return _paginate(token, "/products/best-selling", size=100)
 
 
 def issue_link(token: str, taca_item_id: int, publisher_id: str) -> str:
