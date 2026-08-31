@@ -1,23 +1,24 @@
-import { ChevronRight } from './components/icons';
-
 export function CategoryNav({
   categories,
+  selected,
   onSelect,
 }: {
   categories: string[];
+  selected: string;
   onSelect: (category: string) => void;
 }) {
   return (
-    <nav className="category-list" aria-label="카테고리">
+    <nav className="sidebar" aria-label="카테고리">
       {categories.map((category) => (
         <button
           key={category}
           type="button"
-          className="category-list__item"
+          className={
+            category === selected ? 'sidebar__item sidebar__item--active' : 'sidebar__item'
+          }
           onClick={() => onSelect(category)}
         >
           {category}
-          <ChevronRight size={16} />
         </button>
       ))}
     </nav>

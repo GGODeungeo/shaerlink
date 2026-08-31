@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CategoryNav } from './CategoryNav';
-import { CategoryPage } from './CategoryPage';
+import { ProductCard } from './ProductCard';
 import type { Product } from './types';
 import './App.css';
 
@@ -24,11 +24,9 @@ type LoadState =
   | { status: 'error' }
   | { status: 'ready'; products: Product[] };
 
-type Screen = { name: 'home' } | { name: 'category'; label: string };
-
 function App() {
   const [state, setState] = useState<LoadState>({ status: 'loading' });
-  const [screen, setScreen] = useState<Screen>({ name: 'home' });
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const fetchProducts = () => {
     fetch(DATA_URL)
@@ -46,21 +44,6 @@ function App() {
     setState({ status: 'loading' });
     fetchProducts();
   };
-
-  if (state.status === 'ready' && screen.name === 'category') {
-    const group = groupByCategory(state.products).find((g) => g.label === screen.label);
-    return (
-      <div className="canvas bg-canvas">
-        <div className="page-container">
-          <CategoryPage
-            label={screen.label}
-            products={group?.products ?? []}
-            onBack={() => setScreen({ name: 'home' })}
-          />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="canvas bg-canvas">
@@ -80,12 +63,28 @@ function App() {
           </div>
         )}
 
-        {state.status === 'ready' && (
-          <CategoryNav
-            categories={groupByCategory(state.products).map((g) => g.label)}
-            onSelect={(label) => setScreen({ name: 'category', label })}
-          />
-        )}
+        {state.status === 'ready' && (() => {
+          const groups = groupByCategory(state.products);
+          const activeLabel = selectedCategory ?? groups[0]?.label;
+          const activeGroup = groups.find((g) => g.label === activeLabel);
+          return (
+            <div className="shop">
+              <CategoryNav
+                categories={groups.map((g) => g.label)}
+                selected={activeLabel}
+                onSelect={setSelectedCategory}
+              />
+              <div className="shop-content">
+                <h2 className="shop-content__title">{activeLabel}</h2>
+                <div className="product-grid">
+                  {activeGroup?.products.map((product) => (
+                    <ProductCard key={product.shareLink} product={product} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
       </div>
     </div>
   );
