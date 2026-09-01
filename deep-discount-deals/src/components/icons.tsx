@@ -100,6 +100,26 @@ export function Close({ size = '1em' }: IconProps) {
   );
 }
 
+export function Menu({ size = '1em' }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4 7 L20 7" />
+      <path d="M4 12 L20 12" />
+      <path d="M4 17 L20 17" />
+    </svg>
+  );
+}
+
 export function Search({ size = '1em' }: IconProps) {
   return (
     <svg

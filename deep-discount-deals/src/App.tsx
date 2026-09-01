@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { CategoryNav } from './CategoryNav';
+import { Menu } from './components/icons';
+import { CATEGORY_EMOJI } from './categoryEmoji';
 import { ProductCard } from './ProductCard';
 import type { Product } from './types';
 import './App.css';
@@ -44,6 +45,7 @@ function App() {
   const [state, setState] = useState<LoadState>({ status: 'loading' });
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sort, setSort] = useState<SortKey>('recommend');
+  const [categoryMenuOpen, setCategoryMenuOpen] = useState(false);
 
   const fetchProducts = () => {
     fetch(DATA_URL)
@@ -92,37 +94,68 @@ function App() {
           const activeLabel = selectedCategory ?? groups[0]?.label;
           const activeGroup = groups.find((g) => g.label === activeLabel);
           return (
-            <div className="shop">
-              <CategoryNav
-                categories={groups.map((g) => g.label)}
-                selected={activeLabel}
-                onSelect={setSelectedCategory}
-              />
-              <div className="shop-content">
-                <div className="sort-bar">
-                  <div className="sort-bar__group" role="group" aria-label="정렬">
-                    {SORT_OPTIONS.map((option) => (
-                      <button
-                        key={option.key}
-                        type="button"
-                        className={
-                          sort === option.key ? 'sort-bar__item sort-bar__item--active' : 'sort-bar__item'
-                        }
-                        onClick={() => setSort(option.key)}
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="product-grid">
-                  {sortProducts(activeGroup?.products ?? [], sort).map((product) => (
-                    <ProductCard key={product.shareLink} product={product} />
+            <>
+              <div className="toolbar">
+                <button
+                  type="button"
+                  className="toolbar__trigger"
+                  onClick={() => setCategoryMenuOpen((open) => !open)}
+                  aria-expanded={categoryMenuOpen}
+                  aria-label="카테고리 선택"
+                >
+                  <Menu size={20} />
+                  <span className="tf" aria-hidden="true">
+                    {CATEGORY_EMOJI[activeLabel] ?? '🛍️'}
+                  </span>
+                  {activeLabel}
+                </button>
+                <div className="sort-bar__group" role="group" aria-label="정렬">
+                  {SORT_OPTIONS.map((option) => (
+                    <button
+                      key={option.key}
+                      type="button"
+                      className={
+                        sort === option.key ? 'sort-bar__item sort-bar__item--active' : 'sort-bar__item'
+                      }
+                      onClick={() => setSort(option.key)}
+                    >
+                      {option.label}
+                    </button>
                   ))}
                 </div>
               </div>
-            </div>
+
+              {categoryMenuOpen && (
+                <div className="category-dropdown">
+                  {groups.map((group) => (
+                    <button
+                      key={group.label}
+                      type="button"
+                      className={
+                        group.label === activeLabel
+                          ? 'category-dropdown__item category-dropdown__item--active'
+                          : 'category-dropdown__item'
+                      }
+                      onClick={() => {
+                        setSelectedCategory(group.label);
+                        setCategoryMenuOpen(false);
+                      }}
+                    >
+                      <span className="tf" aria-hidden="true">
+                        {CATEGORY_EMOJI[group.label] ?? '🛍️'}
+                      </span>
+                      {group.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <div className="product-grid">
+                {sortProducts(activeGroup?.products ?? [], sort).map((product) => (
+                  <ProductCard key={product.shareLink} product={product} />
+                ))}
+              </div>
+            </>
           );
         })()}
       </div>
