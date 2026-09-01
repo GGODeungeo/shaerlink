@@ -92,9 +92,6 @@ function App() {
                 onSelect={setSelectedCategory}
               />
               <div className="shop-content">
-                <div className="shop-content__banner">
-                  <h2 className="shop-content__title">{activeLabel}</h2>
-                </div>
                 <div className="sort-bar" role="group" aria-label="정렬">
                   {SORT_OPTIONS.map((option) => (
                     <button
