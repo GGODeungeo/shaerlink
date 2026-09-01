@@ -69,23 +69,6 @@ def get_top_level_category_ids(token: str) -> list:
     return [root["categoryId"] for root in roots]
 
 
-def get_category_meta_map(token: str) -> dict:
-    """Returns {categoryId: {"level": int, "displayName": str}} for every
-    category at any depth - used to find the most specific (deepest) category
-    a product is tagged under, for narrowly-scoped rank badges like '국산생수'
-    rather than just the broad top-level bucket."""
-    roots = _get(token, "/categories")["success"]["categories"]
-    meta = {}
-
-    def walk(nodes):
-        for node in nodes:
-            meta[node["categoryId"]] = {"level": node["level"], "displayName": node["displayName"]}
-            walk(node.get("children", []))
-
-    walk(roots)
-    return meta
-
-
 def _paginate(token: str, path: str, size: int) -> list:
     items = []
     cursor = None
