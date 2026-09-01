@@ -1,7 +1,7 @@
 import { defineConfig } from '@apps-in-toss/web-framework/config';
 
 export default defineConfig({
-  appName: 'deep-discount-deals',
+  appName: 'hidden-deals',
   brand: {
     primaryColor: '#191f28',
   },
