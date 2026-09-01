@@ -67,8 +67,9 @@ function App() {
       <div className="page-container">
         <header className="page-header">
           <h1>반값 이상 특가</h1>
-          <p className="page-header__subtitle">할인율 50% 초과 상품만 확인해서 골랐어요</p>
-          <p className="page-header__subtitle">배송 정보는 상품 페이지에서 확인할 수 있어요</p>
+          <p className="page-header__subtitle">
+            할인율 50% 초과 상품만 골랐어요 · 배송 정보는 상품 페이지에서 확인하세요
+          </p>
         </header>
 
         {state.status === 'loading' && <p className="state-message">불러오는 중...</p>}
@@ -82,7 +83,11 @@ function App() {
           </div>
         )}
 
-        {state.status === 'ready' && (() => {
+        {state.status === 'ready' && state.products.length === 0 && (
+          <p className="state-message">지금은 조건에 맞는 상품이 없어요.</p>
+        )}
+
+        {state.status === 'ready' && state.products.length > 0 && (() => {
           const groups = groupByCategory(state.products);
           const activeLabel = selectedCategory ?? groups[0]?.label;
           const activeGroup = groups.find((g) => g.label === activeLabel);
