@@ -33,7 +33,7 @@ def get_access_token() -> str:
         }
     ).encode()
     req = urllib.request.Request(TOKEN_URL, data=data, method="POST")
-    with urllib.request.urlopen(req) as resp:
+    with urllib.request.urlopen(req, timeout=30) as resp:
         return json.load(resp)["access_token"]
 
 
@@ -41,7 +41,7 @@ def _get(token: str, path: str) -> dict:
     req = urllib.request.Request(
         f"{API_BASE}{path}", headers={"Authorization": f"Bearer {token}"}
     )
-    with urllib.request.urlopen(req) as resp:
+    with urllib.request.urlopen(req, timeout=30) as resp:
         return json.load(resp)
 
 
@@ -104,5 +104,5 @@ def issue_link(token: str, taca_item_id: int, publisher_id: str) -> str:
         method="POST",
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
     )
-    with urllib.request.urlopen(req) as resp:
+    with urllib.request.urlopen(req, timeout=30) as resp:
         return json.load(resp)["success"]["shortUrl"]

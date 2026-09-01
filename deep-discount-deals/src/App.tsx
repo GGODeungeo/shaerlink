@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Menu } from './components/icons';
 import { CATEGORY_EMOJI } from './categoryEmoji';
 import { ProductCard } from './ProductCard';
+import { TopDealsCarousel } from './TopDealsCarousel';
 import type { Product } from './types';
 import './App.css';
 
@@ -95,6 +96,8 @@ function App() {
           const activeGroup = groups.find((g) => g.label === activeLabel);
           return (
             <>
+              <TopDealsCarousel products={state.products} />
+
               <div className="toolbar">
                 <button
                   type="button"
@@ -145,7 +148,7 @@ function App() {
                         }
                         onClick={() => setSort(option.key)}
                       >
-                        {option.label}
+                        <span className="sort-bar__item-label">{option.label}</span>
                       </button>
                     ))}
                   </div>
