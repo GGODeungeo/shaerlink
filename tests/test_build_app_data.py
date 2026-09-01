@@ -62,6 +62,21 @@ def test_build_entry_defaults_review_count_to_zero_when_missing():
     assert build_entry(product, {})["reviewCount"] == 0
 
 
+def test_build_entry_passes_through_deal_end_time_only_when_present():
+    with_end_at = {
+        "tacaItemId": 1, "displayName": "상품명", "displayPrice": 1000,
+        "discountRate": 61, "thumbnailUrl": "https://x", "categoryIds": [],
+        "endAt": "2026-09-01T23:59:59+09:00",
+    }
+    assert build_entry(with_end_at, {})["dealEndsAt"] == "2026-09-01T23:59:59+09:00"
+
+    without_end_at = {
+        "tacaItemId": 1, "displayName": "상품명", "displayPrice": 1000,
+        "discountRate": 61, "thumbnailUrl": "https://x", "categoryIds": [],
+    }
+    assert "dealEndsAt" not in build_entry(without_end_at, {})
+
+
 def test_to_app_data_sorts_by_discount_desc_and_skips_failed_link_issuance(monkeypatch):
     products = [
         {

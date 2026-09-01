@@ -37,7 +37,7 @@ def category_name(product: dict, category_map: dict) -> str:
 
 
 def build_entry(product: dict, category_map: dict) -> dict:
-    return {
+    entry = {
         "name": product["displayName"],
         "price": product["displayPrice"],
         "discountRate": product["discountRate"],
@@ -45,6 +45,9 @@ def build_entry(product: dict, category_map: dict) -> dict:
         "category": category_name(product, category_map),
         "reviewCount": product.get("reviewCount", 0),
     }
+    if "endAt" in product:
+        entry["dealEndsAt"] = product["endAt"]
+    return entry
 
 
 def to_app_data(products: list, category_map: dict, publisher_id: str, token: str) -> list:
