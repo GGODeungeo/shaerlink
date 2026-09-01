@@ -109,44 +109,46 @@ function App() {
                   </span>
                   {activeLabel}
                 </button>
-                <div className="sort-bar__group" role="group" aria-label="정렬">
-                  {SORT_OPTIONS.map((option) => (
-                    <button
-                      key={option.key}
-                      type="button"
-                      className={
-                        sort === option.key ? 'sort-bar__item sort-bar__item--active' : 'sort-bar__item'
-                      }
-                      onClick={() => setSort(option.key)}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
               </div>
 
               {categoryMenuOpen && (
                 <div className="category-dropdown">
-                  {groups.map((group) => (
-                    <button
-                      key={group.label}
-                      type="button"
-                      className={
-                        group.label === activeLabel
-                          ? 'category-dropdown__item category-dropdown__item--active'
-                          : 'category-dropdown__item'
-                      }
-                      onClick={() => {
-                        setSelectedCategory(group.label);
-                        setCategoryMenuOpen(false);
-                      }}
-                    >
-                      <span className="tf" aria-hidden="true">
-                        {CATEGORY_EMOJI[group.label] ?? '🛍️'}
-                      </span>
-                      {group.label}
-                    </button>
-                  ))}
+                  <div className="category-dropdown__chips">
+                    {groups.map((group) => (
+                      <button
+                        key={group.label}
+                        type="button"
+                        className={
+                          group.label === activeLabel
+                            ? 'category-dropdown__item category-dropdown__item--active'
+                            : 'category-dropdown__item'
+                        }
+                        onClick={() => {
+                          setSelectedCategory(group.label);
+                          setCategoryMenuOpen(false);
+                        }}
+                      >
+                        <span className="tf" aria-hidden="true">
+                          {CATEGORY_EMOJI[group.label] ?? '🛍️'}
+                        </span>
+                        {group.label}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="sort-bar__group" role="group" aria-label="정렬">
+                    {SORT_OPTIONS.map((option) => (
+                      <button
+                        key={option.key}
+                        type="button"
+                        className={
+                          sort === option.key ? 'sort-bar__item sort-bar__item--active' : 'sort-bar__item'
+                        }
+                        onClick={() => setSort(option.key)}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
 
