@@ -68,6 +68,7 @@ function App() {
         <header className="page-header">
           <h1>반값 이상 특가</h1>
           <p className="page-header__subtitle">할인율 50% 초과 상품만 확인해서 골랐어요</p>
+          <p className="page-header__subtitle">배송 정보는 상품 페이지에서 확인할 수 있어요</p>
         </header>
 
         {state.status === 'loading' && <p className="state-message">불러오는 중...</p>}
