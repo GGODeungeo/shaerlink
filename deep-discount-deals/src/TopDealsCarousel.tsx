@@ -33,7 +33,9 @@ export function TopDealsCarousel({ products }: { products: Product[] }) {
         className="carousel__card"
         onClick={() => Device.openURL(product.shareLink)}
       >
-        <img src={product.imageUrl} alt="" className="carousel__image" />
+        <div className="carousel__image-wrap">
+          <img src={product.imageUrl} alt="" className="carousel__image" />
+        </div>
         <div className="carousel__info">
           <span className="carousel__discount">{product.discountRate}% 특가</span>
           <span className="carousel__price">{product.price.toLocaleString()}원</span>
