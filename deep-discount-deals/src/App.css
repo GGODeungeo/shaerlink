@@ -114,6 +114,13 @@
   text-overflow: ellipsis;
 }
 
+.carousel__cta {
+  margin-top: var(--space-1);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-subtitle);
+  color: var(--color-danger);
+}
+
 .carousel__dots {
   display: flex;
   justify-content: center;

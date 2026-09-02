@@ -6,10 +6,17 @@ const ROTATE_MS = 3500;
 const TOP_N = 5;
 
 export function TopDealsCarousel({ products }: { products: Product[] }) {
-  const topDeals = useMemo(
-    () => [...products].sort((a, b) => b.discountRate - a.discountRate).slice(0, TOP_N),
+  const [brokenImages, setBrokenImages] = useState<Set<string>>(new Set());
+
+  const sortedByDiscount = useMemo(
+    () => [...products].sort((a, b) => b.discountRate - a.discountRate),
     [products]
   );
+  const topDeals = useMemo(
+    () => sortedByDiscount.filter((p) => !brokenImages.has(p.shareLink)).slice(0, TOP_N),
+    [sortedByDiscount, brokenImages]
+  );
+
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -34,12 +41,20 @@ export function TopDealsCarousel({ products }: { products: Product[] }) {
         onClick={() => Device.openURL(product.shareLink)}
       >
         <div className="carousel__image-wrap">
-          <img src={product.imageUrl} alt="" className="carousel__image" />
+          <img
+            src={product.imageUrl}
+            alt=""
+            className="carousel__image"
+            onError={() =>
+              setBrokenImages((prev) => new Set(prev).add(product.shareLink))
+            }
+          />
         </div>
         <div className="carousel__info">
           <span className="carousel__discount">{product.discountRate}% 특가</span>
           <span className="carousel__price">{product.price.toLocaleString()}원</span>
           <span className="carousel__name">{title}</span>
+          <span className="carousel__cta">{product.discountRate}% 할인 중 · 지금 확인해보세요</span>
         </div>
       </button>
       <div className="carousel__dots">
