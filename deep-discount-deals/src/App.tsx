@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ProductCard } from './ProductCard';
 import { TopDealsCarousel } from './TopDealsCarousel';
+import { Search } from './components/icons';
 import type { Product } from './types';
 import './App.css';
 
@@ -44,6 +45,7 @@ function App() {
   const [state, setState] = useState<LoadState>({ status: 'loading' });
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sort, setSort] = useState<SortKey>('recommend');
+  const [search, setSearch] = useState('');
 
   const fetchProducts = () => {
     fetch(DATA_URL)
@@ -67,9 +69,16 @@ function App() {
       <div className="page-container">
         <header className="page-header">
           <h1>반값 이상 특가</h1>
-          <p className="page-header__subtitle">
-            할인율 50% 초과 상품만 골랐어요 · 배송 정보는 상품 페이지에서 확인하세요
-          </p>
+          <div className="search-bar">
+            <Search size={18} />
+            <input
+              type="text"
+              className="search-bar__input"
+              placeholder="상품명으로 검색"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
         </header>
 
         {state.status === 'loading' && <p className="state-message">불러오는 중...</p>}
@@ -83,12 +92,53 @@ function App() {
           </div>
         )}
 
-        {state.status === 'ready' && state.products.length === 0 && (
-          <p className="state-message">지금은 조건에 맞는 상품이 없어요.</p>
-        )}
+        {state.status === 'ready' && (() => {
+          const isSearching = search.trim().length > 0;
+          const filteredProducts = isSearching
+            ? state.products.filter((p) => p.name.toLowerCase().includes(search.trim().toLowerCase()))
+            : state.products;
 
-        {state.status === 'ready' && state.products.length > 0 && (() => {
-          const groups = groupByCategory(state.products);
+          if (filteredProducts.length === 0) {
+            return (
+              <p className="state-message">
+                {isSearching ? '검색 결과가 없어요.' : '지금은 조건에 맞는 상품이 없어요.'}
+              </p>
+            );
+          }
+
+          const sortRow = (
+            <div className="sort-row">
+              <div className="sort-bar__group" role="group" aria-label="정렬">
+                {SORT_OPTIONS.map((option) => (
+                  <button
+                    key={option.key}
+                    type="button"
+                    className={
+                      sort === option.key ? 'sort-bar__item sort-bar__item--active' : 'sort-bar__item'
+                    }
+                    onClick={() => setSort(option.key)}
+                  >
+                    <span className="sort-bar__item-label">{option.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+
+          if (isSearching) {
+            return (
+              <>
+                {sortRow}
+                <div className="product-grid">
+                  {sortProducts(filteredProducts, sort).map((product) => (
+                    <ProductCard key={product.shareLink} product={product} />
+                  ))}
+                </div>
+              </>
+            );
+          }
+
+          const groups = groupByCategory(filteredProducts);
           const activeLabel = selectedCategory ?? groups[0]?.label;
           const activeGroup = groups.find((g) => g.label === activeLabel);
           return (
@@ -112,22 +162,7 @@ function App() {
                 ))}
               </nav>
 
-              <div className="sort-row">
-                <div className="sort-bar__group" role="group" aria-label="정렬">
-                  {SORT_OPTIONS.map((option) => (
-                    <button
-                      key={option.key}
-                      type="button"
-                      className={
-                        sort === option.key ? 'sort-bar__item sort-bar__item--active' : 'sort-bar__item'
-                      }
-                      onClick={() => setSort(option.key)}
-                    >
-                      <span className="sort-bar__item-label">{option.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
+              {sortRow}
 
               <div className="product-grid">
                 {sortProducts(activeGroup?.products ?? [], sort).map((product) => (
