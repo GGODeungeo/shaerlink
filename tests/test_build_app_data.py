@@ -112,7 +112,28 @@ def test_to_app_data_sorts_by_discount_desc_and_skips_failed_link_issuance(monke
 
     monkeypatch.setattr(bad, "issue_link", fake_issue_link)
 
-    result = to_app_data(products, {}, "publisher-id", "token")
+    result = to_app_data(products, {}, "publisher-id", "token", {})
 
     assert [r["name"] for r in result] == ["높은할인", "낮은할인"]
     assert result[0]["shareLink"] == "https://toss.im/_m/3"
+
+
+def test_to_app_data_reuses_cached_link_instead_of_reissuing(monkeypatch):
+    product = {
+        "tacaItemId": 1,
+        "displayName": "캐시상품",
+        "displayPrice": 1000,
+        "discountRate": 70,
+        "thumbnailUrl": "https://a",
+        "categoryIds": [],
+    }
+
+    def fail_if_called(token, taca_item_id, publisher_id):
+        raise AssertionError("cached link should not be reissued")
+
+    monkeypatch.setattr(bad, "issue_link", fail_if_called)
+
+    link_cache = {"1": "https://toss.im/_m/cached"}
+    result = to_app_data([product], {}, "publisher-id", "token", link_cache)
+
+    assert result[0]["shareLink"] == "https://toss.im/_m/cached"

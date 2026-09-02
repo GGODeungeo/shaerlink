@@ -64,17 +64,21 @@ def get_top_level_category_map(token: str) -> dict:
     return id_to_root_name
 
 
-def get_top_level_category_ids(token: str) -> list:
+def get_category_ids(token: str, max_depth: int) -> list:
+    """categoryIds from the top-level roots (depth 1) down through max_depth.
+    Category counts grow fast with depth (16 / 182 / 1,359 / ...), so pick
+    max_depth based on how many best-categories calls the quota can afford."""
     roots = _get(token, "/categories")["success"]["categories"]
-    return [root["categoryId"] for root in roots]
+    ids = []
 
+    def walk(nodes, depth):
+        for node in nodes:
+            ids.append(node["categoryId"])
+            if depth < max_depth:
+                walk(node.get("children", []), depth + 1)
 
-def get_subcategory_ids(token: str) -> list:
-    """categoryIds one level below the 16 top-level roots - broader coverage
-    for best-categories lookups than the roots alone, without descending into
-    the thousands of leaf nodes further down the tree."""
-    roots = _get(token, "/categories")["success"]["categories"]
-    return [child["categoryId"] for root in roots for child in root.get("children", [])]
+    walk(roots, 1)
+    return ids
 
 
 def _paginate(token: str, path: str, size: int) -> list:
