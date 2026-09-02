@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Device } from '@apps-in-toss/web-framework';
 import type { Product } from './types';
 
@@ -27,10 +27,39 @@ export function TopDealsCarousel({ products }: { products: Product[] }) {
     return () => clearInterval(timer);
   }, [topDeals.length]);
 
+  const touchStartX = useRef<number | null>(null);
+  const didSwipe = useRef(false);
+  const SWIPE_THRESHOLD = 40;
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || topDeals.length <= 1) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (deltaX > SWIPE_THRESHOLD) {
+      didSwipe.current = true;
+      setIndex((current) => (current - 1 + topDeals.length) % topDeals.length);
+    } else if (deltaX < -SWIPE_THRESHOLD) {
+      didSwipe.current = true;
+      setIndex((current) => (current + 1) % topDeals.length);
+    }
+  };
+
   const product = topDeals[index];
   if (!product) return null;
 
   const [title] = product.name.split(', ');
+
+  const handleClick = () => {
+    if (didSwipe.current) {
+      didSwipe.current = false;
+      return;
+    }
+    Device.openURL(product.shareLink);
+  };
 
   return (
     <div className="carousel">
@@ -38,7 +67,9 @@ export function TopDealsCarousel({ products }: { products: Product[] }) {
       <button
         type="button"
         className="carousel__card"
-        onClick={() => Device.openURL(product.shareLink)}
+        onClick={handleClick}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         <div className="carousel__image-wrap">
           <img
