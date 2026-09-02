@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 
 from sharelink_api import (
+    ShareLinkAPIError,
     get_access_token,
     get_best_category_products,
     get_best_selling_products,
@@ -92,6 +93,12 @@ def main():
     for category_id in get_category_ids(token, CATEGORY_DEPTH):
         try:
             all_products.extend(get_best_category_products(token, category_id))
+        except ShareLinkAPIError as e:
+            if e.error_code == "SHARELINK_OPENAPI_QUOTA_EXCEEDED":
+                print("API 요청 한도 초과, 남은 카테고리 조회 중단", file=sys.stderr)
+                break
+            print(f"카테고리 {category_id} 조회 실패, 건너뜀: {e}", file=sys.stderr)
+            continue
         except Exception as e:
             print(f"카테고리 {category_id} 조회 실패, 건너뜀: {e}", file=sys.stderr)
             continue

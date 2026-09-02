@@ -37,12 +37,22 @@ def get_access_token() -> str:
         return json.load(resp)["access_token"]
 
 
+class ShareLinkAPIError(Exception):
+    def __init__(self, error_code: str, reason: str):
+        self.error_code = error_code
+        super().__init__(reason)
+
+
 def _get(token: str, path: str) -> dict:
     req = urllib.request.Request(
         f"{API_BASE}{path}", headers={"Authorization": f"Bearer {token}"}
     )
     with urllib.request.urlopen(req, timeout=30) as resp:
-        return json.load(resp)
+        body = json.load(resp)
+    if body.get("resultType") == "FAIL":
+        error = body.get("error", {})
+        raise ShareLinkAPIError(error.get("errorCode", ""), error.get("reason", ""))
+    return body
 
 
 def get_top_level_category_map(token: str) -> dict:
@@ -65,19 +75,17 @@ def get_top_level_category_map(token: str) -> dict:
 
 
 def get_category_ids(token: str, max_depth: int) -> list:
-    """categoryIds from the top-level roots (depth 1) down through max_depth.
-    Category counts grow fast with depth (16 / 182 / 1,359 / ...), so pick
-    max_depth based on how many best-categories calls the quota can afford."""
+    """categoryIds ordered breadth-first: every depth-1 id, then every depth-2
+    id, and so on through max_depth. Category counts grow fast with depth
+    (16 / 182 / 1,359 / ...), and a quota cutoff can hit mid-run - breadth
+    order means a cutoff only ever drops the deepest, priciest level instead
+    of an arbitrary partial slice of shallow levels too."""
     roots = _get(token, "/categories")["success"]["categories"]
     ids = []
-
-    def walk(nodes, depth):
-        for node in nodes:
-            ids.append(node["categoryId"])
-            if depth < max_depth:
-                walk(node.get("children", []), depth + 1)
-
-    walk(roots, 1)
+    level = roots
+    for _ in range(max_depth):
+        ids.extend(node["categoryId"] for node in level)
+        level = [child for node in level for child in node.get("children", [])]
     return ids
 
 
