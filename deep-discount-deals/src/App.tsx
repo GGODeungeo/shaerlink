@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Menu } from './components/icons';
-import { CATEGORY_EMOJI } from './categoryEmoji';
 import { ProductCard } from './ProductCard';
 import { TopDealsCarousel } from './TopDealsCarousel';
 import type { Product } from './types';
@@ -46,7 +44,6 @@ function App() {
   const [state, setState] = useState<LoadState>({ status: 'loading' });
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sort, setSort] = useState<SortKey>('recommend');
-  const [categoryMenuOpen, setCategoryMenuOpen] = useState(false);
 
   const fetchProducts = () => {
     fetch(DATA_URL)
@@ -98,62 +95,39 @@ function App() {
             <>
               <TopDealsCarousel products={state.products} />
 
-              <div className="toolbar">
-                <button
-                  type="button"
-                  className="toolbar__trigger"
-                  onClick={() => setCategoryMenuOpen((open) => !open)}
-                  aria-expanded={categoryMenuOpen}
-                  aria-label="카테고리 선택"
-                >
-                  <Menu size={20} />
-                  <span className="tf" aria-hidden="true">
-                    {CATEGORY_EMOJI[activeLabel] ?? '🛍️'}
-                  </span>
-                  {activeLabel}
-                </button>
-              </div>
+              <nav className="category-tabs" aria-label="카테고리">
+                {groups.map((group) => (
+                  <button
+                    key={group.label}
+                    type="button"
+                    className={
+                      group.label === activeLabel
+                        ? 'category-tabs__item category-tabs__item--active'
+                        : 'category-tabs__item'
+                    }
+                    onClick={() => setSelectedCategory(group.label)}
+                  >
+                    {group.label}
+                  </button>
+                ))}
+              </nav>
 
-              {categoryMenuOpen && (
-                <div className="category-dropdown">
-                  <div className="category-dropdown__chips">
-                    {groups.map((group) => (
-                      <button
-                        key={group.label}
-                        type="button"
-                        className={
-                          group.label === activeLabel
-                            ? 'category-dropdown__item category-dropdown__item--active'
-                            : 'category-dropdown__item'
-                        }
-                        onClick={() => {
-                          setSelectedCategory(group.label);
-                          setCategoryMenuOpen(false);
-                        }}
-                      >
-                        <span className="tf" aria-hidden="true">
-                          {CATEGORY_EMOJI[group.label] ?? '🛍️'}
-                        </span>
-                        {group.label}
-                      </button>
-                    ))}
-                  </div>
-                  <div className="sort-bar__group" role="group" aria-label="정렬">
-                    {SORT_OPTIONS.map((option) => (
-                      <button
-                        key={option.key}
-                        type="button"
-                        className={
-                          sort === option.key ? 'sort-bar__item sort-bar__item--active' : 'sort-bar__item'
-                        }
-                        onClick={() => setSort(option.key)}
-                      >
-                        <span className="sort-bar__item-label">{option.label}</span>
-                      </button>
-                    ))}
-                  </div>
+              <div className="sort-row">
+                <div className="sort-bar__group" role="group" aria-label="정렬">
+                  {SORT_OPTIONS.map((option) => (
+                    <button
+                      key={option.key}
+                      type="button"
+                      className={
+                        sort === option.key ? 'sort-bar__item sort-bar__item--active' : 'sort-bar__item'
+                      }
+                      onClick={() => setSort(option.key)}
+                    >
+                      <span className="sort-bar__item-label">{option.label}</span>
+                    </button>
+                  ))}
                 </div>
-              )}
+              </div>
 
               <div className="product-grid">
                 {sortProducts(activeGroup?.products ?? [], sort).map((product) => (
