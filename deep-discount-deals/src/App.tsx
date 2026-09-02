@@ -173,22 +173,6 @@ function App() {
             <>
               <TopDealsCarousel products={state.products} onSelect={setSelectedProduct} />
 
-              <div className="category-cards">
-                {groups.map((group) => (
-                  <button
-                    key={group.label}
-                    type="button"
-                    className="category-cards__item"
-                    onClick={() => {
-                      Analytics.click({ log_name: 'category_card_click', category: group.label });
-                      selectCategory(group.label);
-                    }}
-                  >
-                    {group.label}
-                  </button>
-                ))}
-              </div>
-
               <nav className="category-tabs" aria-label="카테고리">
                 {groups.map((group) => (
                   <button

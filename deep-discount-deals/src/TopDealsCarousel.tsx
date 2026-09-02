@@ -3,7 +3,9 @@ import { Analytics } from '@apps-in-toss/web-framework';
 import type { Product } from './types';
 
 const ROTATE_MS = 3500;
-const TOP_N = 5;
+const POOL_MIN_DISCOUNT = 80;
+const POOL_SIZE = 20;
+const GROUP_SIZE = 5;
 
 export function TopDealsCarousel({
   products,
@@ -14,13 +16,28 @@ export function TopDealsCarousel({
 }) {
   const [brokenImages, setBrokenImages] = useState<Set<string>>(new Set());
 
-  const sortedByDiscount = useMemo(
-    () => [...products].sort((a, b) => b.discountRate - a.discountRate),
+  const pool = useMemo(
+    () =>
+      [...products]
+        .filter((p) => p.discountRate >= POOL_MIN_DISCOUNT)
+        .sort((a, b) => b.discountRate - a.discountRate)
+        .slice(0, POOL_SIZE),
     [products]
   );
+
+  const chunks = useMemo(() => {
+    const result: Product[][] = [];
+    for (let i = 0; i < pool.length; i += GROUP_SIZE) {
+      result.push(pool.slice(i, i + GROUP_SIZE));
+    }
+    return result;
+  }, [pool]);
+
+  const [chunkIndex] = useState(() => Math.floor(Math.random() * Math.max(chunks.length, 1)));
+
   const topDeals = useMemo(
-    () => sortedByDiscount.filter((p) => !brokenImages.has(p.shareLink)).slice(0, TOP_N),
-    [sortedByDiscount, brokenImages]
+    () => (chunks[chunkIndex] ?? []).filter((p) => !brokenImages.has(p.shareLink)),
+    [chunks, chunkIndex, brokenImages]
   );
 
   const [index, setIndex] = useState(0);
