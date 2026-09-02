@@ -12,8 +12,8 @@ export function PurchaseSheet({
   const [title] = product.name.split(', ');
 
   const handleConfirm = () => {
-    Device.openURL(product.shareLink);
     onClose();
+    Device.openURL(product.shareLink);
   };
 
   return (
