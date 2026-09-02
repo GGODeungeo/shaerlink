@@ -1,11 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Device } from '@apps-in-toss/web-framework';
+import { Analytics } from '@apps-in-toss/web-framework';
 import type { Product } from './types';
 
 const ROTATE_MS = 3500;
 const TOP_N = 5;
 
-export function TopDealsCarousel({ products }: { products: Product[] }) {
+export function TopDealsCarousel({
+  products,
+  onSelect,
+}: {
+  products: Product[];
+  onSelect: (product: Product) => void;
+}) {
   const [brokenImages, setBrokenImages] = useState<Set<string>>(new Set());
 
   const sortedByDiscount = useMemo(
@@ -58,7 +64,14 @@ export function TopDealsCarousel({ products }: { products: Product[] }) {
       didSwipe.current = false;
       return;
     }
-    Device.openURL(product.shareLink);
+    Analytics.click({
+      log_name: 'top_deal_card_click',
+      product_name: product.name,
+      product_category: product.category,
+      discount_rate: product.discountRate,
+      price: product.price,
+    });
+    onSelect(product);
   };
 
   return (
@@ -76,6 +89,7 @@ export function TopDealsCarousel({ products }: { products: Product[] }) {
             src={product.imageUrl}
             alt=""
             className="carousel__image"
+            decoding="async"
             onError={() =>
               setBrokenImages((prev) => new Set(prev).add(product.shareLink))
             }

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Analytics } from '@apps-in-toss/web-framework';
 import { ProductCard } from './ProductCard';
 import { TopDealsCarousel } from './TopDealsCarousel';
+import { PurchaseSheet } from './PurchaseSheet';
 import { Search } from './components/icons';
 import type { Product } from './types';
 import './App.css';
@@ -46,6 +48,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sort, setSort] = useState<SortKey>('recommend');
   const [search, setSearch] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const fetchProducts = () => {
     fetch(DATA_URL)
@@ -131,7 +134,11 @@ function App() {
                 {sortRow}
                 <div className="product-grid">
                   {sortProducts(filteredProducts, sort).map((product) => (
-                    <ProductCard key={product.shareLink} product={product} />
+                    <ProductCard
+                      key={product.shareLink}
+                      product={product}
+                      onSelect={setSelectedProduct}
+                    />
                   ))}
                 </div>
               </>
@@ -143,7 +150,7 @@ function App() {
           const activeGroup = groups.find((g) => g.label === activeLabel);
           return (
             <>
-              <TopDealsCarousel products={state.products} />
+              <TopDealsCarousel products={state.products} onSelect={setSelectedProduct} />
 
               <nav className="category-tabs" aria-label="카테고리">
                 {groups.map((group) => (
@@ -155,7 +162,10 @@ function App() {
                         ? 'category-tabs__item category-tabs__item--active'
                         : 'category-tabs__item'
                     }
-                    onClick={() => setSelectedCategory(group.label)}
+                    onClick={() => {
+                      Analytics.click({ log_name: 'category_tab_click', category: group.label });
+                      setSelectedCategory(group.label);
+                    }}
                   >
                     {group.label}
                   </button>
@@ -166,7 +176,11 @@ function App() {
 
               <div className="product-grid">
                 {sortProducts(activeGroup?.products ?? [], sort).map((product) => (
-                  <ProductCard key={product.shareLink} product={product} />
+                  <ProductCard
+                    key={product.shareLink}
+                    product={product}
+                    onSelect={setSelectedProduct}
+                  />
                 ))}
               </div>
             </>
@@ -177,6 +191,10 @@ function App() {
           이 앱은 토스쇼핑 파트너스 활동의 일환으로, 상품 구매 시 일정액의 수수료를 제공받습니다.
         </p>
       </div>
+
+      {selectedProduct && (
+        <PurchaseSheet product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Device } from '@apps-in-toss/web-framework';
+import { Analytics } from '@apps-in-toss/web-framework';
 import type { Product } from './types';
 
 function dealCountdownLabel(dealEndsAt: string | undefined): string | null {
@@ -11,9 +11,22 @@ function dealCountdownLabel(dealEndsAt: string | undefined): string | null {
   return `${minutesLeft}분 후 종료`;
 }
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({
+  product,
+  onSelect,
+}: {
+  product: Product;
+  onSelect: (product: Product) => void;
+}) {
   const handleOpen = () => {
-    Device.openURL(product.shareLink);
+    Analytics.click({
+      log_name: 'product_card_click',
+      product_name: product.name,
+      product_category: product.category,
+      discount_rate: product.discountRate,
+      price: product.price,
+    });
+    onSelect(product);
   };
 
   const [title, ...specs] = product.name.split(', ');
@@ -22,7 +35,13 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <button type="button" className="product-card" onClick={handleOpen}>
       <div className="product-card__image-wrap">
-        <img src={product.imageUrl} alt="" className="product-card__image" />
+        <img
+          src={product.imageUrl}
+          alt=""
+          className="product-card__image"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
       <div className="product-card__badges">
         <span className="product-card__badge">{product.discountRate}% 특가</span>
