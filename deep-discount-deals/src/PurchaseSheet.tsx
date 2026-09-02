@@ -1,4 +1,4 @@
-import { Device } from '@apps-in-toss/web-framework';
+import { Analytics, Device } from '@apps-in-toss/web-framework';
 import { Close } from './components/icons';
 import type { Product } from './types';
 
@@ -12,6 +12,13 @@ export function PurchaseSheet({
   const [title] = product.name.split(', ');
 
   const handleConfirm = () => {
+    Analytics.click({
+      log_name: 'purchase_cta_click',
+      product_name: product.name,
+      product_category: product.category,
+      discount_rate: product.discountRate,
+      price: product.price,
+    });
     onClose();
     Device.openURL(product.shareLink);
   };

@@ -35,6 +35,8 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: 'price', label: '낮은 가격순' },
 ];
 
+const PAGE_SIZE = 20;
+
 function sortProducts(products: Product[], sort: SortKey) {
   return [...products].sort((a, b) => {
     if (sort === 'discount') return b.discountRate - a.discountRate;
@@ -49,6 +51,12 @@ function App() {
   const [sort, setSort] = useState<SortKey>('recommend');
   const [search, setSearch] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  const selectCategory = (label: string) => {
+    setSelectedCategory(label);
+    setVisibleCount(PAGE_SIZE);
+  };
 
   const fetchProducts = () => {
     fetch(DATA_URL)
@@ -79,7 +87,7 @@ function App() {
               className="search-bar__input"
               placeholder="상품명으로 검색"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => { setSearch(e.target.value); setVisibleCount(PAGE_SIZE); }}
             />
           </div>
         </header>
@@ -119,7 +127,7 @@ function App() {
                     className={
                       sort === option.key ? 'sort-bar__item sort-bar__item--active' : 'sort-bar__item'
                     }
-                    onClick={() => setSort(option.key)}
+                    onClick={() => { setSort(option.key); setVisibleCount(PAGE_SIZE); }}
                   >
                     <span className="sort-bar__item-label">{option.label}</span>
                   </button>
@@ -129,11 +137,13 @@ function App() {
           );
 
           if (isSearching) {
+            const sorted = sortProducts(filteredProducts, sort);
+            const visible = sorted.slice(0, visibleCount);
             return (
               <>
                 {sortRow}
                 <div className="product-grid">
-                  {sortProducts(filteredProducts, sort).map((product) => (
+                  {visible.map((product) => (
                     <ProductCard
                       key={product.shareLink}
                       product={product}
@@ -141,6 +151,15 @@ function App() {
                     />
                   ))}
                 </div>
+                {visible.length < sorted.length && (
+                  <button
+                    type="button"
+                    className="load-more-button"
+                    onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+                  >
+                    더보기
+                  </button>
+                )}
               </>
             );
           }
@@ -148,9 +167,27 @@ function App() {
           const groups = groupByCategory(filteredProducts);
           const activeLabel = selectedCategory ?? groups[0]?.label;
           const activeGroup = groups.find((g) => g.label === activeLabel);
+          const sortedActive = sortProducts(activeGroup?.products ?? [], sort);
+          const visibleActive = sortedActive.slice(0, visibleCount);
           return (
             <>
               <TopDealsCarousel products={state.products} onSelect={setSelectedProduct} />
+
+              <div className="category-cards">
+                {groups.map((group) => (
+                  <button
+                    key={group.label}
+                    type="button"
+                    className="category-cards__item"
+                    onClick={() => {
+                      Analytics.click({ log_name: 'category_card_click', category: group.label });
+                      selectCategory(group.label);
+                    }}
+                  >
+                    {group.label}
+                  </button>
+                ))}
+              </div>
 
               <nav className="category-tabs" aria-label="카테고리">
                 {groups.map((group) => (
@@ -164,7 +201,7 @@ function App() {
                     }
                     onClick={() => {
                       Analytics.click({ log_name: 'category_tab_click', category: group.label });
-                      setSelectedCategory(group.label);
+                      selectCategory(group.label);
                     }}
                   >
                     {group.label}
@@ -175,7 +212,7 @@ function App() {
               {sortRow}
 
               <div className="product-grid">
-                {sortProducts(activeGroup?.products ?? [], sort).map((product) => (
+                {visibleActive.map((product) => (
                   <ProductCard
                     key={product.shareLink}
                     product={product}
@@ -183,6 +220,15 @@ function App() {
                   />
                 ))}
               </div>
+              {visibleActive.length < sortedActive.length && (
+                <button
+                  type="button"
+                  className="load-more-button"
+                  onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+                >
+                  더보기
+                </button>
+              )}
             </>
           );
         })()}
