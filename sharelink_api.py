@@ -69,6 +69,14 @@ def get_top_level_category_ids(token: str) -> list:
     return [root["categoryId"] for root in roots]
 
 
+def get_subcategory_ids(token: str) -> list:
+    """categoryIds one level below the 16 top-level roots - broader coverage
+    for best-categories lookups than the roots alone, without descending into
+    the thousands of leaf nodes further down the tree."""
+    roots = _get(token, "/categories")["success"]["categories"]
+    return [child["categoryId"] for root in roots for child in root.get("children", [])]
+
+
 def _paginate(token: str, path: str, size: int) -> list:
     items = []
     cursor = None

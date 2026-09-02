@@ -7,6 +7,7 @@ from sharelink_api import (
     get_access_token,
     get_best_category_products,
     get_best_selling_products,
+    get_subcategory_ids,
     get_today_deals,
     get_top_level_category_ids,
     get_top_level_category_map,
@@ -70,7 +71,8 @@ def main():
 
     all_products = list(get_today_deals(token))
     all_products.extend(get_best_selling_products(token))
-    for category_id in get_top_level_category_ids(token):
+    category_ids = get_top_level_category_ids(token) + get_subcategory_ids(token)
+    for category_id in category_ids:
         all_products.extend(get_best_category_products(token, category_id))
 
     merged = merge_unique(all_products)
