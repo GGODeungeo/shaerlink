@@ -3,7 +3,8 @@ import { Analytics } from '@apps-in-toss/web-framework';
 import { ProductCard } from './ProductCard';
 import { TopDealsCarousel } from './TopDealsCarousel';
 import { PurchaseSheet } from './PurchaseSheet';
-import { ChevronLeft, Search } from './components/icons';
+import { ChevronLeft, Heart, Search } from './components/icons';
+import { useFavorites } from './useFavorites';
 import type { Product } from './types';
 import './App.css';
 
@@ -73,9 +74,23 @@ function App() {
   const [search, setSearch] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [viewingFavorites, setViewingFavorites] = useState(false);
+  const { favorites, toggleFavorite } = useFavorites();
 
   const selectCategory = (label: string) => {
     setSelectedCategory(label);
+    setViewingFavorites(false);
+    setVisibleCount(PAGE_SIZE);
+  };
+
+  const openFavorites = () => {
+    Analytics.click({ log_name: 'favorites_nav_click', favorite_count: favorites.size });
+    setViewingFavorites(true);
+    setVisibleCount(PAGE_SIZE);
+  };
+
+  const closeFavorites = () => {
+    setViewingFavorites(false);
     setVisibleCount(PAGE_SIZE);
   };
 
@@ -100,7 +115,18 @@ function App() {
     <div className="canvas bg-canvas">
       <div className="page-container">
         <header className="page-header">
-          <h1>반값 이상 특가</h1>
+          <div className="page-header__row">
+            <h1>반값 이상 특가</h1>
+            <button
+              type="button"
+              className="favorites-nav-button"
+              data-active={favorites.size > 0}
+              aria-label="찜한 상품"
+              onClick={openFavorites}
+            >
+              <Heart size={22} filled={favorites.size > 0} />
+            </button>
+          </div>
           <div className="search-bar">
             <Search size={18} />
             <input
@@ -169,6 +195,8 @@ function App() {
                       key={product.shareLink}
                       product={product}
                       onSelect={setSelectedProduct}
+                      isFavorite={favorites.has(product.shareLink)}
+                      onToggleFavorite={toggleFavorite}
                     />
                   ))}
                 </div>
@@ -180,6 +208,47 @@ function App() {
                   >
                     더보기
                   </button>
+                )}
+              </>
+            );
+          }
+
+          if (viewingFavorites) {
+            const favoriteProducts = state.products.filter((p) => favorites.has(p.shareLink));
+            const sortedFavorites = sortProducts(favoriteProducts, sort);
+            const visibleFavorites = sortedFavorites.slice(0, visibleCount);
+            return (
+              <>
+                <button type="button" className="back-to-home" onClick={closeFavorites}>
+                  <ChevronLeft size={16} /> 홈
+                </button>
+
+                {favoriteProducts.length === 0 ? (
+                  <p className="state-message">아직 찜한 상품이 없어요.</p>
+                ) : (
+                  <>
+                    {sortRow}
+                    <div className="product-grid">
+                      {visibleFavorites.map((product) => (
+                        <ProductCard
+                          key={product.shareLink}
+                          product={product}
+                          onSelect={setSelectedProduct}
+                          isFavorite
+                          onToggleFavorite={toggleFavorite}
+                        />
+                      ))}
+                    </div>
+                    {visibleFavorites.length < sortedFavorites.length && (
+                      <button
+                        type="button"
+                        className="load-more-button"
+                        onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+                      >
+                        더보기
+                      </button>
+                    )}
+                  </>
                 )}
               </>
             );
@@ -239,6 +308,8 @@ function App() {
                             key={product.shareLink}
                             product={product}
                             onSelect={setSelectedProduct}
+                            isFavorite={favorites.has(product.shareLink)}
+                            onToggleFavorite={toggleFavorite}
                           />
                         ))}
                     </div>
@@ -285,6 +356,8 @@ function App() {
                     key={product.shareLink}
                     product={product}
                     onSelect={setSelectedProduct}
+                    isFavorite={favorites.has(product.shareLink)}
+                    onToggleFavorite={toggleFavorite}
                   />
                 ))}
               </div>

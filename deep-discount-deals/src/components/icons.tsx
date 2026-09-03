@@ -100,6 +100,24 @@ export function Close({ size = '1em' }: IconProps) {
   );
 }
 
+export function Heart({ size = '1em', filled = false }: IconProps & { filled?: boolean }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill={filled ? 'currentColor' : 'none'}
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M12 20.5 C12 20.5 3.5 15.4 3.5 9.5 C3.5 6.5 5.8 4.3 8.6 4.3 C10.2 4.3 11.3 5.1 12 6.1 C12.7 5.1 13.8 4.3 15.4 4.3 C18.2 4.3 20.5 6.5 20.5 9.5 C20.5 15.4 12 20.5 12 20.5 Z" />
+    </svg>
+  );
+}
+
 export function Search({ size = '1em' }: IconProps) {
   return (
     <svg
