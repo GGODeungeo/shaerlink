@@ -1,11 +1,32 @@
 import json
 import os
+import random
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
 
 TOKEN_URL = "https://oauth2.cert.toss.im/token"
 API_BASE = "https://sharelink.toss.im/openapi"
+RETRY_ATTEMPTS = 3
+RETRY_DELAY_SECONDS = 1
+
+
+def _urlopen(req: urllib.request.Request):
+    """urlopen with retries for transient network errors (e.g. the DNS
+    resolution hiccups seen mid-run) - a fresh attempt seconds later usually
+    just works, so this alone recovers most of what used to be permanently
+    skipped for the day."""
+    last_error = None
+    for attempt in range(RETRY_ATTEMPTS):
+        try:
+            return urllib.request.urlopen(req, timeout=30)
+        except urllib.error.URLError as e:
+            last_error = e
+            if attempt < RETRY_ATTEMPTS - 1:
+                time.sleep(RETRY_DELAY_SECONDS)
+    raise last_error
 
 
 def _load_dotenv(path: str = ".env") -> None:
@@ -33,7 +54,7 @@ def get_access_token() -> str:
         }
     ).encode()
     req = urllib.request.Request(TOKEN_URL, data=data, method="POST")
-    with urllib.request.urlopen(req, timeout=30) as resp:
+    with _urlopen(req) as resp:
         return json.load(resp)["access_token"]
 
 
@@ -47,7 +68,7 @@ def _get(token: str, path: str) -> dict:
     req = urllib.request.Request(
         f"{API_BASE}{path}", headers={"Authorization": f"Bearer {token}"}
     )
-    with urllib.request.urlopen(req, timeout=30) as resp:
+    with _urlopen(req) as resp:
         body = json.load(resp)
     if body.get("resultType") == "FAIL":
         error = body.get("error", {})
@@ -79,11 +100,16 @@ def get_category_ids(token: str, max_depth: int) -> list:
     id, and so on through max_depth. Category counts grow fast with depth
     (16 / 182 / 1,359 / ...), and a quota cutoff can hit mid-run - breadth
     order means a cutoff only ever drops the deepest, priciest level instead
-    of an arbitrary partial slice of shallow levels too."""
+    of an arbitrary partial slice of shallow levels too.
+
+    Each level's node order is shuffled before use, so a cutoff mid-level
+    lands on different categories run to run instead of always favoring
+    whichever categories the API happens to list first."""
     roots = _get(token, "/categories")["success"]["categories"]
     ids = []
     level = roots
     for _ in range(max_depth):
+        random.shuffle(level)
         ids.extend(node["categoryId"] for node in level)
         level = [child for node in level for child in node.get("children", [])]
     return ids
@@ -124,5 +150,5 @@ def issue_link(token: str, taca_item_id: int, publisher_id: str) -> str:
         method="POST",
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
     )
-    with urllib.request.urlopen(req, timeout=30) as resp:
+    with _urlopen(req) as resp:
         return json.load(resp)["success"]["shortUrl"]
