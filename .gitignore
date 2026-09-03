@@ -1,6 +1,4 @@
 __pycache__/
 *.pyc
-output/
-browser-profile/
 .env
 .DS_Store
