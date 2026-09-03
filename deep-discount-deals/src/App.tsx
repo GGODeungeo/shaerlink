@@ -5,6 +5,7 @@ import { TopDealsCarousel } from './TopDealsCarousel';
 import { PurchaseSheet } from './PurchaseSheet';
 import { ChevronLeft, Heart, Search } from './components/icons';
 import { useFavorites } from './useFavorites';
+import { useRecentlyViewed } from './useRecentlyViewed';
 import type { Product } from './types';
 import './App.css';
 
@@ -76,6 +77,12 @@ function App() {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [viewingFavorites, setViewingFavorites] = useState(false);
   const { favorites, toggleFavorite } = useFavorites();
+  const { recentIds, recordView } = useRecentlyViewed();
+
+  const handleSelectProduct = (product: Product) => {
+    recordView(product.shareLink);
+    setSelectedProduct(product);
+  };
 
   const selectCategory = (label: string) => {
     setSelectedCategory(label);
@@ -194,7 +201,7 @@ function App() {
                     <ProductCard
                       key={product.shareLink}
                       product={product}
-                      onSelect={setSelectedProduct}
+                      onSelect={handleSelectProduct}
                       isFavorite={favorites.has(product.shareLink)}
                       onToggleFavorite={toggleFavorite}
                     />
@@ -233,7 +240,7 @@ function App() {
                         <ProductCard
                           key={product.shareLink}
                           product={product}
-                          onSelect={setSelectedProduct}
+                          onSelect={handleSelectProduct}
                           isFavorite
                           onToggleFavorite={toggleFavorite}
                         />
@@ -257,11 +264,35 @@ function App() {
           const groups = groupByCategory(filteredProducts);
 
           if (selectedCategory === null) {
+            const productByLink = new Map(state.products.map((p) => [p.shareLink, p]));
+            const recentProducts = recentIds
+              .map((id) => productByLink.get(id))
+              .filter((p): p is Product => p !== undefined);
+
             return (
               <>
-                <TopDealsCarousel products={state.products} onSelect={setSelectedProduct} />
+                <TopDealsCarousel products={state.products} onSelect={handleSelectProduct} />
 
                 <p className="daily-update-notice">매일 아침 10시, 더 많은 특가가 추가돼요</p>
+
+                {recentProducts.length > 0 && (
+                  <div className="category-shelf">
+                    <div className="category-shelf__header">
+                      <span className="category-shelf__title">최근 본 상품</span>
+                    </div>
+                    <div className="category-shelf__list">
+                      {recentProducts.map((product) => (
+                        <ProductCard
+                          key={product.shareLink}
+                          product={product}
+                          onSelect={handleSelectProduct}
+                          isFavorite={favorites.has(product.shareLink)}
+                          onToggleFavorite={toggleFavorite}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div className="category-grid">
                   {groups.map((group) => (
@@ -307,7 +338,7 @@ function App() {
                           <ProductCard
                             key={product.shareLink}
                             product={product}
-                            onSelect={setSelectedProduct}
+                            onSelect={handleSelectProduct}
                             isFavorite={favorites.has(product.shareLink)}
                             onToggleFavorite={toggleFavorite}
                           />
@@ -355,7 +386,7 @@ function App() {
                   <ProductCard
                     key={product.shareLink}
                     product={product}
-                    onSelect={setSelectedProduct}
+                    onSelect={handleSelectProduct}
                     isFavorite={favorites.has(product.shareLink)}
                     onToggleFavorite={toggleFavorite}
                   />
