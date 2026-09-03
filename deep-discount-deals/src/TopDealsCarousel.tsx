@@ -20,7 +20,7 @@ export function TopDealsCarousel({
     () =>
       [...products]
         .filter((p) => p.discountRate >= POOL_MIN_DISCOUNT)
-        .sort((a, b) => b.discountRate - a.discountRate)
+        .sort((a, b) => b.reviewCount - a.reviewCount)
         .slice(0, POOL_SIZE),
     [products]
   );

@@ -192,6 +192,8 @@ function App() {
               <>
                 <TopDealsCarousel products={state.products} onSelect={setSelectedProduct} />
 
+                <p className="daily-update-notice">매일 아침 10시, 더 많은 특가가 추가돼요</p>
+
                 <div className="category-grid">
                   {groups.map((group) => (
                     <button
@@ -230,7 +232,7 @@ function App() {
                       </button>
                     </div>
                     <div className="category-shelf__list">
-                      {sortProducts(group.products, 'price')
+                      {sortProducts(group.products, 'recommend')
                         .slice(0, SHELF_SIZE)
                         .map((product) => (
                           <ProductCard

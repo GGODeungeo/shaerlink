@@ -6,13 +6,13 @@
 }
 
 .page-header {
-  padding: var(--space-4) var(--space-4) var(--space-2);
+  padding: var(--space-5) var(--space-4) var(--space-3);
 }
 
 .page-header h1 {
   margin: 0;
-  font-size: var(--font-size-title);
-  font-weight: var(--font-weight-title);
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-display);
   color: var(--color-text-strong);
 }
 
@@ -81,7 +81,7 @@
   width: 100%;
   padding: 0;
   border: none;
-  border-radius: 12px;
+  border-radius: 16px;
   background: var(--color-bg);
   text-align: left;
   cursor: pointer;
@@ -179,6 +179,7 @@
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   gap: var(--space-4);
   margin: var(--space-3) 0 0;
@@ -234,7 +235,7 @@
 }
 
 .category-grid__emoji {
-  font-size: 28px;
+  font-size: 30px;
   line-height: 1;
 }
 
@@ -249,7 +250,7 @@
 }
 
 .category-shelf {
-  margin-top: var(--space-5);
+  margin-top: var(--space-6);
 }
 
 .category-shelf__header {
@@ -282,9 +283,10 @@
 .category-shelf__list {
   display: flex;
   gap: var(--space-2);
-  margin-top: var(--space-2);
+  margin-top: var(--space-3);
   padding: 0 var(--space-3);
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
 
@@ -379,7 +381,7 @@
   gap: 0;
   padding: 0;
   border: none;
-  border-radius: 12px;
+  border-radius: 16px;
   background: var(--color-bg);
   text-align: left;
   cursor: pointer;
@@ -466,6 +468,15 @@
   margin: var(--space-4) var(--space-3) 0;
   padding-bottom: calc(var(--space-4) + 34px);
   font-size: var(--font-size-caption);
+  color: var(--color-text-subtle);
+  text-align: center;
+  word-break: keep-all;
+}
+
+.daily-update-notice {
+  margin: var(--space-3) var(--space-3) 0;
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-subtitle);
   color: var(--color-text-subtle);
   text-align: center;
   word-break: keep-all;
