@@ -3,12 +3,33 @@ import { Analytics } from '@apps-in-toss/web-framework';
 import { ProductCard } from './ProductCard';
 import { TopDealsCarousel } from './TopDealsCarousel';
 import { PurchaseSheet } from './PurchaseSheet';
-import { Search } from './components/icons';
+import { ChevronLeft, Search } from './components/icons';
 import type { Product } from './types';
 import './App.css';
 
 const DATA_URL =
   'https://raw.githubusercontent.com/GGODeungeo/shaerlink/main/app-data/products.json';
+
+const CATEGORY_EMOJI: Record<string, string> = {
+  '식품': '🍎',
+  '가구/홈데코': '🛋️',
+  '가전/디지털': '📱',
+  '뷰티': '💄',
+  '생활용품': '🧻',
+  '스포츠/레져': '⚽',
+  '자동차용품': '🚗',
+  '주방용품': '🍳',
+  '완구/취미': '🧸',
+  '반려/애완용품': '🐾',
+  '패션의류잡화': '👕',
+  '문구/오피스': '📎',
+  '음반/DVD': '💿',
+  '출산/유아동': '🍼',
+  '도서': '📚',
+  '여행/취미': '✈️',
+};
+const DEFAULT_CATEGORY_EMOJI = '🏷️';
+const SHELF_SIZE = 10;
 
 function groupByCategory(products: Product[]) {
   const byCategory = new Map<string, Product[]>();
@@ -165,13 +186,74 @@ function App() {
           }
 
           const groups = groupByCategory(filteredProducts);
-          const activeLabel = selectedCategory ?? groups[0]?.label;
-          const activeGroup = groups.find((g) => g.label === activeLabel);
+
+          if (selectedCategory === null) {
+            return (
+              <>
+                <TopDealsCarousel products={state.products} onSelect={setSelectedProduct} />
+
+                <div className="category-grid">
+                  {groups.map((group) => (
+                    <button
+                      key={group.label}
+                      type="button"
+                      className="category-grid__item"
+                      onClick={() => {
+                        Analytics.click({ log_name: 'category_icon_click', category: group.label });
+                        selectCategory(group.label);
+                      }}
+                    >
+                      <span className="category-grid__emoji tf">
+                        {CATEGORY_EMOJI[group.label] ?? DEFAULT_CATEGORY_EMOJI}
+                      </span>
+                      <span className="category-grid__label">{group.label}</span>
+                    </button>
+                  ))}
+                </div>
+
+                {groups.map((group) => (
+                  <div className="category-shelf" key={group.label}>
+                    <div className="category-shelf__header">
+                      <span className="category-shelf__title">
+                        <span className="tf">{CATEGORY_EMOJI[group.label] ?? DEFAULT_CATEGORY_EMOJI}</span>{' '}
+                        {group.label} 특가 순위
+                      </span>
+                      <button
+                        type="button"
+                        className="category-shelf__more"
+                        onClick={() => {
+                          Analytics.click({ log_name: 'category_shelf_more_click', category: group.label });
+                          selectCategory(group.label);
+                        }}
+                      >
+                        전체보기
+                      </button>
+                    </div>
+                    <div className="category-shelf__list">
+                      {sortProducts(group.products, 'price')
+                        .slice(0, SHELF_SIZE)
+                        .map((product) => (
+                          <ProductCard
+                            key={product.shareLink}
+                            product={product}
+                            onSelect={setSelectedProduct}
+                          />
+                        ))}
+                    </div>
+                  </div>
+                ))}
+              </>
+            );
+          }
+
+          const activeGroup = groups.find((g) => g.label === selectedCategory) ?? groups[0];
           const sortedActive = sortProducts(activeGroup?.products ?? [], sort);
           const visibleActive = sortedActive.slice(0, visibleCount);
           return (
             <>
-              <TopDealsCarousel products={state.products} onSelect={setSelectedProduct} />
+              <button type="button" className="back-to-home" onClick={() => setSelectedCategory(null)}>
+                <ChevronLeft size={16} /> 홈
+              </button>
 
               <nav className="category-tabs" aria-label="카테고리">
                 {groups.map((group) => (
@@ -179,7 +261,7 @@ function App() {
                     key={group.label}
                     type="button"
                     className={
-                      group.label === activeLabel
+                      group.label === activeGroup?.label
                         ? 'category-tabs__item category-tabs__item--active'
                         : 'category-tabs__item'
                     }

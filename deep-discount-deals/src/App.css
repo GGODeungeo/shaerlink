@@ -200,6 +200,103 @@
   font-weight: var(--font-weight-subtitle);
 }
 
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3) var(--space-2);
+  margin: var(--space-4) var(--space-3) 0;
+}
+
+.category-grid__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 44px;
+  padding: var(--space-1) 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.category-grid__emoji {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.category-grid__label {
+  max-width: 100%;
+  font-size: var(--font-size-caption);
+  color: var(--color-text-subtle);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: keep-all;
+}
+
+.category-shelf {
+  margin-top: var(--space-5);
+}
+
+.category-shelf__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-3);
+}
+
+.category-shelf__title {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-subtitle);
+  color: var(--color-text-strong);
+  word-break: keep-all;
+}
+
+.category-shelf__more {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0 0 var(--space-2);
+  border: none;
+  background: none;
+  color: var(--color-text-subtle);
+  font-size: var(--font-size-caption);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.category-shelf__list {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  padding: 0 var(--space-3);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.category-shelf__list::-webkit-scrollbar {
+  display: none;
+}
+
+.category-shelf__list .product-card {
+  flex: 0 0 140px;
+}
+
+.back-to-home {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 44px;
+  margin: 0 var(--space-2);
+  padding: 0 var(--space-2);
+  border: none;
+  background: none;
+  color: var(--color-text-strong);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-subtitle);
+  cursor: pointer;
+}
+
 .load-more-button {
   display: block;
   width: calc(100% - var(--space-3) * 2);
