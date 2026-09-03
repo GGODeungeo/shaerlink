@@ -1,10 +1,12 @@
 name: Refresh product data
 
 on:
-  schedule:
-    # 09:50 KST daily (KST = UTC+9). GitHub's scheduler can run a few
-    # minutes late under load - this isn't a hard real-time guarantee.
-    - cron: '50 0 * * *'
+  # Schedule trigger disabled: sharelink.toss.im IP-allowlists callers, and
+  # GitHub-hosted runners use rotating IPs that can't be registered there.
+  # Re-enable once this runs from a fixed-IP host (VPS / self-hosted runner)
+  # whose IP is added at https://sharelink.toss.im/integration/api-key.
+  # schedule:
+  #   - cron: '50 0 * * *'
   workflow_dispatch: {}
 
 permissions:
