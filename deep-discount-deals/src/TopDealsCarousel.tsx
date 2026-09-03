@@ -102,6 +102,7 @@ export function TopDealsCarousel({
         onTouchEnd={handleTouchEnd}
       >
         <div className="carousel__image-wrap">
+          <img src={product.imageUrl} alt="" className="carousel__image-backdrop" aria-hidden="true" />
           <img
             src={product.imageUrl}
             alt=""
