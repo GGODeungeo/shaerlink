@@ -48,7 +48,7 @@ export function PurchaseSheet({
         </button>
 
         <div className="purchase-sheet__product">
-          <img src={product.imageUrl} alt="" className="purchase-sheet__image" />
+          <img src={product.imageUrl} alt={title} className="purchase-sheet__image" />
           <div className="purchase-sheet__info">
             <span className="purchase-sheet__discount">{product.discountRate}% 특가</span>
             <span className="purchase-sheet__price">{product.price.toLocaleString()}원</span>

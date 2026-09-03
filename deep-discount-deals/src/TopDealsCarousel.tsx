@@ -105,7 +105,7 @@ export function TopDealsCarousel({
           <img src={product.imageUrl} alt="" className="carousel__image-backdrop" aria-hidden="true" />
           <img
             src={product.imageUrl}
-            alt=""
+            alt={title}
             className="carousel__image"
             decoding="async"
             onError={() =>

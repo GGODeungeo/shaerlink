@@ -109,7 +109,8 @@ def main():
     if not filtered:
         raise SystemExit("할인율 50% 초과 상품을 하나도 찾지 못했어요.")
 
-    link_cache = load_link_cache()
+    current_ids = {str(p["tacaItemId"]) for p in filtered}
+    link_cache = {k: v for k, v in load_link_cache().items() if k in current_ids}
     try:
         data = to_app_data(
             filtered, category_map, os.environ["SHARELINK_PUBLISHER_ID"], token, link_cache

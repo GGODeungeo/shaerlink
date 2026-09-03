@@ -1,23 +1,27 @@
 import { useEffect, useState } from 'react';
 import { Analytics } from '@apps-in-toss/web-framework';
+import { Heart } from './components/icons';
 import type { Product } from './types';
 
 function dealCountdownLabel(dealEndsAt: string | undefined, now: number): string | null {
   if (!dealEndsAt) return null;
   const msLeft = new Date(dealEndsAt).getTime() - now;
   if (msLeft <= 0) return null;
-  const hoursLeft = Math.ceil(msLeft / (60 * 60 * 1000));
-  if (hoursLeft >= 1) return `${hoursLeft}시간 후 종료`;
   const minutesLeft = Math.max(1, Math.ceil(msLeft / (60 * 1000)));
+  if (minutesLeft >= 60) return `${Math.floor(minutesLeft / 60)}시간 후 종료`;
   return `${minutesLeft}분 후 종료`;
 }
 
 export function ProductCard({
   product,
   onSelect,
+  isFavorite,
+  onToggleFavorite,
 }: {
   product: Product;
   onSelect: (product: Product) => void;
+  isFavorite: boolean;
+  onToggleFavorite: (shareLink: string) => void;
 }) {
   const handleOpen = () => {
     Analytics.click({
@@ -28,6 +32,16 @@ export function ProductCard({
       price: product.price,
     });
     onSelect(product);
+  };
+
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    Analytics.click({
+      log_name: 'favorite_toggle_click',
+      product_name: product.name,
+      favorited: !isFavorite,
+    });
+    onToggleFavorite(product.shareLink);
   };
 
   const [now, setNow] = useState(() => Date.now());
@@ -46,11 +60,20 @@ export function ProductCard({
       <div className="product-card__image-wrap">
         <img
           src={product.imageUrl}
-          alt=""
+          alt={title}
           className="product-card__image"
           loading="lazy"
           decoding="async"
         />
+        <button
+          type="button"
+          className="product-card__favorite"
+          data-active={isFavorite}
+          aria-label={isFavorite ? '찜 해제하기' : '찜하기'}
+          onClick={handleToggleFavorite}
+        >
+          <Heart size={18} filled={isFavorite} />
+        </button>
       </div>
       <div className="product-card__badges">
         <span className="product-card__badge">{product.discountRate}% 특가</span>
