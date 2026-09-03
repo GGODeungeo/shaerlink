@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
 import { Analytics } from '@apps-in-toss/web-framework';
 import type { Product } from './types';
 
-function dealCountdownLabel(dealEndsAt: string | undefined): string | null {
+function dealCountdownLabel(dealEndsAt: string | undefined, now: number): string | null {
   if (!dealEndsAt) return null;
-  const msLeft = new Date(dealEndsAt).getTime() - Date.now();
+  const msLeft = new Date(dealEndsAt).getTime() - now;
   if (msLeft <= 0) return null;
   const hoursLeft = Math.ceil(msLeft / (60 * 60 * 1000));
   if (hoursLeft >= 1) return `${hoursLeft}시간 후 종료`;
@@ -29,8 +30,16 @@ export function ProductCard({
     onSelect(product);
   };
 
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    if (!product.dealEndsAt) return;
+    const timer = setInterval(() => setNow(Date.now()), 60_000);
+    return () => clearInterval(timer);
+  }, [product.dealEndsAt]);
+
   const [title, ...specs] = product.name.split(', ');
-  const countdown = dealCountdownLabel(product.dealEndsAt);
+  const countdown = dealCountdownLabel(product.dealEndsAt, now);
 
   return (
     <button type="button" className="product-card" onClick={handleOpen}>
