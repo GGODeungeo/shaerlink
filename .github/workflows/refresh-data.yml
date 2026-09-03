@@ -1,0 +1,60 @@
+name: Refresh product data
+
+on:
+  schedule:
+    # 09:50 KST daily (KST = UTC+9). GitHub's scheduler can run a few
+    # minutes late under load - this isn't a hard real-time guarantee.
+    - cron: '50 0 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install test dependencies
+        run: pip install -r requirements.txt
+
+      - name: Record previous product count
+        id: before
+        run: |
+          COUNT=$(python3 -c 'import json; print(len(json.load(open("app-data/products.json", encoding="utf-8"))))')
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+
+      - name: Run data pipeline
+        env:
+          SHARELINK_ACCESS_KEY: ${{ secrets.SHARELINK_ACCESS_KEY }}
+          SHARELINK_SECRET_KEY: ${{ secrets.SHARELINK_SECRET_KEY }}
+          SHARELINK_PUBLISHER_ID: ${{ secrets.SHARELINK_PUBLISHER_ID }}
+        run: python3 build_app_data.py
+
+      - name: Run tests
+        run: python3 -m pytest tests/ -q
+
+      - name: Commit and push if the catalog grew
+        run: |
+          NEW_COUNT=$(python3 -c 'import json; print(len(json.load(open("app-data/products.json", encoding="utf-8"))))')
+          OLD_COUNT="${{ steps.before.outputs.count }}"
+          echo "Before: $OLD_COUNT, after: $NEW_COUNT"
+          if [ "$NEW_COUNT" -lt "$OLD_COUNT" ]; then
+            echo "Product count dropped ($OLD_COUNT -> $NEW_COUNT) - discarding, keeping yesterday's data"
+            git checkout -- app-data/products.json
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- app-data/products.json link_cache.json; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git add app-data/products.json link_cache.json
+          git commit -m "Automated data refresh: ${OLD_COUNT} -> ${NEW_COUNT} items"
+          git push
