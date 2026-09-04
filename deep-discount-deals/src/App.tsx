@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Analytics } from '@apps-in-toss/web-framework';
 import { ProductCard } from './ProductCard';
 import { TopDealsCarousel } from './TopDealsCarousel';
 import { PurchaseSheet } from './PurchaseSheet';
 import { RecentlyViewedWidget } from './RecentlyViewedWidget';
-import { ChevronLeft, ChevronRight, Heart, Search } from './components/icons';
+import { ChevronLeft, Heart, Search } from './components/icons';
 import { useFavorites } from './useFavorites';
 import { useRecentlyViewed } from './useRecentlyViewed';
 import { dedupeByImage } from './dedupeByImage';
 import { TodaysPickEvent } from './TodaysPickEvent';
+import { EventPopup } from './EventPopup';
 import { BannerAd } from './BannerAd';
 import { PushOptInCard } from './PushOptInCard';
 import type { Product } from './types';
@@ -82,6 +83,8 @@ function App() {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [viewingFavorites, setViewingFavorites] = useState(false);
   const [viewingEvent, setViewingEvent] = useState(false);
+  const [showEventPopup, setShowEventPopup] = useState(false);
+  const hasShownEventPopup = useRef(false);
   const { favorites, toggleFavorite } = useFavorites();
   const { recentIds, recordView } = useRecentlyViewed();
 
@@ -116,7 +119,6 @@ function App() {
   };
 
   const openEvent = () => {
-    Analytics.click({ log_name: 'today_event_banner_click' });
     setViewingEvent(true);
     setViewingFavorites(false);
   };
@@ -137,6 +139,13 @@ function App() {
 
   useEffect(fetchProducts, []);
 
+  useEffect(() => {
+    if (state.status === 'ready' && !hasShownEventPopup.current) {
+      hasShownEventPopup.current = true;
+      setShowEventPopup(true);
+    }
+  }, [state.status]);
+
   const retry = () => {
     setState({ status: 'loading' });
     fetchProducts();
@@ -148,15 +157,28 @@ function App() {
         <header className="page-header">
           <div className="page-header__row">
             <h1>반값 이상 특가</h1>
-            <button
-              type="button"
-              className="favorites-nav-button"
-              data-active={favorites.size > 0}
-              aria-label="찜한 상품"
-              onClick={openFavorites}
-            >
-              <Heart size={22} filled={favorites.size > 0} />
-            </button>
+            <div className="page-header__actions">
+              <button
+                type="button"
+                className="event-nav-button"
+                aria-label="오늘의 특가 오픈 이벤트"
+                onClick={() => {
+                  Analytics.click({ log_name: 'event_nav_icon_click' });
+                  openEvent();
+                }}
+              >
+                <span className="tf">🎉</span>
+              </button>
+              <button
+                type="button"
+                className="favorites-nav-button"
+                data-active={favorites.size > 0}
+                aria-label="찜한 상품"
+                onClick={openFavorites}
+              >
+                <Heart size={22} filled={favorites.size > 0} />
+              </button>
+            </div>
           </div>
           <div className="search-bar">
             <Search size={18} />
@@ -304,15 +326,6 @@ function App() {
               <>
                 <TopDealsCarousel products={state.products} onSelect={handleSelectProduct} />
 
-                <button type="button" className="event-banner" onClick={openEvent}>
-                  <span className="event-banner__emoji tf">🎉</span>
-                  <span className="event-banner__text">
-                    <span className="event-banner__title">오늘의 특가 오픈 이벤트</span>
-                    <span className="event-banner__subtitle">평 많고 좋은 상품만 모았어요</span>
-                  </span>
-                  <ChevronRight size={16} />
-                </button>
-
                 <p className="daily-update-notice">매일 아침 10시, 더 많은 특가가 추가돼요</p>
 
                 <PushOptInCard />
@@ -439,6 +452,16 @@ function App() {
 
       {selectedProduct && (
         <PurchaseSheet product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+      )}
+
+      {showEventPopup && (
+        <EventPopup
+          onOpenEvent={() => {
+            setShowEventPopup(false);
+            openEvent();
+          }}
+          onClose={() => setShowEventPopup(false)}
+        />
       )}
     </div>
   );

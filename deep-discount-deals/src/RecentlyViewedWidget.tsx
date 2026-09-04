@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Analytics } from '@apps-in-toss/web-framework';
 import { Bag, Close } from './components/icons';
 import type { Product } from './types';
+
+const AUTO_CLOSE_MS = 5000;
+const EXIT_ANIMATION_MS = 300;
 
 export function RecentlyViewedWidget({
   products,
@@ -11,22 +14,47 @@ export function RecentlyViewedWidget({
   onSelect: (product: Product) => void;
 }) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const autoCloseTimer = useRef<ReturnType<typeof setTimeout>>();
+  const unmountTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  const clearTimers = () => {
+    clearTimeout(autoCloseTimer.current);
+    clearTimeout(unmountTimer.current);
+  };
+
+  useEffect(() => clearTimers, []);
+
+  const openPanel = () => {
+    clearTimers();
+    setMounted(true);
+    requestAnimationFrame(() => setOpen(true));
+    autoCloseTimer.current = setTimeout(closePanel, AUTO_CLOSE_MS);
+  };
+
+  const closePanel = () => {
+    clearTimeout(autoCloseTimer.current);
+    setOpen(false);
+    unmountTimer.current = setTimeout(() => setMounted(false), EXIT_ANIMATION_MS);
+  };
 
   if (products.length === 0) return null;
 
   const toggle = () => {
-    if (!open) {
-      Analytics.click({ log_name: 'recently_viewed_widget_open', item_count: products.length });
+    if (mounted) {
+      closePanel();
+      return;
     }
-    setOpen((current) => !current);
+    Analytics.click({ log_name: 'recently_viewed_widget_open', item_count: products.length });
+    openPanel();
   };
 
   const total = products.reduce((sum, p) => sum + p.price, 0);
 
   return (
     <div className="recently-viewed-widget">
-      {open && (
-        <div className="recently-viewed-panel">
+      {mounted && (
+        <div className={open ? 'recently-viewed-panel recently-viewed-panel--visible' : 'recently-viewed-panel'}>
           <div className="recently-viewed-panel__header">
             <span>최근 본 상품 ({products.length})</span>
             <span className="recently-viewed-panel__total">합계 {total.toLocaleString()}원</span>
@@ -38,7 +66,7 @@ export function RecentlyViewedWidget({
                 type="button"
                 className="recently-viewed-panel__item"
                 onClick={() => {
-                  setOpen(false);
+                  closePanel();
                   onSelect(product);
                 }}
               >
