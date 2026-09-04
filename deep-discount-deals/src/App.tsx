@@ -87,7 +87,7 @@ function App() {
   const [showEventPopup, setShowEventPopup] = useState(false);
   const hasShownEventPopup = useRef(false);
   const { favorites, toggleFavorite } = useFavorites();
-  const { recentIds, recordView, removeView } = useRecentlyViewed();
+  const { recentIds, recordView, removeView, clearAll } = useRecentlyViewed();
   const recentlyViewedRef = useRef<RecentlyViewedWidgetHandle>(null);
 
   const handleSelectProduct = (product: Product) => {
@@ -311,9 +311,23 @@ function App() {
             const visibleRecent = sortedRecent.slice(0, visibleCount);
             return (
               <>
-                <button type="button" className="back-to-home" onClick={closeRecentlyViewedPage}>
-                  <ChevronLeft size={16} /> 홈
-                </button>
+                <div className="recently-viewed-page__header">
+                  <button type="button" className="back-to-home" onClick={closeRecentlyViewedPage}>
+                    <ChevronLeft size={16} /> 홈
+                  </button>
+                  {recentProducts.length > 0 && (
+                    <button
+                      type="button"
+                      className="recently-viewed-page__clear"
+                      onClick={() => {
+                        Analytics.click({ log_name: 'recently_viewed_clear_all_click', item_count: recentProducts.length });
+                        clearAll();
+                      }}
+                    >
+                      전체 삭제
+                    </button>
+                  )}
+                </div>
 
                 {recentProducts.length === 0 ? (
                   <p className="state-message">아직 본 상품이 없어요.</p>
