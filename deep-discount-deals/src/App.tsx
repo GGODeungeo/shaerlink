@@ -6,6 +6,7 @@ import { PurchaseSheet } from './PurchaseSheet';
 import { ChevronLeft, Heart, Search } from './components/icons';
 import { useFavorites } from './useFavorites';
 import { useRecentlyViewed } from './useRecentlyViewed';
+import { dedupeByImage } from './dedupeByImage';
 import type { Product } from './types';
 import './App.css';
 
@@ -332,7 +333,7 @@ function App() {
                       </button>
                     </div>
                     <div className="category-shelf__list">
-                      {sortProducts(group.products, 'recommend')
+                      {dedupeByImage(sortProducts(group.products, 'recommend'))
                         .slice(0, SHELF_SIZE)
                         .map((product) => (
                           <ProductCard
