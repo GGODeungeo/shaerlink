@@ -31,5 +31,13 @@ export function useRecentlyViewed() {
     });
   }, []);
 
-  return { recentIds, recordView };
+  const removeView = useCallback((shareLink: string) => {
+    setRecentIds((current) => {
+      const next = current.filter((id) => id !== shareLink);
+      writeStored(next);
+      return next;
+    });
+  }, []);
+
+  return { recentIds, recordView, removeView };
 }

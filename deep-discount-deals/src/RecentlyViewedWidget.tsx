@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Analytics } from '@apps-in-toss/web-framework';
 import { Bag, Close } from './components/icons';
 import type { Product } from './types';
@@ -6,13 +6,18 @@ import type { Product } from './types';
 const AUTO_CLOSE_MS = 3000;
 const EXIT_ANIMATION_MS = 300;
 
-export function RecentlyViewedWidget({
-  products,
-  onSelect,
-}: {
-  products: Product[];
-  onSelect: (product: Product) => void;
-}) {
+export type RecentlyViewedWidgetHandle = {
+  open: () => void;
+};
+
+export const RecentlyViewedWidget = forwardRef<
+  RecentlyViewedWidgetHandle,
+  {
+    products: Product[];
+    onSelect: (product: Product) => void;
+    onRemove: (shareLink: string) => void;
+  }
+>(function RecentlyViewedWidget({ products, onSelect, onRemove }, ref) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const autoCloseTimer = useRef<ReturnType<typeof setTimeout>>();
@@ -38,6 +43,13 @@ export function RecentlyViewedWidget({
     unmountTimer.current = setTimeout(() => setMounted(false), EXIT_ANIMATION_MS);
   };
 
+  useImperativeHandle(ref, () => ({
+    open: () => {
+      Analytics.click({ log_name: 'recently_viewed_widget_open', item_count: products.length });
+      openPanel();
+    },
+  }));
+
   if (products.length === 0) return null;
 
   const toggle = () => {
@@ -61,23 +73,35 @@ export function RecentlyViewedWidget({
           </div>
           <div className="recently-viewed-panel__list">
             {products.map((product) => (
-              <button
-                key={product.shareLink}
-                type="button"
-                className="recently-viewed-panel__item"
-                onClick={() => {
-                  closePanel();
-                  onSelect(product);
-                }}
-              >
-                <img
-                  src={product.imageUrl}
-                  alt={product.name.split(', ')[0]}
-                  loading="lazy"
-                  decoding="async"
-                />
-                <span className="recently-viewed-panel__price">{product.price.toLocaleString()}원</span>
-              </button>
+              <div key={product.shareLink} className="recently-viewed-panel__item">
+                <button
+                  type="button"
+                  className="recently-viewed-panel__item-select"
+                  onClick={() => {
+                    closePanel();
+                    onSelect(product);
+                  }}
+                >
+                  <img
+                    src={product.imageUrl}
+                    alt={product.name.split(', ')[0]}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="recently-viewed-panel__price">{product.price.toLocaleString()}원</span>
+                </button>
+                <button
+                  type="button"
+                  className="recently-viewed-panel__item-remove"
+                  aria-label="최근 본 목록에서 지우기"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onRemove(product.shareLink);
+                  }}
+                >
+                  <Close size={12} />
+                </button>
+              </div>
             ))}
           </div>
         </div>
@@ -94,4 +118,4 @@ export function RecentlyViewedWidget({
       </button>
     </div>
   );
-}
+});

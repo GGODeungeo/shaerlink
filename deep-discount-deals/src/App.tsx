@@ -3,8 +3,8 @@ import { Analytics } from '@apps-in-toss/web-framework';
 import { ProductCard } from './ProductCard';
 import { TopDealsCarousel } from './TopDealsCarousel';
 import { PurchaseSheet } from './PurchaseSheet';
-import { RecentlyViewedWidget } from './RecentlyViewedWidget';
-import { ChevronLeft, Heart, Search } from './components/icons';
+import { RecentlyViewedWidget, type RecentlyViewedWidgetHandle } from './RecentlyViewedWidget';
+import { Bag, ChevronLeft, Heart, Search } from './components/icons';
 import { useFavorites } from './useFavorites';
 import { useRecentlyViewed } from './useRecentlyViewed';
 import { dedupeByImage } from './dedupeByImage';
@@ -86,7 +86,8 @@ function App() {
   const [showEventPopup, setShowEventPopup] = useState(false);
   const hasShownEventPopup = useRef(false);
   const { favorites, toggleFavorite } = useFavorites();
-  const { recentIds, recordView } = useRecentlyViewed();
+  const { recentIds, recordView, removeView } = useRecentlyViewed();
+  const recentlyViewedRef = useRef<RecentlyViewedWidgetHandle>(null);
 
   const handleSelectProduct = (product: Product) => {
     recordView(product.shareLink);
@@ -169,6 +170,16 @@ function App() {
               >
                 <span className="tf">🎉</span>
               </button>
+              {recentProducts.length > 0 && (
+                <button
+                  type="button"
+                  className="recently-viewed-nav-button"
+                  aria-label="최근 본 상품"
+                  onClick={() => recentlyViewedRef.current?.open()}
+                >
+                  <Bag size={20} />
+                </button>
+              )}
               <button
                 type="button"
                 className="favorites-nav-button"
@@ -448,7 +459,12 @@ function App() {
         </p>
       </div>
 
-      <RecentlyViewedWidget products={recentProducts} onSelect={handleSelectProduct} />
+      <RecentlyViewedWidget
+        ref={recentlyViewedRef}
+        products={recentProducts}
+        onSelect={handleSelectProduct}
+        onRemove={removeView}
+      />
 
       {selectedProduct && (
         <PurchaseSheet product={selectedProduct} onClose={() => setSelectedProduct(null)} />
