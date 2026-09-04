@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { ChevronLeft } from './components/icons';
 import { ProductCard } from './ProductCard';
 import { dedupeByImage } from './dedupeByImage';
 import type { Product } from './types';
@@ -23,13 +22,11 @@ function countdownLabel(msLeft: number): string {
 export function TodaysPickEvent({
   products,
   onSelect,
-  onBack,
   favorites,
   onToggleFavorite,
 }: {
   products: Product[];
   onSelect: (product: Product) => void;
-  onBack: () => void;
   favorites: Set<string>;
   onToggleFavorite: (shareLink: string) => void;
 }) {
@@ -48,36 +45,30 @@ export function TodaysPickEvent({
   ).slice(0, EVENT_SIZE);
 
   return (
-    <>
-      <button type="button" className="back-to-home" onClick={onBack}>
-        <ChevronLeft size={16} /> 홈
-      </button>
+    <div className="event-page">
+      <h2 className="event-page__title">오늘의 특가 오픈 이벤트</h2>
+      <p className="event-page__subtitle">구매평 많고 반응 좋은 상품만 모았어요</p>
 
-      <div className="event-page">
-        <h2 className="event-page__title">오늘의 특가 오픈 이벤트</h2>
-        <p className="event-page__subtitle">구매평 많고 반응 좋은 상품만 모았어요</p>
-
-        {!unlocked ? (
-          <div className="event-page__locked">
-            <p className="event-page__countdown">{countdownLabel(eventStart - now)}</p>
-            <p className="event-page__locked-hint">매일 오전 9시에 공개돼요</p>
-          </div>
-        ) : eventProducts.length === 0 ? (
-          <p className="state-message">지금은 보여드릴 상품이 없어요.</p>
-        ) : (
-          <div className="product-grid">
-            {eventProducts.map((product) => (
-              <ProductCard
-                key={product.shareLink}
-                product={product}
-                onSelect={onSelect}
-                isFavorite={favorites.has(product.shareLink)}
-                onToggleFavorite={onToggleFavorite}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-    </>
+      {!unlocked ? (
+        <div className="event-page__locked">
+          <p className="event-page__countdown">{countdownLabel(eventStart - now)}</p>
+          <p className="event-page__locked-hint">매일 오전 9시에 공개돼요</p>
+        </div>
+      ) : eventProducts.length === 0 ? (
+        <p className="state-message">지금은 보여드릴 상품이 없어요.</p>
+      ) : (
+        <div className="product-grid">
+          {eventProducts.map((product) => (
+            <ProductCard
+              key={product.shareLink}
+              product={product}
+              onSelect={onSelect}
+              isFavorite={favorites.has(product.shareLink)}
+              onToggleFavorite={onToggleFavorite}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

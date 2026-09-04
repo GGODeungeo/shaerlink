@@ -4,7 +4,7 @@ import { ProductCard } from './ProductCard';
 import { TopDealsCarousel } from './TopDealsCarousel';
 import { PurchaseSheet } from './PurchaseSheet';
 import { RecentlyViewedWidget, type RecentlyViewedWidgetHandle } from './RecentlyViewedWidget';
-import { Bag, ChevronLeft, Heart, Search } from './components/icons';
+import { Bag, Heart, Search } from './components/icons';
 import { useFavorites } from './useFavorites';
 import { useRecentlyViewed } from './useRecentlyViewed';
 import { dedupeByImage } from './dedupeByImage';
@@ -114,19 +114,10 @@ function App() {
     setVisibleCount(PAGE_SIZE);
   };
 
-  const closeFavorites = () => {
-    setViewingFavorites(false);
-    setVisibleCount(PAGE_SIZE);
-  };
-
   const openEvent = () => {
     setViewingEvent(true);
     setViewingFavorites(false);
     setViewingRecentlyViewed(false);
-  };
-
-  const closeEvent = () => {
-    setViewingEvent(false);
   };
 
   const openRecentlyViewedPage = () => {
@@ -134,11 +125,6 @@ function App() {
     setViewingRecentlyViewed(true);
     setViewingFavorites(false);
     setViewingEvent(false);
-    setVisibleCount(PAGE_SIZE);
-  };
-
-  const closeRecentlyViewedPage = () => {
-    setViewingRecentlyViewed(false);
     setVisibleCount(PAGE_SIZE);
   };
 
@@ -153,6 +139,31 @@ function App() {
   };
 
   useEffect(fetchProducts, []);
+
+  // 서브뷰(카테고리 상세/찜/이벤트/최근본)에 들어갈 때 history entry를 하나
+  // 쌓아서, 플랫폼 자체 상단 뒤로가기 버튼 및 스와이프 제스처가 홈으로
+  // 돌아오게 만든다 - 화면에 직접 그린 뒤로가기 버튼과 중복 노출되지 않도록
+  // 자체 버튼은 두지 않는다.
+  const isSubView = selectedCategory !== null || viewingFavorites || viewingEvent || viewingRecentlyViewed;
+  const wasSubView = useRef(false);
+
+  useEffect(() => {
+    if (isSubView && !wasSubView.current) {
+      window.history.pushState({ hiddenDealsSubView: true }, '');
+    }
+    wasSubView.current = isSubView;
+  }, [isSubView]);
+
+  useEffect(() => {
+    const goHome = () => {
+      setSelectedCategory(null);
+      setViewingFavorites(false);
+      setViewingEvent(false);
+      setViewingRecentlyViewed(false);
+    };
+    window.addEventListener('popstate', goHome);
+    return () => window.removeEventListener('popstate', goHome);
+  }, []);
 
   const retry = () => {
     setState({ status: 'loading' });
@@ -289,7 +300,6 @@ function App() {
               <TodaysPickEvent
                 products={state.products}
                 onSelect={handleSelectProduct}
-                onBack={closeEvent}
                 favorites={favorites}
                 onToggleFavorite={toggleFavorite}
               />
@@ -302,9 +312,6 @@ function App() {
             return (
               <>
                 <div className="recently-viewed-page__header">
-                  <button type="button" className="back-to-home" onClick={closeRecentlyViewedPage}>
-                    <ChevronLeft size={16} /> 홈
-                  </button>
                   {recentProducts.length > 0 && (
                     <button
                       type="button"
@@ -357,10 +364,6 @@ function App() {
             const visibleFavorites = sortedFavorites.slice(0, visibleCount);
             return (
               <>
-                <button type="button" className="back-to-home" onClick={closeFavorites}>
-                  <ChevronLeft size={16} /> 홈
-                </button>
-
                 {favoriteProducts.length === 0 ? (
                   <p className="state-message">아직 찜한 상품이 없어요.</p>
                 ) : (
@@ -466,10 +469,6 @@ function App() {
           const visibleActive = sortedActive.slice(0, visibleCount);
           return (
             <>
-              <button type="button" className="back-to-home" onClick={() => setSelectedCategory(null)}>
-                <ChevronLeft size={16} /> 홈
-              </button>
-
               <nav className="category-tabs" aria-label="카테고리">
                 {groups.map((group) => (
                   <button
