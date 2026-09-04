@@ -21,11 +21,16 @@ export function RecentlyViewedWidget({
     setOpen((current) => !current);
   };
 
+  const total = products.reduce((sum, p) => sum + p.price, 0);
+
   return (
     <div className="recently-viewed-widget">
       {open && (
         <div className="recently-viewed-panel">
-          <div className="recently-viewed-panel__header">최근 본 상품 ({products.length})</div>
+          <div className="recently-viewed-panel__header">
+            <span>최근 본 상품 ({products.length})</span>
+            <span className="recently-viewed-panel__total">합계 {total.toLocaleString()}원</span>
+          </div>
           <div className="recently-viewed-panel__list">
             {products.map((product) => (
               <button
@@ -43,6 +48,7 @@ export function RecentlyViewedWidget({
                   loading="lazy"
                   decoding="async"
                 />
+                <span className="recently-viewed-panel__price">{product.price.toLocaleString()}원</span>
               </button>
             ))}
           </div>
