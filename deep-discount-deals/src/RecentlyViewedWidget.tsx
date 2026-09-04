@@ -16,8 +16,9 @@ export const RecentlyViewedWidget = forwardRef<
     products: Product[];
     onSelect: (product: Product) => void;
     onRemove: (shareLink: string) => void;
+    onViewAll: () => void;
   }
->(function RecentlyViewedWidget({ products, onSelect, onRemove }, ref) {
+>(function RecentlyViewedWidget({ products, onSelect, onRemove, onViewAll }, ref) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const autoCloseTimer = useRef<ReturnType<typeof setTimeout>>();
@@ -69,6 +70,18 @@ export const RecentlyViewedWidget = forwardRef<
         <div className={open ? 'recently-viewed-panel recently-viewed-panel--visible' : 'recently-viewed-panel'}>
           <div className="recently-viewed-panel__header">
             <span>최근 본 상품 ({products.length})</span>
+            <button
+              type="button"
+              className="recently-viewed-panel__view-all"
+              onClick={() => {
+                closePanel();
+                onViewAll();
+              }}
+            >
+              전체보기
+            </button>
+          </div>
+          <div className="recently-viewed-panel__subheader">
             <span className="recently-viewed-panel__total">합계 {total.toLocaleString()}원</span>
           </div>
           <div className="recently-viewed-panel__list">

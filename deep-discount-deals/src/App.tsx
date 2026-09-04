@@ -83,6 +83,7 @@ function App() {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [viewingFavorites, setViewingFavorites] = useState(false);
   const [viewingEvent, setViewingEvent] = useState(false);
+  const [viewingRecentlyViewed, setViewingRecentlyViewed] = useState(false);
   const [showEventPopup, setShowEventPopup] = useState(false);
   const hasShownEventPopup = useRef(false);
   const { favorites, toggleFavorite } = useFavorites();
@@ -104,6 +105,7 @@ function App() {
     setSelectedCategory(label);
     setViewingFavorites(false);
     setViewingEvent(false);
+    setViewingRecentlyViewed(false);
     setVisibleCount(PAGE_SIZE);
   };
 
@@ -111,6 +113,7 @@ function App() {
     Analytics.click({ log_name: 'favorites_nav_click', favorite_count: favorites.size });
     setViewingFavorites(true);
     setViewingEvent(false);
+    setViewingRecentlyViewed(false);
     setVisibleCount(PAGE_SIZE);
   };
 
@@ -122,10 +125,24 @@ function App() {
   const openEvent = () => {
     setViewingEvent(true);
     setViewingFavorites(false);
+    setViewingRecentlyViewed(false);
   };
 
   const closeEvent = () => {
     setViewingEvent(false);
+  };
+
+  const openRecentlyViewedPage = () => {
+    Analytics.click({ log_name: 'recently_viewed_nav_click', item_count: recentProducts.length });
+    setViewingRecentlyViewed(true);
+    setViewingFavorites(false);
+    setViewingEvent(false);
+    setVisibleCount(PAGE_SIZE);
+  };
+
+  const closeRecentlyViewedPage = () => {
+    setViewingRecentlyViewed(false);
+    setVisibleCount(PAGE_SIZE);
   };
 
   const fetchProducts = () => {
@@ -175,7 +192,7 @@ function App() {
                   type="button"
                   className="recently-viewed-nav-button"
                   aria-label="최근 본 상품"
-                  onClick={() => recentlyViewedRef.current?.open()}
+                  onClick={openRecentlyViewedPage}
                 >
                   <Bag size={20} />
                 </button>
@@ -286,6 +303,46 @@ function App() {
                 favorites={favorites}
                 onToggleFavorite={toggleFavorite}
               />
+            );
+          }
+
+          if (viewingRecentlyViewed) {
+            const sortedRecent = sortProducts(recentProducts, sort);
+            const visibleRecent = sortedRecent.slice(0, visibleCount);
+            return (
+              <>
+                <button type="button" className="back-to-home" onClick={closeRecentlyViewedPage}>
+                  <ChevronLeft size={16} /> 홈
+                </button>
+
+                {recentProducts.length === 0 ? (
+                  <p className="state-message">아직 본 상품이 없어요.</p>
+                ) : (
+                  <>
+                    {sortRow}
+                    <div className="product-grid">
+                      {visibleRecent.map((product) => (
+                        <ProductCard
+                          key={product.shareLink}
+                          product={product}
+                          onSelect={handleSelectProduct}
+                          isFavorite={favorites.has(product.shareLink)}
+                          onToggleFavorite={toggleFavorite}
+                        />
+                      ))}
+                    </div>
+                    {visibleRecent.length < sortedRecent.length && (
+                      <button
+                        type="button"
+                        className="load-more-button"
+                        onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+                      >
+                        더보기
+                      </button>
+                    )}
+                  </>
+                )}
+              </>
             );
           }
 
@@ -464,6 +521,7 @@ function App() {
         products={recentProducts}
         onSelect={handleSelectProduct}
         onRemove={removeView}
+        onViewAll={openRecentlyViewedPage}
       />
 
       {selectedProduct && (
