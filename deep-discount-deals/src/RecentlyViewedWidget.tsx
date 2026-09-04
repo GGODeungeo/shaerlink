@@ -15,10 +15,9 @@ export const RecentlyViewedWidget = forwardRef<
   {
     products: Product[];
     onSelect: (product: Product) => void;
-    onRemove: (shareLink: string) => void;
     onViewAll: () => void;
   }
->(function RecentlyViewedWidget({ products, onSelect, onRemove, onViewAll }, ref) {
+>(function RecentlyViewedWidget({ products, onSelect, onViewAll }, ref) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const autoCloseTimer = useRef<ReturnType<typeof setTimeout>>();
@@ -86,35 +85,23 @@ export const RecentlyViewedWidget = forwardRef<
           </div>
           <div className="recently-viewed-panel__list">
             {products.map((product) => (
-              <div key={product.shareLink} className="recently-viewed-panel__item">
-                <button
-                  type="button"
-                  className="recently-viewed-panel__item-select"
-                  onClick={() => {
-                    closePanel();
-                    onSelect(product);
-                  }}
-                >
-                  <img
-                    src={product.imageUrl}
-                    alt={product.name.split(', ')[0]}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <span className="recently-viewed-panel__price">{product.price.toLocaleString()}원</span>
-                </button>
-                <button
-                  type="button"
-                  className="recently-viewed-panel__item-remove"
-                  aria-label="최근 본 목록에서 지우기"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onRemove(product.shareLink);
-                  }}
-                >
-                  <Close size={12} />
-                </button>
-              </div>
+              <button
+                key={product.shareLink}
+                type="button"
+                className="recently-viewed-panel__item"
+                onClick={() => {
+                  closePanel();
+                  onSelect(product);
+                }}
+              >
+                <img
+                  src={product.imageUrl}
+                  alt={product.name.split(', ')[0]}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span className="recently-viewed-panel__price">{product.price.toLocaleString()}원</span>
+              </button>
             ))}
           </div>
         </div>

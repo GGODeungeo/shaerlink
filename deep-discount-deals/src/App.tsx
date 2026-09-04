@@ -328,6 +328,7 @@ function App() {
                           onSelect={handleSelectProduct}
                           isFavorite={favorites.has(product.shareLink)}
                           onToggleFavorite={toggleFavorite}
+                          onRemove={removeView}
                         />
                       ))}
                     </div>
@@ -520,7 +521,6 @@ function App() {
         ref={recentlyViewedRef}
         products={recentProducts}
         onSelect={handleSelectProduct}
-        onRemove={removeView}
         onViewAll={openRecentlyViewedPage}
       />
 

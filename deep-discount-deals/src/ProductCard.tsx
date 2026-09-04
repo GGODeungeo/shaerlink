@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Analytics } from '@apps-in-toss/web-framework';
-import { Heart } from './components/icons';
+import { Close, Heart } from './components/icons';
 import type { Product } from './types';
 
 function dealCountdownLabel(dealEndsAt: string | undefined, now: number): string | null {
@@ -17,11 +17,13 @@ export function ProductCard({
   onSelect,
   isFavorite,
   onToggleFavorite,
+  onRemove,
 }: {
   product: Product;
   onSelect: (product: Product) => void;
   isFavorite: boolean;
   onToggleFavorite: (shareLink: string) => void;
+  onRemove?: (shareLink: string) => void;
 }) {
   const handleOpen = () => {
     Analytics.click({
@@ -49,6 +51,12 @@ export function ProductCard({
       favorited: !isFavorite,
     });
     onToggleFavorite(product.shareLink);
+  };
+
+  const handleRemove = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    Analytics.click({ log_name: 'recently_viewed_remove_click', product_name: product.name });
+    onRemove?.(product.shareLink);
   };
 
   const [now, setNow] = useState(() => Date.now());
@@ -98,6 +106,16 @@ export function ProductCard({
         >
           <Heart size={18} filled={isFavorite} />
         </button>
+        {onRemove && (
+          <button
+            type="button"
+            className="product-card__remove"
+            aria-label="최근 본 목록에서 지우기"
+            onClick={handleRemove}
+          >
+            <Close size={16} />
+          </button>
+        )}
       </div>
       <div className="product-card__price">{product.price.toLocaleString()}원</div>
       <div className="product-card__title">{title}</div>
