@@ -118,6 +118,25 @@ export function Heart({ size = '1em', filled = false }: IconProps & { filled?: b
   );
 }
 
+export function Bag({ size = '1em' }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M6 8 H18 L17.2 20 A2 2 0 0 1 15.2 22 H8.8 A2 2 0 0 1 6.8 20 Z" />
+      <path d="M9 8 V6 A3 3 0 0 1 15 6 V8" />
+    </svg>
+  );
+}
+
 export function Search({ size = '1em' }: IconProps) {
   return (
     <svg

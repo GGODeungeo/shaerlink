@@ -3,6 +3,7 @@ import { Analytics } from '@apps-in-toss/web-framework';
 import { ProductCard } from './ProductCard';
 import { TopDealsCarousel } from './TopDealsCarousel';
 import { PurchaseSheet } from './PurchaseSheet';
+import { RecentlyViewedWidget } from './RecentlyViewedWidget';
 import { ChevronLeft, Heart, Search } from './components/icons';
 import { useFavorites } from './useFavorites';
 import { useRecentlyViewed } from './useRecentlyViewed';
@@ -84,6 +85,12 @@ function App() {
     recordView(product.shareLink);
     setSelectedProduct(product);
   };
+
+  const recentProducts = (() => {
+    if (state.status !== 'ready') return [];
+    const productByLink = new Map(state.products.map((p) => [p.shareLink, p]));
+    return recentIds.map((id) => productByLink.get(id)).filter((p): p is Product => p !== undefined);
+  })();
 
   const selectCategory = (label: string) => {
     setSelectedCategory(label);
@@ -265,35 +272,11 @@ function App() {
           const groups = groupByCategory(filteredProducts);
 
           if (selectedCategory === null) {
-            const productByLink = new Map(state.products.map((p) => [p.shareLink, p]));
-            const recentProducts = recentIds
-              .map((id) => productByLink.get(id))
-              .filter((p): p is Product => p !== undefined);
-
             return (
               <>
                 <TopDealsCarousel products={state.products} onSelect={handleSelectProduct} />
 
                 <p className="daily-update-notice">매일 아침 10시, 더 많은 특가가 추가돼요</p>
-
-                {recentProducts.length > 0 && (
-                  <div className="category-shelf">
-                    <div className="category-shelf__header">
-                      <span className="category-shelf__title">최근 본 상품</span>
-                    </div>
-                    <div className="category-shelf__list">
-                      {recentProducts.map((product) => (
-                        <ProductCard
-                          key={product.shareLink}
-                          product={product}
-                          onSelect={handleSelectProduct}
-                          isFavorite={favorites.has(product.shareLink)}
-                          onToggleFavorite={toggleFavorite}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
 
                 <div className="category-grid">
                   {groups.map((group) => (
@@ -410,6 +393,8 @@ function App() {
           이 앱은 토스쇼핑 파트너스 활동의 일환으로, 상품 구매 시 일정액의 수수료를 제공받습니다.
         </p>
       </div>
+
+      <RecentlyViewedWidget products={recentProducts} onSelect={handleSelectProduct} />
 
       {selectedProduct && (
         <PurchaseSheet product={selectedProduct} onClose={() => setSelectedProduct(null)} />
