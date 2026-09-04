@@ -1,5 +1,6 @@
 import { Analytics, Device, Share } from '@apps-in-toss/web-framework';
 import { Close } from './components/icons';
+import { savingsAmount } from './savings';
 import type { Product } from './types';
 
 export function PurchaseSheet({
@@ -52,6 +53,7 @@ export function PurchaseSheet({
           <div className="purchase-sheet__info">
             <span className="purchase-sheet__discount">{product.discountRate}% 특가</span>
             <span className="purchase-sheet__price">{product.price.toLocaleString()}원</span>
+            <span className="purchase-sheet__savings">▼ {savingsAmount(product).toLocaleString()}원 아껴요</span>
             <span className="purchase-sheet__name">{title}</span>
           </div>
         </div>

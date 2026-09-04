@@ -166,6 +166,12 @@
   color: var(--color-text-strong);
 }
 
+.carousel__savings {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-subtitle);
+  color: var(--color-danger);
+}
+
 .carousel__name {
   font-size: var(--font-size-body-small);
   color: var(--color-text-subtle);
@@ -481,6 +487,10 @@
   background: var(--color-text-strong);
 }
 
+.product-card__badge--lowest {
+  background: var(--brand-primary);
+}
+
 .product-card__price {
   margin: var(--space-1) var(--space-2) 0;
   font-size: var(--font-size-body);
@@ -781,6 +791,12 @@
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-title);
   color: var(--color-text-strong);
+}
+
+.purchase-sheet__savings {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-subtitle);
+  color: var(--color-danger);
 }
 
 .purchase-sheet__name {

@@ -76,6 +76,11 @@ export function ProductCard({
         </button>
       </div>
       <div className="product-card__badges">
+        {product.isAllTimeLow && (
+          <span className="product-card__badge product-card__badge--lowest">
+            <span className="tf">🔥</span> 역대 최저가
+          </span>
+        )}
         <span className="product-card__badge">{product.discountRate}% 특가</span>
         {countdown && <span className="product-card__badge product-card__badge--deal">{countdown}</span>}
       </div>

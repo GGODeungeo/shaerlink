@@ -1,5 +1,6 @@
 import json
 import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -90,6 +91,48 @@ def to_app_data(
     return slim
 
 
+def load_price_history(path: str = str(APP_DATA_PATH)) -> dict:
+    """Mines this file's own git history for a per-shareLink price timeline
+    - one data point per day this pipeline has run and committed, no extra
+    storage needed.
+    ponytail: re-walks and re-parses the full history every run (O(days
+    elapsed) `git show` + json.loads calls). Fine for the history depth
+    this app accumulates over weeks/months; if it ever grows to years of
+    daily commits, cache the running per-shareLink minimum to a side file
+    and only fold in commits newer than the last run."""
+    try:
+        commits = subprocess.run(
+            ["git", "log", "--format=%H", "--", path],
+            capture_output=True, text=True, check=True,
+        ).stdout.split()
+    except subprocess.CalledProcessError:
+        return {}
+
+    history: dict = {}
+    for commit in reversed(commits):
+        result = subprocess.run(["git", "show", f"{commit}:{path}"], capture_output=True, text=True)
+        if result.returncode != 0:
+            continue
+        try:
+            snapshot = json.loads(result.stdout)
+        except json.JSONDecodeError:
+            continue
+        for p in snapshot:
+            history.setdefault(p["shareLink"], []).append(p["price"])
+    return history
+
+
+def flag_all_time_lows(data: list, history: dict) -> None:
+    """Marks isAllTimeLow when a product's price matches or beats every
+    price seen for that shareLink in prior recorded runs. Products with no
+    prior history are left unflagged - there's nothing to compare against
+    yet, so claiming "all-time low" would be meaningless."""
+    for entry in data:
+        past_prices = history.get(entry["shareLink"], [])
+        if past_prices and entry["price"] <= min(past_prices):
+            entry["isAllTimeLow"] = True
+
+
 def main():
     token = get_access_token()
     category_map = get_top_level_category_map(token)
@@ -123,6 +166,8 @@ def main():
         )
     finally:
         save_link_cache(link_cache)
+
+    flag_all_time_lows(data, load_price_history())
 
     APP_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
     APP_DATA_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")

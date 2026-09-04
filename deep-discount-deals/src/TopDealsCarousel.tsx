@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Analytics } from '@apps-in-toss/web-framework';
 import { dedupeByImage } from './dedupeByImage';
+import { savingsAmount } from './savings';
 import type { Product } from './types';
 
 const ROTATE_MS = 3500;
@@ -118,6 +119,7 @@ export function TopDealsCarousel({
         <div className="carousel__info">
           <span className="carousel__discount">{product.discountRate}% 특가</span>
           <span className="carousel__price">{product.price.toLocaleString()}원</span>
+          <span className="carousel__savings">▼ {savingsAmount(product).toLocaleString()}원 아껴요</span>
           <span className="carousel__name">{title}</span>
           <span className="carousel__cta">{product.discountRate}% 할인 중 · 지금 확인해보세요</span>
         </div>
