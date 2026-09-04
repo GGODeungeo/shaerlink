@@ -78,6 +78,17 @@ export function ProductCard({
           loading="lazy"
           decoding="async"
         />
+      </div>
+      <div className="product-card__meta">
+        <div className="product-card__badges">
+          {product.isAllTimeLow && (
+            <span className="product-card__badge product-card__badge--lowest">
+              <span className="tf">🔥</span> 역대 최저가
+            </span>
+          )}
+          <span className="product-card__badge">{product.discountRate}% 특가</span>
+          {countdown && <span className="product-card__badge product-card__badge--deal">{countdown}</span>}
+        </div>
         <button
           type="button"
           className="product-card__favorite"
@@ -87,15 +98,6 @@ export function ProductCard({
         >
           <Heart size={18} filled={isFavorite} />
         </button>
-      </div>
-      <div className="product-card__badges">
-        {product.isAllTimeLow && (
-          <span className="product-card__badge product-card__badge--lowest">
-            <span className="tf">🔥</span> 역대 최저가
-          </span>
-        )}
-        <span className="product-card__badge">{product.discountRate}% 특가</span>
-        {countdown && <span className="product-card__badge product-card__badge--deal">{countdown}</span>}
       </div>
       <div className="product-card__price">{product.price.toLocaleString()}원</div>
       <div className="product-card__title">{title}</div>

@@ -3,7 +3,7 @@ import { Analytics } from '@apps-in-toss/web-framework';
 import { Bag, Close } from './components/icons';
 import type { Product } from './types';
 
-const AUTO_CLOSE_MS = 5000;
+const AUTO_CLOSE_MS = 3000;
 const EXIT_ANIMATION_MS = 300;
 
 export function RecentlyViewedWidget({

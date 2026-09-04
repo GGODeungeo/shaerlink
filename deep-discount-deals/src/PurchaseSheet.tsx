@@ -1,6 +1,7 @@
 import { Analytics, Device, Share } from '@apps-in-toss/web-framework';
 import { Close } from './components/icons';
 import { savingsAmount } from './savings';
+import { useLockBodyScroll } from './useLockBodyScroll';
 import type { Product } from './types';
 
 export function PurchaseSheet({
@@ -10,6 +11,8 @@ export function PurchaseSheet({
   product: Product;
   onClose: () => void;
 }) {
+  useLockBodyScroll();
+
   const [title] = product.name.split(', ');
 
   const handleConfirm = () => {

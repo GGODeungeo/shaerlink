@@ -5,5 +5,7 @@
  */
 export function savingsAmount(product: { price: number; discountRate: number }): number {
   const originalPrice = product.price / (1 - product.discountRate / 100);
-  return Math.round(originalPrice) - product.price;
+  const rawSavings = Math.round(originalPrice) - product.price;
+  // 어차피 근사치라 원 단위 끝자리까지 정확한 척하지 않는다 - 백 원 단위로 끊어서 보여준다.
+  return Math.floor(rawSavings / 100) * 100;
 }

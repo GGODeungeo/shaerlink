@@ -1,5 +1,6 @@
 import { Analytics } from '@apps-in-toss/web-framework';
 import { Close } from './components/icons';
+import { useLockBodyScroll } from './useLockBodyScroll';
 
 export function EventPopup({
   onOpenEvent,
@@ -8,6 +9,8 @@ export function EventPopup({
   onOpenEvent: () => void;
   onClose: () => void;
 }) {
+  useLockBodyScroll();
+
   const handleOpen = () => {
     Analytics.click({ log_name: 'today_event_popup_click' });
     onOpenEvent();
