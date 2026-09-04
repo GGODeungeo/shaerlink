@@ -9,7 +9,6 @@ import { useFavorites } from './useFavorites';
 import { useRecentlyViewed } from './useRecentlyViewed';
 import { dedupeByImage } from './dedupeByImage';
 import { TodaysPickEvent } from './TodaysPickEvent';
-import { EventPopup } from './EventPopup';
 import { BannerAd } from './BannerAd';
 import { PushOptInCard } from './PushOptInCard';
 import type { Product } from './types';
@@ -84,8 +83,6 @@ function App() {
   const [viewingFavorites, setViewingFavorites] = useState(false);
   const [viewingEvent, setViewingEvent] = useState(false);
   const [viewingRecentlyViewed, setViewingRecentlyViewed] = useState(false);
-  const [showEventPopup, setShowEventPopup] = useState(false);
-  const hasShownEventPopup = useRef(false);
   const { favorites, toggleFavorite } = useFavorites();
   const { recentIds, recordView, removeView, clearAll } = useRecentlyViewed();
   const recentlyViewedRef = useRef<RecentlyViewedWidgetHandle>(null);
@@ -156,13 +153,6 @@ function App() {
   };
 
   useEffect(fetchProducts, []);
-
-  useEffect(() => {
-    if (state.status === 'ready' && !hasShownEventPopup.current) {
-      hasShownEventPopup.current = true;
-      setShowEventPopup(true);
-    }
-  }, [state.status]);
 
   const retry = () => {
     setState({ status: 'loading' });
@@ -540,16 +530,6 @@ function App() {
 
       {selectedProduct && (
         <PurchaseSheet product={selectedProduct} onClose={() => setSelectedProduct(null)} />
-      )}
-
-      {showEventPopup && (
-        <EventPopup
-          onOpenEvent={() => {
-            setShowEventPopup(false);
-            openEvent();
-          }}
-          onClose={() => setShowEventPopup(false)}
-        />
       )}
     </div>
   );
