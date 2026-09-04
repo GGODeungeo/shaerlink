@@ -4,10 +4,11 @@ import { ProductCard } from './ProductCard';
 import { TopDealsCarousel } from './TopDealsCarousel';
 import { PurchaseSheet } from './PurchaseSheet';
 import { RecentlyViewedWidget } from './RecentlyViewedWidget';
-import { ChevronLeft, Heart, Search } from './components/icons';
+import { ChevronLeft, ChevronRight, Heart, Search } from './components/icons';
 import { useFavorites } from './useFavorites';
 import { useRecentlyViewed } from './useRecentlyViewed';
 import { dedupeByImage } from './dedupeByImage';
+import { TodaysPickEvent } from './TodaysPickEvent';
 import type { Product } from './types';
 import './App.css';
 
@@ -78,6 +79,7 @@ function App() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [viewingFavorites, setViewingFavorites] = useState(false);
+  const [viewingEvent, setViewingEvent] = useState(false);
   const { favorites, toggleFavorite } = useFavorites();
   const { recentIds, recordView } = useRecentlyViewed();
 
@@ -95,18 +97,30 @@ function App() {
   const selectCategory = (label: string) => {
     setSelectedCategory(label);
     setViewingFavorites(false);
+    setViewingEvent(false);
     setVisibleCount(PAGE_SIZE);
   };
 
   const openFavorites = () => {
     Analytics.click({ log_name: 'favorites_nav_click', favorite_count: favorites.size });
     setViewingFavorites(true);
+    setViewingEvent(false);
     setVisibleCount(PAGE_SIZE);
   };
 
   const closeFavorites = () => {
     setViewingFavorites(false);
     setVisibleCount(PAGE_SIZE);
+  };
+
+  const openEvent = () => {
+    Analytics.click({ log_name: 'today_event_banner_click' });
+    setViewingEvent(true);
+    setViewingFavorites(false);
+  };
+
+  const closeEvent = () => {
+    setViewingEvent(false);
   };
 
   const fetchProducts = () => {
@@ -228,6 +242,18 @@ function App() {
             );
           }
 
+          if (viewingEvent) {
+            return (
+              <TodaysPickEvent
+                products={state.products}
+                onSelect={handleSelectProduct}
+                onBack={closeEvent}
+                favorites={favorites}
+                onToggleFavorite={toggleFavorite}
+              />
+            );
+          }
+
           if (viewingFavorites) {
             const favoriteProducts = state.products.filter((p) => favorites.has(p.shareLink));
             const sortedFavorites = sortProducts(favoriteProducts, sort);
@@ -275,6 +301,15 @@ function App() {
             return (
               <>
                 <TopDealsCarousel products={state.products} onSelect={handleSelectProduct} />
+
+                <button type="button" className="event-banner" onClick={openEvent}>
+                  <span className="event-banner__emoji tf">🎉</span>
+                  <span className="event-banner__text">
+                    <span className="event-banner__title">오늘의 특가 오픈 이벤트</span>
+                    <span className="event-banner__subtitle">평 많고 좋은 상품만 모았어요</span>
+                  </span>
+                  <ChevronRight size={16} />
+                </button>
 
                 <p className="daily-update-notice">매일 아침 10시, 더 많은 특가가 추가돼요</p>
 
