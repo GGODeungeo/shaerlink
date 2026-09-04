@@ -9,6 +9,8 @@ import { useFavorites } from './useFavorites';
 import { useRecentlyViewed } from './useRecentlyViewed';
 import { dedupeByImage } from './dedupeByImage';
 import { TodaysPickEvent } from './TodaysPickEvent';
+import { BannerAd } from './BannerAd';
+import { PushOptInCard } from './PushOptInCard';
 import type { Product } from './types';
 import './App.css';
 
@@ -313,6 +315,8 @@ function App() {
 
                 <p className="daily-update-notice">매일 아침 10시, 더 많은 특가가 추가돼요</p>
 
+                <PushOptInCard />
+
                 <div className="category-grid">
                   {groups.map((group) => (
                     <button
@@ -365,6 +369,8 @@ function App() {
                     </div>
                   </div>
                 ))}
+
+                <BannerAd />
               </>
             );
           }

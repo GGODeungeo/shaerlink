@@ -595,6 +595,45 @@
   color: var(--color-text-subtle);
 }
 
+.push-opt-in-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: calc(100% - var(--space-3) * 2);
+  margin: var(--space-3) var(--space-3) 0;
+  padding: var(--space-3);
+  border: none;
+  border-radius: 16px;
+  background: var(--color-bg-canvas);
+  text-align: left;
+  cursor: pointer;
+}
+
+.push-opt-in-card__emoji {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.push-opt-in-card__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.push-opt-in-card__title {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-subtitle);
+  color: var(--color-text-strong);
+}
+
+.push-opt-in-card__subtitle {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-subtle);
+  word-break: keep-all;
+}
+
 .recently-viewed-widget {
   position: fixed;
   right: var(--space-3);
@@ -719,6 +758,12 @@
   color: var(--color-text-subtle);
   text-align: center;
   word-break: keep-all;
+}
+
+.banner-ad {
+  width: 100%;
+  height: 96px;
+  margin-top: var(--space-4);
 }
 
 .purchase-sheet-backdrop {
