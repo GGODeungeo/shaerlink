@@ -23,11 +23,20 @@ def test_merge_unique_dedupes_by_taca_item_id_keeping_first_occurrence():
     assert next(r for r in result if r["tacaItemId"] == 1)["displayName"] == "A"
 
 
-def test_category_name_resolves_first_matching_id_and_falls_back():
-    product = {"categoryIds": [999, 5, 6]}
-    assert category_name(product, {5: "식품"}) == "식품"
-    assert category_name({"categoryIds": [999]}, {5: "식품"}) == "기타"
-    assert category_name({"categoryIds": []}, {5: "식품"}) == "기타"
+def test_category_name_resolves_matching_id_and_falls_back():
+    product = {"categoryIds": [999, 5]}
+    assert category_name(product, {5: ("식품", 1)}) == "식품"
+    assert category_name({"categoryIds": [999]}, {5: ("식품", 1)}) == "기타"
+    assert category_name({"categoryIds": []}, {5: ("식품", 1)}) == "기타"
+
+
+def test_category_name_prefers_the_more_specific_deeper_category_when_ids_disagree():
+    # a product cross-tagged under both an unrelated shallow branch and a
+    # specific one (e.g. pilates socks tagged under "여행/취미 > 예체능레슨" as
+    # well as "스포츠/레져 > 헬스/요가 > ...") should resolve to the specific one
+    product = {"categoryIds": [10, 20]}
+    category_map = {10: ("여행/취미", 3), 20: ("스포츠/레져", 4)}
+    assert category_name(product, category_map) == "스포츠/레져"
 
 
 def test_build_entry_maps_api_fields_to_app_data_fields():
@@ -40,7 +49,7 @@ def test_build_entry_maps_api_fields_to_app_data_fields():
         "categoryIds": [5],
         "reviewCount": 342,
     }
-    assert build_entry(product, {5: "식품"}) == {
+    assert build_entry(product, {5: ("식품", 1)}) == {
         "name": "상품명",
         "price": 12000,
         "discountRate": 61,

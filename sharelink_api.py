@@ -77,22 +77,27 @@ def _get(token: str, path: str) -> dict:
 
 
 def get_top_level_category_map(token: str) -> dict:
-    """Returns {categoryId: rootDisplayName} for every category at any depth,
-    mapped to the display name of its top-level (level 1) ancestor - so any
-    categoryId found on a product can be bucketed into one of the top-level
-    sections regardless of how specific that id is."""
+    """Returns {categoryId: (rootDisplayName, depth)} for every category at
+    any depth, mapped to the display name of its top-level (level 1)
+    ancestor plus how deep that categoryId itself sits - so any categoryId
+    found on a product can be bucketed into one of the top-level sections
+    regardless of how specific that id is, and callers with multiple
+    categoryIds per product can prefer the most specific (deepest) match
+    instead of an arbitrary one (sellers cross-tag products into unrelated
+    top-level sections, e.g. pilates socks also tagged under the
+    "여행/취미 > 예체능레슨" hobby-lessons branch)."""
     roots = _get(token, "/categories")["success"]["categories"]
-    id_to_root_name = {}
+    id_to_root = {}
 
-    def walk(nodes, root_name):
+    def walk(nodes, root_name, depth):
         for node in nodes:
-            id_to_root_name[node["categoryId"]] = root_name
-            walk(node.get("children", []), root_name)
+            id_to_root[node["categoryId"]] = (root_name, depth)
+            walk(node.get("children", []), root_name, depth + 1)
 
     for root in roots:
-        walk([root], root["displayName"])
+        walk([root], root["displayName"], 1)
 
-    return id_to_root_name
+    return id_to_root
 
 
 def get_category_ids(token: str, max_depth: int) -> list:

@@ -43,10 +43,16 @@ def merge_unique(*item_lists: list) -> list:
 
 
 def category_name(product: dict, category_map: dict) -> str:
-    for category_id in product.get("categoryIds", []):
-        if category_id in category_map:
-            return category_map[category_id]
-    return "기타"
+    """Products are sometimes tagged with categoryIds across unrelated
+    top-level sections (e.g. pilates socks under both 스포츠/레져 and the
+    여행/취미 > 예체능레슨 hobby-lessons branch) - prefer whichever tagged
+    categoryId is the most specific (deepest) rather than just the first
+    one listed, since depth correlates with how well-targeted the tag is."""
+    matches = [category_map[cid] for cid in product.get("categoryIds", []) if cid in category_map]
+    if not matches:
+        return "기타"
+    root_name, _ = max(matches, key=lambda root_and_depth: root_and_depth[1])
+    return root_name
 
 
 def build_entry(product: dict, category_map: dict) -> dict:
