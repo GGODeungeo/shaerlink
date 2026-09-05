@@ -16,7 +16,7 @@ from sharelink_api import (
 )
 
 MIN_DISCOUNT = 50
-CATEGORY_DEPTH = 3
+CATEGORY_DEPTH = 4
 APP_DATA_PATH = Path("app-data/products.json")
 LINK_CACHE_PATH = Path("link_cache.json")
 
