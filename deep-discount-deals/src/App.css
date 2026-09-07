@@ -882,14 +882,6 @@
   font-weight: var(--font-weight-subtitle);
 }
 
-.purchase-sheet__notice {
-  margin: var(--space-2) 0 0;
-  font-size: var(--font-size-caption);
-  color: var(--color-text-subtle);
-  text-align: center;
-  word-break: keep-all;
-}
-
 .purchase-sheet__hint {
   margin: var(--space-2) 0 0;
   font-size: var(--font-size-caption);

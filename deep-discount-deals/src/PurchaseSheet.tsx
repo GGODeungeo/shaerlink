@@ -61,10 +61,6 @@ export function PurchaseSheet({
           </div>
         </div>
 
-        <p className="purchase-sheet__notice">
-          특가 정보는 하루에 한 번 갱신돼요. 일부 상품은 이미 품절됐을 수 있어요.
-        </p>
-
         <button type="button" className="purchase-sheet__cta" onClick={handleConfirm}>
           토스쇼핑에서 구매하기
         </button>
