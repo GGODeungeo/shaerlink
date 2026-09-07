@@ -128,16 +128,16 @@ def test_to_app_data_sorts_by_discount_desc_and_skips_failed_link_issuance(monke
     assert result[0]["shareLink"] == "https://toss.im/_m/3"
 
 
-def test_flag_all_time_lows_marks_price_at_or_below_every_past_price():
+def test_flag_all_time_lows_requires_a_strict_price_drop():
     data = [
-        {"shareLink": "a", "price": 1000},  # ties past low -> flagged
+        {"shareLink": "a", "price": 1000},  # ties past low -> NOT flagged (no actual drop)
         {"shareLink": "b", "price": 1000},  # beats past low -> flagged
         {"shareLink": "c", "price": 2000},  # above past low -> not flagged
         {"shareLink": "d", "price": 500},  # no history -> not flagged
     ]
     history = {"a": [1000, 1200], "b": [1500], "c": [1000]}
     flag_all_time_lows(data, history)
-    assert data[0]["isAllTimeLow"] is True
+    assert "isAllTimeLow" not in data[0]
     assert data[1]["isAllTimeLow"] is True
     assert "isAllTimeLow" not in data[2]
     assert "isAllTimeLow" not in data[3]

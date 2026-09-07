@@ -123,13 +123,15 @@ def load_price_history(path: str = str(APP_DATA_PATH)) -> dict:
 
 
 def flag_all_time_lows(data: list, history: dict) -> None:
-    """Marks isAllTimeLow when a product's price matches or beats every
-    price seen for that shareLink in prior recorded runs. Products with no
-    prior history are left unflagged - there's nothing to compare against
-    yet, so claiming "all-time low" would be meaningless."""
+    """Marks isAllTimeLow when a product's price strictly beats every price
+    seen for that shareLink in prior recorded runs - a real price drop, not
+    just a repeat of a price we've already seen (our history is still only
+    a handful of runs deep, so an unchanged price ties the "minimum" trivially
+    and isn't evidence of anything). Products with no prior history are left
+    unflagged - there's nothing to compare against yet."""
     for entry in data:
         past_prices = history.get(entry["shareLink"], [])
-        if past_prices and entry["price"] <= min(past_prices):
+        if past_prices and entry["price"] < min(past_prices):
             entry["isAllTimeLow"] = True
 
 
