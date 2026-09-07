@@ -18,12 +18,14 @@ export function ProductCard({
   isFavorite,
   onToggleFavorite,
   onRemove,
+  rank,
 }: {
   product: Product;
   onSelect: (product: Product) => void;
   isFavorite: boolean;
   onToggleFavorite: (shareLink: string) => void;
   onRemove?: (shareLink: string) => void;
+  rank?: number;
 }) {
   const handleOpen = () => {
     Analytics.click({
@@ -86,6 +88,7 @@ export function ProductCard({
           loading="lazy"
           decoding="async"
         />
+        {rank !== undefined && <span className="product-card__rank">{rank}</span>}
       </div>
       <div className="product-card__meta">
         <div className="product-card__badges">

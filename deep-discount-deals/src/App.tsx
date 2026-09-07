@@ -398,6 +398,10 @@ function App() {
           const groups = groupByCategory(filteredProducts);
 
           if (selectedCategory === null) {
+            const allTimeLowProducts = dedupeByImage(
+              sortProducts(state.products.filter((p) => p.isAllTimeLow), 'recommend')
+            ).slice(0, SHELF_SIZE);
+
             return (
               <>
                 <TopDealsCarousel products={state.products} onSelect={handleSelectProduct} />
@@ -405,6 +409,27 @@ function App() {
                 <p className="daily-update-notice">매일 아침 10시, 더 많은 특가가 추가돼요</p>
 
                 <PushOptInCard />
+
+                {allTimeLowProducts.length > 0 && (
+                  <div className="category-shelf">
+                    <div className="category-shelf__header">
+                      <span className="category-shelf__title">
+                        <span className="tf">🔥</span> 역대 최저가 상품
+                      </span>
+                    </div>
+                    <div className="category-shelf__list">
+                      {allTimeLowProducts.map((product) => (
+                        <ProductCard
+                          key={product.shareLink}
+                          product={product}
+                          onSelect={handleSelectProduct}
+                          isFavorite={favorites.has(product.shareLink)}
+                          onToggleFavorite={toggleFavorite}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div className="category-grid">
                   {groups.map((group) => (
@@ -446,13 +471,14 @@ function App() {
                     <div className="category-shelf__list">
                       {dedupeByImage(sortProducts(group.products, 'recommend'))
                         .slice(0, SHELF_SIZE)
-                        .map((product) => (
+                        .map((product, index) => (
                           <ProductCard
                             key={product.shareLink}
                             product={product}
                             onSelect={handleSelectProduct}
                             isFavorite={favorites.has(product.shareLink)}
                             onToggleFavorite={toggleFavorite}
+                            rank={index + 1}
                           />
                         ))}
                     </div>
