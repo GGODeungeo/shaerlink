@@ -522,8 +522,20 @@
   background: var(--color-text-strong);
 }
 
-.product-card__badge--lowest {
+.product-card__lowest {
+  position: absolute;
+  top: var(--space-1);
+  left: var(--space-1);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px 8px;
+  border-radius: 999px;
   background: var(--brand-primary);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-subtitle);
+  white-space: nowrap;
 }
 
 .product-card__price {

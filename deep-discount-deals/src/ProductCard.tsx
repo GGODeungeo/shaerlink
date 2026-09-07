@@ -88,15 +88,15 @@ export function ProductCard({
           loading="lazy"
           decoding="async"
         />
+        {product.isAllTimeLow && (
+          <span className="product-card__lowest">
+            <span className="tf">🔥</span> 역대 최저가
+          </span>
+        )}
         {rank !== undefined && <span className="product-card__rank">{rank}</span>}
       </div>
       <div className="product-card__meta">
         <div className="product-card__badges">
-          {product.isAllTimeLow && (
-            <span className="product-card__badge product-card__badge--lowest">
-              <span className="tf">🔥</span> 역대 최저가
-            </span>
-          )}
           <span className="product-card__badge">{product.discountRate}% 특가</span>
           {countdown && <span className="product-card__badge product-card__badge--deal">{countdown}</span>}
         </div>
