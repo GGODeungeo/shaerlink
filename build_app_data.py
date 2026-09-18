@@ -16,7 +16,7 @@ from sharelink_api import (
 )
 
 MIN_DISCOUNT = 50
-CATEGORY_DEPTH = 4
+CATEGORY_DEPTH = 3
 APP_DATA_PATH = Path("app-data/products.json")
 LINK_CACHE_PATH = Path("link_cache.json")
 
@@ -58,6 +58,7 @@ def category_name(product: dict, category_map: dict) -> str:
 
 def build_entry(product: dict, category_map: dict) -> dict:
     entry = {
+        "tacaItemId": product["tacaItemId"],
         "name": product["displayName"],
         "price": product["displayPrice"],
         "discountRate": product["discountRate"],
@@ -89,6 +90,18 @@ def to_app_data(
         slim.append(entry)
     slim.sort(key=lambda p: -p["discountRate"])
     return slim
+
+
+def merge_with_previous(data: list, previous: list) -> list:
+    """Unions a partial run's results with the prior snapshot instead of
+    replacing it - used when a quota cutoff meant some categories were never
+    reached this run, so those items aren't dropped just for going
+    unchecked. Items rediscovered this run use the fresh data; others are
+    kept as last seen."""
+    seen = {p["shareLink"] for p in data}
+    merged = data + [p for p in previous if p["shareLink"] not in seen]
+    merged.sort(key=lambda p: -p["discountRate"])
+    return merged
 
 
 def load_price_history(path: str = str(APP_DATA_PATH)) -> dict:
@@ -136,23 +149,41 @@ def flag_all_time_lows(data: list, history: dict) -> None:
 
 
 def main():
+    # Optional: python3 build_app_data.py 1.5 caps growth at 1.5x today's
+    # starting count, stopping early instead of running until the daily quota
+    # is exhausted - so quota is deliberately left over for something else.
+    # Omit the arg for the old unbounded (run until quota) behavior.
+    growth_cap_multiplier = float(sys.argv[1]) if len(sys.argv) > 1 else None
+    baseline_count = len(json.loads(APP_DATA_PATH.read_text(encoding="utf-8"))) if APP_DATA_PATH.exists() else 0
+    growth_cap = int(baseline_count * growth_cap_multiplier) if growth_cap_multiplier else None
+
     token = get_access_token()
     category_map = get_top_level_category_map(token)
 
     all_products = list(get_today_deals(token))
     all_products.extend(get_best_selling_products(token))
+    seen_ids = {p["tacaItemId"] for p in all_products if is_deep_discount(p)}
+    quota_hit = False
     for category_id in get_category_ids(token, CATEGORY_DEPTH):
         try:
-            all_products.extend(get_best_category_products(token, category_id))
+            batch = get_best_category_products(token, category_id)
         except ShareLinkAPIError as e:
             if e.error_code == "SHARELINK_OPENAPI_QUOTA_EXCEEDED":
                 print("API 요청 한도 초과, 남은 카테고리 조회 중단", file=sys.stderr)
+                quota_hit = True
                 break
             print(f"카테고리 {category_id} 조회 실패, 건너뜀: {e}", file=sys.stderr)
             continue
         except Exception as e:
             print(f"카테고리 {category_id} 조회 실패, 건너뜀: {e}", file=sys.stderr)
             continue
+
+        all_products.extend(batch)
+        seen_ids.update(p["tacaItemId"] for p in batch if is_deep_discount(p))
+        if growth_cap and len(seen_ids) >= growth_cap:
+            print(f"목표 증가치({growth_cap}개) 도달, 남은 한도는 아껴두고 조회 중단", file=sys.stderr)
+            quota_hit = True  # same partial-run handling: merge, don't prune
+            break
 
     merged = merge_unique(all_products)
     filtered = [p for p in merged if is_deep_discount(p)]
@@ -161,13 +192,23 @@ def main():
         raise SystemExit("할인율 50% 초과 상품을 하나도 찾지 못했어요.")
 
     current_ids = {str(p["tacaItemId"]) for p in filtered}
-    link_cache = {k: v for k, v in load_link_cache().items() if k in current_ids}
+    cached = load_link_cache()
+    # A quota cutoff (or growth-cap stop) only means we didn't get to check
+    # the remaining categories this run - not that those products are gone.
+    # Pruning the cache to just this run's ids would be fine for a complete
+    # run, but for a partial one it throws away still-valid links for no
+    # reason.
+    link_cache = cached if quota_hit else {k: v for k, v in cached.items() if k in current_ids}
     try:
         data = to_app_data(
             filtered, category_map, os.environ["SHARELINK_PUBLISHER_ID"], token, link_cache
         )
     finally:
         save_link_cache(link_cache)
+
+    if quota_hit and APP_DATA_PATH.exists():
+        previous = json.loads(APP_DATA_PATH.read_text(encoding="utf-8"))
+        data = merge_with_previous(data, previous)
 
     flag_all_time_lows(data, load_price_history())
 

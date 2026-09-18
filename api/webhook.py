@@ -11,9 +11,15 @@ import http.client
 import json
 import os
 import ssl
+import sys
 import tempfile
+import urllib.parse
 from datetime import datetime, timezone, timedelta
 from http.server import BaseHTTPRequestHandler
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from sharelink_api import get_access_token, issue_link_with_origin
 
 MAX_CLOCK_SKEW = timedelta(minutes=5)
 PROMOTION_API_HOST = "apps-in-toss-api.toss.im"
@@ -97,8 +103,33 @@ def grant_reward(anon_key: str, amount: int) -> dict:
     )
 
 
+def issue_tracked_link(taca_item_id: int, anon_key: str) -> str:
+    """Issues a fresh sharelink for this click and tags its originUrl with
+    partner_ref_id=anon_key, so a later PURCHASE webhook can attribute the
+    order back to this app user."""
+    token = get_access_token()
+    publisher_id = os.environ["SHARELINK_PUBLISHER_ID"]
+    link = issue_link_with_origin(token, taca_item_id, publisher_id)
+    origin = link["originUrl"]
+    sep = "&" if "?" in origin else "?"
+    return f"{origin}{sep}partner_ref_id={urllib.parse.quote(anon_key, safe='')}"
+
+
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
+        if self.path.startswith("/api/link"):
+            self._handle_link_request()
+        else:
+            self._handle_order_event()
+
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, x-internal-token")
+        self.end_headers()
+
+    def _handle_order_event(self):
         content_length = int(self.headers.get("Content-Length", 0))
         raw_body = self.rfile.read(content_length)
         transmission_time = self.headers.get("sharelink-webhook-transmission-time", "")
@@ -127,9 +158,35 @@ class handler(BaseHTTPRequestHandler):
 
         self._respond(200, {"received": True})
 
-    def _respond(self, status: int, body: dict):
+    def _handle_link_request(self):
+        token = self.headers.get("x-internal-token", "")
+        if not hmac.compare_digest(token, os.environ.get("LINK_API_TOKEN", "")):
+            self._respond(401, {"error": "unauthorized"}, cors=True)
+            return
+
+        content_length = int(self.headers.get("Content-Length", 0))
+        try:
+            body = json.loads(self.rfile.read(content_length) or b"{}")
+            taca_item_id = int(body["tacaItemId"])
+            anon_key = str(body["anonKey"])
+        except (json.JSONDecodeError, KeyError, ValueError):
+            self._respond(400, {"error": "tacaItemId and anonKey are required"}, cors=True)
+            return
+
+        try:
+            url = issue_tracked_link(taca_item_id, anon_key)
+        except Exception as e:
+            print(f"[link] issue failed for tacaItemId={taca_item_id}: {e}")
+            self._respond(502, {"error": "link issuance failed"}, cors=True)
+            return
+
+        self._respond(200, {"url": url}, cors=True)
+
+    def _respond(self, status: int, body: dict, cors: bool = False):
         payload = json.dumps(body).encode()
         self.send_response(status)
         self.send_header("Content-Type", "application/json")
+        if cors:
+            self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         self.wfile.write(payload)

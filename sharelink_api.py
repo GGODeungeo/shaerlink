@@ -64,11 +64,42 @@ class ShareLinkAPIError(Exception):
         super().__init__(reason)
 
 
+# The API replies with a token-bucket rate limit (x-ratelimit-* headers, e.g.
+# burst-capacity=30, replenish-rate=10/s) rather than a fixed daily total.
+# Keeping RESERVE_FRACTION of the bucket unspent at all times - instead of
+# racing every call until the bucket empties and a request finally fails -
+# leaves headroom for whatever else needs this same quota later (another
+# script, a manual retry) instead of us spending it down to zero.
+RESERVE_FRACTION = 0.30
+_rate_state = {"remaining": None, "capacity": None, "replenish_rate": None}
+
+
+def _update_rate_state(resp) -> None:
+    try:
+        _rate_state["remaining"] = int(resp.headers.get("x-ratelimit-remaining"))
+        _rate_state["capacity"] = int(resp.headers.get("x-ratelimit-burst-capacity"))
+        _rate_state["replenish_rate"] = int(resp.headers.get("x-ratelimit-replenish-rate"))
+    except (TypeError, ValueError):
+        pass
+
+
+def _throttle_if_low() -> None:
+    remaining, capacity = _rate_state["remaining"], _rate_state["capacity"]
+    if remaining is None or capacity is None:
+        return
+    reserve = capacity * RESERVE_FRACTION
+    if remaining <= reserve:
+        rate = _rate_state["replenish_rate"] or 1
+        time.sleep(max(1.0, reserve / rate))
+
+
 def _get(token: str, path: str) -> dict:
+    _throttle_if_low()
     req = urllib.request.Request(
         f"{API_BASE}{path}", headers={"Authorization": f"Bearer {token}"}
     )
     with _urlopen(req) as resp:
+        _update_rate_state(resp)
         body = json.load(resp)
     if body.get("resultType") == "FAIL":
         error = body.get("error", {})
@@ -147,7 +178,11 @@ def get_best_selling_products(token: str) -> list:
     return _paginate(token, "/products/best-selling", size=100)
 
 
-def issue_link(token: str, taca_item_id: int, publisher_id: str) -> str:
+def issue_link_with_origin(token: str, taca_item_id: int, publisher_id: str) -> dict:
+    """Returns the full {shortUrl, originUrl, ...} payload - originUrl is what
+    a caller appends ?partner_ref_id=... to for reward attribution, per
+    sharelink-docs.toss.im (the shortUrl doesn't carry query params through)."""
+    _throttle_if_low()
     body = json.dumps({"tacaItemId": taca_item_id, "publisherId": publisher_id}).encode()
     req = urllib.request.Request(
         f"{API_BASE}/links",
@@ -156,4 +191,9 @@ def issue_link(token: str, taca_item_id: int, publisher_id: str) -> str:
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
     )
     with _urlopen(req) as resp:
-        return json.load(resp)["success"]["shortUrl"]
+        _update_rate_state(resp)
+        return json.load(resp)["success"]
+
+
+def issue_link(token: str, taca_item_id: int, publisher_id: str) -> str:
+    return issue_link_with_origin(token, taca_item_id, publisher_id)["shortUrl"]

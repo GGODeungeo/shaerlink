@@ -5,6 +5,7 @@ from build_app_data import (
     flag_all_time_lows,
     is_deep_discount,
     merge_unique,
+    merge_with_previous,
     to_app_data,
 )
 
@@ -51,6 +52,7 @@ def test_build_entry_maps_api_fields_to_app_data_fields():
         "reviewCount": 342,
     }
     assert build_entry(product, {5: ("식품", 1)}) == {
+        "tacaItemId": 1,
         "name": "상품명",
         "price": 12000,
         "discountRate": 61,
@@ -141,6 +143,17 @@ def test_flag_all_time_lows_requires_a_strict_price_drop():
     assert data[1]["isAllTimeLow"] is True
     assert "isAllTimeLow" not in data[2]
     assert "isAllTimeLow" not in data[3]
+
+
+def test_merge_with_previous_keeps_items_not_rediscovered_this_run():
+    data = [{"shareLink": "new", "discountRate": 90}]
+    previous = [
+        {"shareLink": "new", "discountRate": 60},  # rediscovered - fresh data wins
+        {"shareLink": "old", "discountRate": 75},  # not rediscovered - kept as last seen
+    ]
+    result = merge_with_previous(data, previous)
+    assert [r["shareLink"] for r in result] == ["new", "old"]
+    assert next(r for r in result if r["shareLink"] == "new")["discountRate"] == 90
 
 
 def test_to_app_data_reuses_cached_link_instead_of_reissuing(monkeypatch):
