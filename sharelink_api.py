@@ -192,7 +192,11 @@ def issue_link_with_origin(token: str, taca_item_id: int, publisher_id: str) -> 
     )
     with _urlopen(req) as resp:
         _update_rate_state(resp)
-        return json.load(resp)["success"]
+        body_json = json.load(resp)
+    if body_json.get("resultType") == "FAIL":
+        error = body_json.get("error", {})
+        raise ShareLinkAPIError(error.get("errorCode", ""), error.get("reason", ""))
+    return body_json["success"]
 
 
 def issue_link(token: str, taca_item_id: int, publisher_id: str) -> str:
