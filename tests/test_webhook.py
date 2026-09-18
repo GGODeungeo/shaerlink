@@ -7,7 +7,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "api"))
 
-from webhook import _verify_signature, _within_clock_skew
+import webhook
+from webhook import _verify_signature, _within_clock_skew, grant_reward
 
 SECRET = "test-secret"
 
@@ -43,3 +44,36 @@ def test_within_clock_skew_accepts_recent_timestamp():
 def test_within_clock_skew_rejects_old_timestamp():
     old = datetime.now(timezone.utc) - timedelta(minutes=10)
     assert not _within_clock_skew(old.isoformat())
+
+
+def test_grant_reward_passes_key_from_get_key_into_execute_promotion(monkeypatch):
+    monkeypatch.setenv("PROMOTION_CODE", "PROMO123")
+    calls = []
+
+    def fake_post(path, anon_key, body):
+        calls.append((path, anon_key, body))
+        if path.endswith("/get-key"):
+            return {"resultType": "SUCCESS", "success": {"key": "the-key"}}
+        return {"resultType": "SUCCESS", "success": {"key": "the-key"}}
+
+    monkeypatch.setattr(webhook, "_promotion_api_post", fake_post)
+    result = grant_reward("anon-hash", 500)
+
+    assert result["resultType"] == "SUCCESS"
+    assert calls[0][0].endswith("/get-key")
+    assert calls[1][1] == "anon-hash"
+    assert calls[1][2] == {"promotionCode": "PROMO123", "key": "the-key", "amount": 500}
+
+
+def test_grant_reward_stops_and_returns_error_if_get_key_fails(monkeypatch):
+    monkeypatch.setenv("PROMOTION_CODE", "PROMO123")
+    calls = []
+    monkeypatch.setattr(
+        webhook,
+        "_promotion_api_post",
+        lambda path, anon_key, body: calls.append(path) or {"resultType": "FAIL", "error": {"errorCode": "4100"}},
+    )
+    result = grant_reward("anon-hash", 500)
+
+    assert result["resultType"] == "FAIL"
+    assert len(calls) == 1
