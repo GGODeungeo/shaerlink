@@ -188,6 +188,7 @@ class handler(BaseHTTPRequestHandler):
             self._respond(400, {"error": "tacaItemId and anonKey are required"}, cors=True)
             return
 
+        print(f"[link] request tacaItemId={taca_item_id} anonKey={anon_key}")
         try:
             url = issue_tracked_link(taca_item_id, anon_key)
         except Exception as e:
