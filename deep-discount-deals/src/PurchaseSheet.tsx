@@ -1,7 +1,9 @@
 import { Analytics, Device, Share } from '@apps-in-toss/web-framework';
 import { Close } from './components/icons';
 import { savingsAmount } from './savings';
+import { reviewCountLabel } from './reviewCount';
 import { useLockBodyScroll } from './useLockBodyScroll';
+import { getTrackedPurchaseUrl } from './trackedLink';
 import type { Product } from './types';
 
 export function PurchaseSheet({
@@ -14,8 +16,9 @@ export function PurchaseSheet({
   useLockBodyScroll();
 
   const [title] = product.name.split(', ');
+  const reviews = reviewCountLabel(product.reviewCount);
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     Analytics.click({
       log_name: 'purchase_cta_click',
       product_name: product.name,
@@ -24,7 +27,7 @@ export function PurchaseSheet({
       price: product.price,
     });
     onClose();
-    Device.openURL(product.shareLink);
+    Device.openURL(await getTrackedPurchaseUrl(product));
   };
 
   const handleShare = async () => {
@@ -35,7 +38,10 @@ export function PurchaseSheet({
       discount_rate: product.discountRate,
     });
     try {
-      const link = await Share.createLink({ path: 'intoss://hidden-deals' });
+      const link = await Share.createLink({
+        path: 'intoss://hidden-deals',
+        ogImageUrl: 'https://static.toss.im/appsintoss/61293/06a91316-51e4-4209-892a-28b136d4436a.png',
+      });
       await Share.sendMessage({
         message: `${title} ${product.discountRate}% 특가!\n반값 이상 특가를 숨은특가에서 확인해보세요.\n${link}`,
       });
@@ -58,6 +64,7 @@ export function PurchaseSheet({
             <span className="purchase-sheet__price">{product.price.toLocaleString()}원</span>
             <span className="purchase-sheet__savings">▼ {savingsAmount(product).toLocaleString()}원 아껴요</span>
             <span className="purchase-sheet__name">{title}</span>
+            {reviews && <span className="purchase-sheet__reviews">{reviews}</span>}
           </div>
         </div>
 

@@ -8,4 +8,5 @@ export type Product = {
   reviewCount: number;
   dealEndsAt?: string;
   isAllTimeLow?: boolean;
+  tacaItemId?: number;
 };
