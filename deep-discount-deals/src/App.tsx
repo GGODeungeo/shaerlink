@@ -3,12 +3,12 @@ import { Analytics } from '@apps-in-toss/web-framework';
 import { ProductCard } from './ProductCard';
 import { TopDealsCarousel } from './TopDealsCarousel';
 import { PurchaseSheet } from './PurchaseSheet';
-import { RecentlyViewedWidget, type RecentlyViewedWidgetHandle } from './RecentlyViewedWidget';
 import { Bag, Heart, Search } from './components/icons';
 import { useFavorites } from './useFavorites';
 import { useRecentlyViewed } from './useRecentlyViewed';
 import { dedupeByImage } from './dedupeByImage';
 import { TodaysPickEvent } from './TodaysPickEvent';
+import { PopularRanking } from './PopularRanking';
 import { BannerAd } from './BannerAd';
 import { PushOptInCard } from './PushOptInCard';
 import type { Product } from './types';
@@ -83,9 +83,9 @@ function App() {
   const [viewingFavorites, setViewingFavorites] = useState(false);
   const [viewingEvent, setViewingEvent] = useState(false);
   const [viewingRecentlyViewed, setViewingRecentlyViewed] = useState(false);
+  const [viewingRanking, setViewingRanking] = useState(false);
   const { favorites, toggleFavorite } = useFavorites();
   const { recentIds, recordView, removeView, clearAll } = useRecentlyViewed();
-  const recentlyViewedRef = useRef<RecentlyViewedWidgetHandle>(null);
 
   const handleSelectProduct = (product: Product) => {
     recordView(product.shareLink);
@@ -103,6 +103,7 @@ function App() {
     setViewingFavorites(false);
     setViewingEvent(false);
     setViewingRecentlyViewed(false);
+    setViewingRanking(false);
     setVisibleCount(PAGE_SIZE);
   };
 
@@ -111,6 +112,7 @@ function App() {
     setViewingFavorites(true);
     setViewingEvent(false);
     setViewingRecentlyViewed(false);
+    setViewingRanking(false);
     setVisibleCount(PAGE_SIZE);
   };
 
@@ -118,6 +120,7 @@ function App() {
     setViewingEvent(true);
     setViewingFavorites(false);
     setViewingRecentlyViewed(false);
+    setViewingRanking(false);
   };
 
   const openRecentlyViewedPage = () => {
@@ -125,6 +128,20 @@ function App() {
     setViewingRecentlyViewed(true);
     setViewingFavorites(false);
     setViewingEvent(false);
+    setViewingRanking(false);
+    setVisibleCount(PAGE_SIZE);
+  };
+
+  const openHome = () => {
+    if (isSubView) window.history.back();
+  };
+
+  const openRanking = () => {
+    Analytics.click({ log_name: 'ranking_teaser_click' });
+    setViewingRanking(true);
+    setViewingFavorites(false);
+    setViewingEvent(false);
+    setViewingRecentlyViewed(false);
     setVisibleCount(PAGE_SIZE);
   };
 
@@ -140,11 +157,31 @@ function App() {
 
   useEffect(fetchProducts, []);
 
+  // 주요 기능(앱 상세 화면 바로가기)이 intoss://hidden-deals?view=favorites 같은
+  // 링크로 특정 화면을 바로 열 수 있게 한다.
+  useEffect(() => {
+    const view = new URLSearchParams(window.location.search).get('view');
+    if (view === 'favorites') {
+      Analytics.click({ log_name: 'deep_link_open', view });
+      setViewingFavorites(true);
+    } else if (view === 'event') {
+      Analytics.click({ log_name: 'deep_link_open', view });
+      setViewingEvent(true);
+    } else if (view === 'recent') {
+      Analytics.click({ log_name: 'deep_link_open', view });
+      setViewingRecentlyViewed(true);
+    } else if (view === 'ranking') {
+      Analytics.click({ log_name: 'deep_link_open', view });
+      setViewingRanking(true);
+    }
+  }, []);
+
   // 서브뷰(카테고리 상세/찜/이벤트/최근본)에 들어갈 때 history entry를 하나
   // 쌓아서, 플랫폼 자체 상단 뒤로가기 버튼 및 스와이프 제스처가 홈으로
   // 돌아오게 만든다 - 화면에 직접 그린 뒤로가기 버튼과 중복 노출되지 않도록
   // 자체 버튼은 두지 않는다.
-  const isSubView = selectedCategory !== null || viewingFavorites || viewingEvent || viewingRecentlyViewed;
+  const isSubView =
+    selectedCategory !== null || viewingFavorites || viewingEvent || viewingRecentlyViewed || viewingRanking;
   const wasSubView = useRef(false);
 
   useEffect(() => {
@@ -160,6 +197,7 @@ function App() {
       setViewingFavorites(false);
       setViewingEvent(false);
       setViewingRecentlyViewed(false);
+      setViewingRanking(false);
     };
     window.addEventListener('popstate', goHome);
     return () => window.removeEventListener('popstate', goHome);
@@ -180,32 +218,13 @@ function App() {
               <button
                 type="button"
                 className="event-nav-button"
-                aria-label="오늘의 특가 오픈 이벤트"
+                aria-label="오늘의 특가 랭킹 보기"
                 onClick={() => {
                   Analytics.click({ log_name: 'event_nav_icon_click' });
-                  openEvent();
+                  openRanking();
                 }}
               >
                 <span className="tf">🎉</span>
-              </button>
-              {recentProducts.length > 0 && (
-                <button
-                  type="button"
-                  className="recently-viewed-nav-button"
-                  aria-label="최근 본 상품"
-                  onClick={openRecentlyViewedPage}
-                >
-                  <Bag size={20} />
-                </button>
-              )}
-              <button
-                type="button"
-                className="favorites-nav-button"
-                data-active={favorites.size > 0}
-                aria-label="찜한 상품"
-                onClick={openFavorites}
-              >
-                <Heart size={22} filled={favorites.size > 0} />
               </button>
             </div>
           </div>
@@ -358,6 +377,17 @@ function App() {
             );
           }
 
+          if (viewingRanking) {
+            return (
+              <PopularRanking
+                products={state.products}
+                onSelect={handleSelectProduct}
+                favorites={favorites}
+                onToggleFavorite={toggleFavorite}
+              />
+            );
+          }
+
           if (viewingFavorites) {
             const favoriteProducts = state.products.filter((p) => favorites.has(p.shareLink));
             const sortedFavorites = sortProducts(favoriteProducts, sort);
@@ -448,6 +478,17 @@ function App() {
                       <span className="category-grid__label">{group.label}</span>
                     </button>
                   ))}
+                  <button
+                    type="button"
+                    className="category-grid__item"
+                    onClick={() => {
+                      Analytics.click({ log_name: 'event_grid_tile_click' });
+                      openEvent();
+                    }}
+                  >
+                    <span className="category-grid__emoji tf">🎉</span>
+                    <span className="category-grid__label">오늘의 특가 이벤트</span>
+                  </button>
                 </div>
 
                 {groups.map((group) => (
@@ -471,14 +512,13 @@ function App() {
                     <div className="category-shelf__list">
                       {dedupeByImage(sortProducts(group.products, 'recommend'))
                         .slice(0, SHELF_SIZE)
-                        .map((product, index) => (
+                        .map((product) => (
                           <ProductCard
                             key={product.shareLink}
                             product={product}
                             onSelect={handleSelectProduct}
                             isFavorite={favorites.has(product.shareLink)}
                             onToggleFavorite={toggleFavorite}
-                            rank={index + 1}
                           />
                         ))}
                     </div>
@@ -548,12 +588,33 @@ function App() {
         </p>
       </div>
 
-      <RecentlyViewedWidget
-        ref={recentlyViewedRef}
-        products={recentProducts}
-        onSelect={handleSelectProduct}
-        onViewAll={openRecentlyViewedPage}
-      />
+      <div className="quick-nav-pill">
+        <button type="button" className="quick-nav-pill__item" onClick={openHome}>
+          <span className="tf quick-nav-pill__icon">🏠</span>
+          <span className="quick-nav-pill__label">홈</span>
+        </button>
+        <button type="button" className="quick-nav-pill__item" onClick={openRanking}>
+          <span className="tf quick-nav-pill__icon">👑</span>
+          <span className="quick-nav-pill__label">랭킹</span>
+        </button>
+        <button
+          type="button"
+          className="quick-nav-pill__item"
+          data-active={favorites.size > 0}
+          onClick={openFavorites}
+        >
+          <Heart size={18} filled={favorites.size > 0} />
+          <span className="quick-nav-pill__label">찜</span>
+          {favorites.size > 0 && <span className="quick-nav-pill__badge">{favorites.size}</span>}
+        </button>
+        {recentProducts.length > 0 && (
+          <button type="button" className="quick-nav-pill__item" onClick={openRecentlyViewedPage}>
+            <Bag size={18} />
+            <span className="quick-nav-pill__label">최근본</span>
+            <span className="quick-nav-pill__badge">{recentProducts.length}</span>
+          </button>
+        )}
+      </div>
 
       {selectedProduct && (
         <PurchaseSheet product={selectedProduct} onClose={() => setSelectedProduct(null)} />
