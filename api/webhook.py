@@ -82,6 +82,15 @@ def _promotion_api_post(path: str, anon_key: str, body: dict) -> dict:
         conn.close()
 
 
+def is_reward_eligible(event: dict, min_purchase_amount: int, processed_order_ids: set) -> bool:
+    return (
+        event.get("eventType") == "PURCHASE"
+        and bool(event.get("partnerRefId"))
+        and event.get("orderId") not in processed_order_ids
+        and (event.get("commissionBaseAmount") or 0) >= min_purchase_amount
+    )
+
+
 def grant_reward(anon_key: str, amount: int) -> dict:
     promotion_code = os.environ["PROMOTION_CODE"]
 
@@ -150,14 +159,14 @@ class handler(BaseHTTPRequestHandler):
             return
 
         event = json.loads(raw_body)
-        event_type = event.get("eventType")
         order_id = event.get("orderId")
-        partner_ref_id = event.get("partnerRefId")
-        print(f"[order-event] {event_type} partnerRefId={partner_ref_id} orderId={order_id}")
+        min_purchase = int(os.environ.get("MIN_PURCHASE_AMOUNT_WON", "5000"))
+        print(f"[order-event] {event.get('eventType')} partnerRefId={event.get('partnerRefId')} "
+              f"orderId={order_id} amount={event.get('commissionBaseAmount')}")
 
-        if event_type == "PURCHASE" and partner_ref_id and order_id not in _processed_order_ids:
+        if is_reward_eligible(event, min_purchase, _processed_order_ids):
             amount = int(os.environ.get("REWARD_AMOUNT_WON", "500"))
-            result = grant_reward(partner_ref_id, amount)
+            result = grant_reward(event["partnerRefId"], amount)
             print(f"[reward] orderId={order_id} result={result}")
             if result.get("resultType") == "SUCCESS":
                 _processed_order_ids.add(order_id)

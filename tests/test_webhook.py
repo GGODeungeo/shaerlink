@@ -9,7 +9,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "api"))
 
 import webhook
-from webhook import _verify_signature, _within_clock_skew, grant_reward, issue_tracked_link
+from webhook import _verify_signature, _within_clock_skew, grant_reward, is_reward_eligible, issue_tracked_link
 
 SECRET = "test-secret"
 
@@ -116,3 +116,35 @@ def test_issue_tracked_link_uses_question_mark_when_origin_has_no_query(monkeypa
     )
     url = issue_tracked_link(123, "abc")
     assert url == "https://toss.im/item?partner_ref_id=abc"
+
+
+def _purchase_event(**overrides):
+    event = {
+        "eventType": "PURCHASE",
+        "partnerRefId": "anon-hash",
+        "orderId": "order-1",
+        "commissionBaseAmount": 5000,
+    }
+    event.update(overrides)
+    return event
+
+
+def test_is_reward_eligible_accepts_purchase_at_or_above_minimum():
+    assert is_reward_eligible(_purchase_event(commissionBaseAmount=5000), 5000, set())
+    assert is_reward_eligible(_purchase_event(commissionBaseAmount=9999), 5000, set())
+
+
+def test_is_reward_eligible_rejects_purchase_below_minimum():
+    assert not is_reward_eligible(_purchase_event(commissionBaseAmount=4999), 5000, set())
+
+
+def test_is_reward_eligible_rejects_cancel_events():
+    assert not is_reward_eligible(_purchase_event(eventType="CANCEL"), 5000, set())
+
+
+def test_is_reward_eligible_rejects_already_processed_order():
+    assert not is_reward_eligible(_purchase_event(orderId="order-1"), 5000, {"order-1"})
+
+
+def test_is_reward_eligible_rejects_missing_partner_ref_id():
+    assert not is_reward_eligible(_purchase_event(partnerRefId=None), 5000, set())
