@@ -14,8 +14,7 @@ import { PushOptInCard } from './PushOptInCard';
 import type { Product } from './types';
 import './App.css';
 
-const DATA_URL =
-  'https://raw.githubusercontent.com/GGODeungeo/shaerlink/main/app-data/products.json';
+const DATA_URL = 'https://shaerlink.vercel.app/api/products';
 
 const CATEGORY_EMOJI: Record<string, string> = {
   '식품': '🍎',
