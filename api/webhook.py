@@ -11,15 +11,11 @@ import http.client
 import json
 import os
 import ssl
-import sys
 import tempfile
 import urllib.parse
+import urllib.request
 from datetime import datetime, timezone, timedelta
 from http.server import BaseHTTPRequestHandler
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from sharelink_api import get_access_token, issue_link_with_origin
 
 MAX_CLOCK_SKEW = timedelta(minutes=5)
 PROMOTION_API_HOST = "apps-in-toss-api.toss.im"
@@ -106,10 +102,20 @@ def grant_reward(anon_key: str, amount: int) -> dict:
 def issue_tracked_link(taca_item_id: int, anon_key: str) -> str:
     """Issues a fresh sharelink for this click and tags its originUrl with
     partner_ref_id=anon_key, so a later PURCHASE webhook can attribute the
-    order back to this app user."""
-    token = get_access_token()
-    publisher_id = os.environ["SHARELINK_PUBLISHER_ID"]
-    link = issue_link_with_origin(token, taca_item_id, publisher_id)
+    order back to this app user.
+
+    Sharelink's Open API enforces a source-IP allowlist that Vercel's
+    dynamic egress IP can't satisfy, so the actual issuance happens on a
+    small static-IP relay droplet instead - this just forwards to it."""
+    req = urllib.request.Request(
+        os.environ["RELAY_URL"],
+        data=json.dumps({"tacaItemId": taca_item_id}).encode(),
+        method="POST",
+        headers={"Content-Type": "application/json", "x-relay-token": os.environ["RELAY_TOKEN"]},
+    )
+    with urllib.request.urlopen(req, timeout=10) as resp:
+        link = json.loads(resp.read())
+
     origin = link["originUrl"]
     sep = "&" if "?" in origin else "?"
     return f"{origin}{sep}partner_ref_id={urllib.parse.quote(anon_key, safe='')}"

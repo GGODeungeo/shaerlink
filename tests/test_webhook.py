@@ -1,6 +1,7 @@
 import base64
 import hashlib
 import hmac
+import json
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -79,25 +80,39 @@ def test_grant_reward_stops_and_returns_error_if_get_key_fails(monkeypatch):
     assert len(calls) == 1
 
 
+class _FakeUrlopenResponse:
+    def __init__(self, body: bytes):
+        self._body = body
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        pass
+
+    def read(self):
+        return self._body
+
+
 def test_issue_tracked_link_appends_partner_ref_id_to_origin_url(monkeypatch):
-    monkeypatch.setenv("SHARELINK_PUBLISHER_ID", "pub-1")
-    monkeypatch.setattr(webhook, "get_access_token", lambda: "tok")
+    monkeypatch.setenv("RELAY_URL", "http://relay:8080/")
+    monkeypatch.setenv("RELAY_TOKEN", "relay-secret")
     monkeypatch.setattr(
-        webhook,
-        "issue_link_with_origin",
-        lambda token, taca_item_id, publisher_id: {"originUrl": "https://toss.im/item?x=1"},
+        webhook.urllib.request,
+        "urlopen",
+        lambda req, timeout: _FakeUrlopenResponse(json.dumps({"originUrl": "https://toss.im/item?x=1"}).encode()),
     )
     url = issue_tracked_link(123, "anon hash/with special")
     assert url == "https://toss.im/item?x=1&partner_ref_id=anon%20hash%2Fwith%20special"
 
 
 def test_issue_tracked_link_uses_question_mark_when_origin_has_no_query(monkeypatch):
-    monkeypatch.setenv("SHARELINK_PUBLISHER_ID", "pub-1")
-    monkeypatch.setattr(webhook, "get_access_token", lambda: "tok")
+    monkeypatch.setenv("RELAY_URL", "http://relay:8080/")
+    monkeypatch.setenv("RELAY_TOKEN", "relay-secret")
     monkeypatch.setattr(
-        webhook,
-        "issue_link_with_origin",
-        lambda token, taca_item_id, publisher_id: {"originUrl": "https://toss.im/item"},
+        webhook.urllib.request,
+        "urlopen",
+        lambda req, timeout: _FakeUrlopenResponse(json.dumps({"originUrl": "https://toss.im/item"}).encode()),
     )
     url = issue_tracked_link(123, "abc")
     assert url == "https://toss.im/item?partner_ref_id=abc"
