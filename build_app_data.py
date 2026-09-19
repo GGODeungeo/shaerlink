@@ -17,6 +17,12 @@ from sharelink_api import (
 
 MIN_DISCOUNT = 50
 CATEGORY_DEPTH = 3
+# ponytail: hard cap on shipped catalog size - a 7000+ item / 2.6MB
+# products.json got the mini-app rejected for a >20s first load. Data is
+# already sorted by discount desc, so this just trims the long tail; raise
+# it if the app can afford heavier payloads later (e.g. once paginated
+# fetching replaces "load the whole catalog up front").
+MAX_SHIPPED_ITEMS = 2000
 APP_DATA_PATH = Path("app-data/products.json")
 LINK_CACHE_PATH = Path("link_cache.json")
 
@@ -211,9 +217,12 @@ def main():
         data = merge_with_previous(data, previous)
 
     flag_all_time_lows(data, load_price_history())
+    data = data[:MAX_SHIPPED_ITEMS]
 
     APP_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
-    APP_DATA_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    APP_DATA_PATH.write_text(
+        json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
+    )
     print(f"완료: {APP_DATA_PATH} ({len(data)}개 상품)")
 
 
