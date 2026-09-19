@@ -96,7 +96,6 @@ export function TopDealsCarousel({
 
   return (
     <div className="carousel">
-      <div className="carousel__label">오늘의 초특가</div>
       <button
         type="button"
         className="carousel__card"
@@ -115,23 +114,20 @@ export function TopDealsCarousel({
               setBrokenImages((prev) => new Set(prev).add(product.shareLink))
             }
           />
-        </div>
-        <div className="carousel__info">
-          <span className="carousel__discount">{product.discountRate}% 특가</span>
-          <span className="carousel__price">{product.price.toLocaleString()}원</span>
-          <span className="carousel__savings">▼ {savingsAmount(product).toLocaleString()}원 아껴요</span>
-          <span className="carousel__name">{title}</span>
-          <span className="carousel__cta">{product.discountRate}% 할인 중 · 지금 확인해보세요</span>
+          <div className="carousel__scrim" />
+          <div className="carousel__overlay">
+            <span className="carousel__discount">{product.discountRate}% 특가</span>
+            <span className="carousel__name">{title}</span>
+            <span className="carousel__price">
+              {product.price.toLocaleString()}원
+              <span className="carousel__savings"> · {savingsAmount(product).toLocaleString()}원 아껴요</span>
+            </span>
+          </div>
+          {topDeals.length > 1 && (
+            <span className="carousel__counter">{index + 1} | {topDeals.length}</span>
+          )}
         </div>
       </button>
-      <div className="carousel__dots">
-        {topDeals.map((item, i) => (
-          <span
-            key={item.shareLink}
-            className={i === index ? 'carousel__dot carousel__dot--active' : 'carousel__dot'}
-          />
-        ))}
-      </div>
     </div>
   );
 }

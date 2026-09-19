@@ -369,8 +369,6 @@ function App() {
               <PopularRanking
                 products={state.products}
                 onSelect={handleSelectProduct}
-                favorites={favorites}
-                onToggleFavorite={toggleFavorite}
               />
             );
           }
