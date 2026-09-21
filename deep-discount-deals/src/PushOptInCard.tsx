@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Analytics, Notification } from '@apps-in-toss/web-framework';
+import { ChevronRight } from './components/icons';
 
 const TEMPLATE_CODE = 'hidden-deals-DAILY_DEAL_PUSH';
 const STORAGE_KEY = 'hidden-deals:push-agreement-status';
@@ -48,7 +49,10 @@ export function PushOptInCard() {
       <span className="push-opt-in-card__emoji tf">🔔</span>
       <span className="push-opt-in-card__text">
         <span className="push-opt-in-card__title">특가 알림 받기</span>
-        <span className="push-opt-in-card__subtitle">매일 저녁 7시, 반값 특가를 알려드려요</span>
+        <span className="push-opt-in-card__subtitle">매일 저녁 7시, 반값 이상 특가를 가장 먼저 알려드려요</span>
+      </span>
+      <span className="push-opt-in-card__chevron">
+        <ChevronRight size={18} />
       </span>
     </button>
   );

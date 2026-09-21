@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Analytics } from '@apps-in-toss/web-framework';
 import { Close, Heart } from './components/icons';
+import { reviewCountLabel } from './reviewCount';
 import type { Product } from './types';
 
 function dealCountdownLabel(dealEndsAt: string | undefined, now: number): string | null {
@@ -18,14 +19,12 @@ export function ProductCard({
   isFavorite,
   onToggleFavorite,
   onRemove,
-  rank,
 }: {
   product: Product;
   onSelect: (product: Product) => void;
   isFavorite: boolean;
   onToggleFavorite: (shareLink: string) => void;
   onRemove?: (shareLink: string) => void;
-  rank?: number;
 }) {
   const handleOpen = () => {
     Analytics.click({
@@ -71,6 +70,7 @@ export function ProductCard({
 
   const [title, ...specs] = product.name.split(', ');
   const countdown = dealCountdownLabel(product.dealEndsAt, now);
+  const reviews = reviewCountLabel(product.reviewCount);
 
   return (
     <div
@@ -88,16 +88,15 @@ export function ProductCard({
           loading="lazy"
           decoding="async"
         />
-        {product.isAllTimeLow && (
-          <span className="product-card__lowest">
-            <span className="tf">🔥</span> 역대 최저가
-          </span>
-        )}
-        {rank !== undefined && <span className="product-card__rank">{rank}</span>}
       </div>
       <div className="product-card__meta">
         <div className="product-card__badges">
           <span className="product-card__badge">{product.discountRate}% 특가</span>
+          {product.isAllTimeLow && (
+            <span className="product-card__badge product-card__badge--lowest">
+              <span className="tf">🔥</span> 최저가
+            </span>
+          )}
           {countdown && <span className="product-card__badge product-card__badge--deal">{countdown}</span>}
         </div>
         <button
@@ -121,6 +120,7 @@ export function ProductCard({
         )}
       </div>
       <div className="product-card__price">{product.price.toLocaleString()}원</div>
+      {reviews && <div className="product-card__reviews">{reviews}</div>}
       <div className="product-card__title">{title}</div>
       {specs.length > 0 && <div className="product-card__specs">{specs.join(' · ')}</div>}
     </div>
