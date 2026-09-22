@@ -9,6 +9,7 @@ Add TLS if that stops being true.
 """
 import json
 import os
+import socketserver
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from sharelink_api import get_access_token, issue_link_with_origin
@@ -17,7 +18,19 @@ RELAY_TOKEN = os.environ["RELAY_TOKEN"]
 PUBLISHER_ID = os.environ["SHARELINK_PUBLISHER_ID"]
 
 
+class ThreadingHTTPServer(socketserver.ThreadingMixIn, HTTPServer):
+    daemon_threads = True
+
+
 class Handler(BaseHTTPRequestHandler):
+    # ponytail: single-threaded HTTPServer + no socket timeout meant one
+    # client that opens a connection and never finishes sending its request
+    # (a stray scanner, a dead connection) wedges the whole server forever -
+    # every later request, including a plain localhost curl, queues behind
+    # it with no way out. ThreadingHTTPServer plus this timeout is the fix:
+    # a stuck client gets dropped instead of blocking everyone else.
+    timeout = 10
+
     def do_POST(self):
         if self.headers.get("x-relay-token") != RELAY_TOKEN:
             self._respond(401, {"error": "unauthorized"})
@@ -52,4 +65,4 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    HTTPServer(("0.0.0.0", 8080), Handler).serve_forever()
+    ThreadingHTTPServer(("0.0.0.0", 8080), Handler).serve_forever()
