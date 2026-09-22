@@ -4,6 +4,7 @@ import { savingsAmount } from './savings';
 import { reviewCountLabel } from './reviewCount';
 import { useLockBodyScroll } from './useLockBodyScroll';
 import { getTrackedPurchaseUrl } from './trackedLink';
+import { requestReviewOnce } from './reviewPrompt';
 import type { Product } from './types';
 
 export function PurchaseSheet({
@@ -27,6 +28,7 @@ export function PurchaseSheet({
       price: product.price,
     });
     onClose();
+    await requestReviewOnce();
     Device.openURL(await getTrackedPurchaseUrl(product));
   };
 
