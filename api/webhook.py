@@ -217,7 +217,7 @@ class handler(BaseHTTPRequestHandler):
 
     def _handle_link_request(self):
         token = self.headers.get("x-internal-token", "")
-        if not hmac.compare_digest(token, os.environ.get("LINK_API_TOKEN", "")):
+        if not hmac.compare_digest(token.encode(), os.environ.get("LINK_API_TOKEN", "").encode()):
             self._respond(401, {"error": "unauthorized"}, cors=True)
             return
 
@@ -247,7 +247,7 @@ class handler(BaseHTTPRequestHandler):
         without touching the live PROMOTION_CODE/CLICK_PROMOTION_CODE env
         vars. Same auth token as /api/link since both are internal-only."""
         token = self.headers.get("x-internal-token", "")
-        if not hmac.compare_digest(token, os.environ.get("LINK_API_TOKEN", "")):
+        if not hmac.compare_digest(token.encode(), os.environ.get("LINK_API_TOKEN", "").encode()):
             self._respond(401, {"error": "unauthorized"}, cors=True)
             return
 
