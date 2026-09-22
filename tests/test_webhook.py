@@ -9,7 +9,14 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "api"))
 
 import webhook
-from webhook import _verify_signature, _within_clock_skew, grant_reward, is_reward_eligible, issue_tracked_link
+from webhook import (
+    _verify_signature,
+    _within_clock_skew,
+    grant_click_reward,
+    grant_reward,
+    is_reward_eligible,
+    issue_tracked_link,
+)
 
 SECRET = "test-secret"
 
@@ -78,6 +85,54 @@ def test_grant_reward_stops_and_returns_error_if_get_key_fails(monkeypatch):
 
     assert result["resultType"] == "FAIL"
     assert len(calls) == 1
+
+
+def test_grant_reward_uses_explicit_promotion_code_over_env(monkeypatch):
+    monkeypatch.setenv("PROMOTION_CODE", "PURCHASE_PROMO")
+    calls = []
+
+    def fake_post(path, anon_key, body):
+        calls.append((path, anon_key, body))
+        return {"resultType": "SUCCESS", "success": {"key": "the-key"}}
+
+    monkeypatch.setattr(webhook, "_promotion_api_post", fake_post)
+    grant_reward("anon-hash", 1, promotion_code="CLICK_PROMO")
+
+    assert calls[1][2]["promotionCode"] == "CLICK_PROMO"
+
+
+def test_grant_click_reward_noop_when_no_click_promotion_configured(monkeypatch):
+    monkeypatch.delenv("CLICK_PROMOTION_CODE", raising=False)
+    calls = []
+    monkeypatch.setattr(webhook, "grant_reward", lambda *a, **k: calls.append((a, k)))
+
+    grant_click_reward("anon-hash")
+
+    assert calls == []
+
+
+def test_grant_click_reward_calls_grant_reward_with_click_promotion_and_amount(monkeypatch):
+    monkeypatch.setenv("CLICK_PROMOTION_CODE", "CLICK_PROMO")
+    monkeypatch.setenv("CLICK_REWARD_AMOUNT_WON", "1")
+    calls = []
+    monkeypatch.setattr(
+        webhook, "grant_reward", lambda anon_key, amount, promotion_code=None: calls.append((anon_key, amount, promotion_code)) or {"resultType": "SUCCESS"}
+    )
+
+    grant_click_reward("anon-hash")
+
+    assert calls == [("anon-hash", 1, "CLICK_PROMO")]
+
+
+def test_grant_click_reward_swallows_errors(monkeypatch):
+    monkeypatch.setenv("CLICK_PROMOTION_CODE", "CLICK_PROMO")
+
+    def boom(*a, **k):
+        raise RuntimeError("network down")
+
+    monkeypatch.setattr(webhook, "grant_reward", boom)
+
+    grant_click_reward("anon-hash")  # must not raise
 
 
 class _FakeUrlopenResponse:

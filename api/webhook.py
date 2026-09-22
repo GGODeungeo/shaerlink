@@ -4,6 +4,8 @@ On a verified PURCHASE event, grants the sharelink click's promotion reward
 via the apps-in-toss mTLS server-to-server API, using partnerRefId (the
 buyer's getAnonymousKey() hash) as the anon-key target.
 """
+from __future__ import annotations
+
 import base64
 import hashlib
 import hmac
@@ -93,8 +95,8 @@ def is_reward_eligible(event: dict, min_purchase_amount: int, processed_order_id
     )
 
 
-def grant_reward(anon_key: str, amount: int) -> dict:
-    promotion_code = os.environ["PROMOTION_CODE"]
+def grant_reward(anon_key: str, amount: int, promotion_code: str | None = None) -> dict:
+    promotion_code = promotion_code or os.environ["PROMOTION_CODE"]
 
     key_resp = _promotion_api_post(
         "/api-partner/v1/apps-in-toss/promotion/execute-promotion/get-key", anon_key, {}
@@ -108,6 +110,22 @@ def grant_reward(anon_key: str, amount: int) -> dict:
         anon_key,
         {"promotionCode": promotion_code, "key": reward_key, "amount": amount},
     )
+
+
+def grant_click_reward(anon_key: str) -> None:
+    """Best-effort reward grant for clicking through to the sharelink itself,
+    separate from the PURCHASE-triggered reward above (different promotion,
+    tiny amount). Never raises - a failed/capped grant (daily limit hit,
+    promotion paused) must not break link issuance."""
+    click_promotion_code = os.environ.get("CLICK_PROMOTION_CODE")
+    if not click_promotion_code:
+        return
+    amount = int(os.environ.get("CLICK_REWARD_AMOUNT_WON", "1"))
+    try:
+        result = grant_reward(anon_key, amount, promotion_code=click_promotion_code)
+        print(f"[click-reward] anonKey={anon_key} result={result}")
+    except Exception as e:
+        print(f"[click-reward] failed for anonKey={anon_key}: {e}")
 
 
 def issue_tracked_link(taca_item_id: int, anon_key: str) -> str:
@@ -218,6 +236,7 @@ class handler(BaseHTTPRequestHandler):
             self._respond(502, {"error": "link issuance failed"}, cors=True)
             return
 
+        grant_click_reward(anon_key)
         self._respond(200, {"url": url}, cors=True)
 
     def _respond(self, status: int, body: dict, cors: bool = False):
