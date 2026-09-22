@@ -7,6 +7,7 @@ import { Bag, Heart, Search } from './components/icons';
 import { useFavorites } from './useFavorites';
 import { useRecentlyViewed } from './useRecentlyViewed';
 import { dedupeByImage } from './dedupeByImage';
+import { dailyShuffle } from './dailyShuffle';
 import { TodaysPickEvent } from './TodaysPickEvent';
 import { PopularRanking } from './PopularRanking';
 import { BannerAd } from './BannerAd';
@@ -36,6 +37,7 @@ const CATEGORY_EMOJI: Record<string, string> = {
 };
 const DEFAULT_CATEGORY_EMOJI = '🏷️';
 const SHELF_SIZE = 10;
+const SHELF_POOL_SIZE = SHELF_SIZE * 2;
 
 function groupByCategory(products: Product[]) {
   const byCategory = new Map<string, Product[]>();
@@ -409,11 +411,15 @@ function App() {
             );
           }
 
-          const groups = groupByCategory(filteredProducts);
+          const groups = dailyShuffle(groupByCategory(filteredProducts), 'category-order');
 
           if (selectedCategory === null) {
-            const allTimeLowProducts = dedupeByImage(
-              sortProducts(state.products.filter((p) => p.isAllTimeLow), 'recommend')
+            const allTimeLowProducts = dailyShuffle(
+              dedupeByImage(sortProducts(state.products.filter((p) => p.isAllTimeLow), 'recommend')).slice(
+                0,
+                SHELF_POOL_SIZE
+              ),
+              'all-time-low'
             ).slice(0, SHELF_SIZE);
 
             return (
@@ -494,7 +500,10 @@ function App() {
                       </button>
                     </div>
                     <div className="category-shelf__list">
-                      {dedupeByImage(sortProducts(group.products, 'recommend'))
+                      {dailyShuffle(
+                        dedupeByImage(sortProducts(group.products, 'recommend')).slice(0, SHELF_POOL_SIZE),
+                        `shelf-${group.label}`
+                      )
                         .slice(0, SHELF_SIZE)
                         .map((product) => (
                           <ProductCard
