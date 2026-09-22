@@ -5,6 +5,9 @@ export default defineConfig({
   brand: {
     primaryColor: '#191f28',
   },
+  navigationBar: {
+    withTitle: true,
+  },
   permissions: [],
   webBundleDir: 'dist',
 });
