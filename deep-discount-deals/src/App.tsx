@@ -16,6 +16,7 @@ import type { Product } from './types';
 import './App.css';
 
 const DATA_URL = 'https://shaerlink.vercel.app/api/products';
+const HOME_DATA_URL = 'https://shaerlink.vercel.app/api/products/home';
 
 const CATEGORY_EMOJI: Record<string, string> = {
   '식품': '🍎',
@@ -146,13 +147,25 @@ function App() {
     setVisibleCount(PAGE_SIZE);
   };
 
+  const fetchJson = (url: string): Promise<Product[]> =>
+    fetch(url).then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    });
+
+  // Loads the small home-screen subset first so the home screen paints
+  // immediately regardless of how large the full catalog gets, then quietly
+  // swaps in the full catalog once it arrives (needed for search / category
+  // "전체보기" - if the user reaches those before it lands, they briefly see
+  // just the home subset's coverage, which self-corrects a moment later).
   const fetchProducts = () => {
-    fetch(DATA_URL)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
+    fetchJson(HOME_DATA_URL)
+      .then((products) => {
+        setState({ status: 'ready', products });
+        fetchJson(DATA_URL)
+          .then((products) => setState({ status: 'ready', products }))
+          .catch(() => {});
       })
-      .then((products: Product[]) => setState({ status: 'ready', products }))
       .catch(() => setState({ status: 'error' }));
   };
 

@@ -22,6 +22,7 @@ from pathlib import Path
 
 MAX_CLOCK_SKEW = timedelta(minutes=5)
 PRODUCTS_JSON_PATH = Path(__file__).resolve().parent.parent / "app-data" / "products.json"
+PRODUCTS_HOME_JSON_PATH = Path(__file__).resolve().parent.parent / "app-data" / "products-home.json"
 PROMOTION_API_HOST = "apps-in-toss-api.toss.im"
 
 # ponytail: in-memory only - resets on cold start / differs per instance, so a
@@ -152,8 +153,10 @@ def issue_tracked_link(taca_item_id: int, anon_key: str) -> str:
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path.startswith("/api/products"):
-            self._handle_products_request()
+        if self.path.startswith("/api/products/home"):
+            self._handle_products_request(PRODUCTS_HOME_JSON_PATH)
+        elif self.path.startswith("/api/products"):
+            self._handle_products_request(PRODUCTS_JSON_PATH)
         else:
             self.send_response(404)
             self.end_headers()
@@ -173,11 +176,11 @@ class handler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Headers", "Content-Type, x-internal-token")
         self.end_headers()
 
-    def _handle_products_request(self):
+    def _handle_products_request(self, path: Path):
         try:
-            payload = PRODUCTS_JSON_PATH.read_bytes()
+            payload = path.read_bytes()
         except FileNotFoundError:
-            self._respond(404, {"error": "products.json not found"}, cors=True)
+            self._respond(404, {"error": f"{path.name} not found"}, cors=True)
             return
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
