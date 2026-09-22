@@ -728,7 +728,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   height: 40px;
   padding: 0 var(--space-2);
   border: none;
@@ -761,7 +761,7 @@
 .quick-nav-pill__badge {
   position: absolute;
   top: -6px;
-  right: -8px;
+  right: -4px;
   min-width: 18px;
   height: 18px;
   padding: 0 3px;
