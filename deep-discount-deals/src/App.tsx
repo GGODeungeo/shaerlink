@@ -596,9 +596,11 @@ function App() {
           data-active={favorites.size > 0}
           onClick={openFavorites}
         >
-          <Heart size={18} filled={favorites.size > 0} />
+          <span className="quick-nav-pill__icon-wrap">
+            <Heart size={18} filled={favorites.size > 0} />
+            {favorites.size > 0 && <span className="quick-nav-pill__badge">{favorites.size}</span>}
+          </span>
           <span className="quick-nav-pill__label">찜</span>
-          {favorites.size > 0 && <span className="quick-nav-pill__badge">{favorites.size}</span>}
         </button>
         {recentProducts.length > 0 && (
           <button type="button" className="quick-nav-pill__item" onClick={openRecentlyViewedPage}>

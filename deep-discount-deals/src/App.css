@@ -749,14 +749,19 @@
   line-height: 1;
 }
 
+.quick-nav-pill__icon-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
 .quick-nav-pill__label {
   white-space: nowrap;
 }
 
 .quick-nav-pill__badge {
   position: absolute;
-  top: -2px;
-  right: 0;
+  top: -6px;
+  right: -8px;
   min-width: 18px;
   height: 18px;
   padding: 0 3px;
