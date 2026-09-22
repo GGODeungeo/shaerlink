@@ -161,6 +161,8 @@ class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         if self.path.startswith("/api/link"):
             self._handle_link_request()
+        elif self.path.startswith("/api/test-reward"):
+            self._handle_test_reward_request()
         else:
             self._handle_order_event()
 
@@ -238,6 +240,30 @@ class handler(BaseHTTPRequestHandler):
 
         grant_click_reward(anon_key)
         self._respond(200, {"url": url}, cors=True)
+
+    def _handle_test_reward_request(self):
+        """Manual test hook for the promotion pre-launch gate: lets us call
+        execute-promotion with a TEST_-prefixed code (see promotion docs)
+        without touching the live PROMOTION_CODE/CLICK_PROMOTION_CODE env
+        vars. Same auth token as /api/link since both are internal-only."""
+        token = self.headers.get("x-internal-token", "")
+        if not hmac.compare_digest(token, os.environ.get("LINK_API_TOKEN", "")):
+            self._respond(401, {"error": "unauthorized"}, cors=True)
+            return
+
+        content_length = int(self.headers.get("Content-Length", 0))
+        try:
+            body = json.loads(self.rfile.read(content_length) or b"{}")
+            promotion_code = str(body["promotionCode"])
+            anon_key = str(body["anonKey"])
+            amount = int(body["amount"])
+        except (json.JSONDecodeError, KeyError, ValueError):
+            self._respond(400, {"error": "promotionCode, anonKey and amount are required"}, cors=True)
+            return
+
+        result = grant_reward(anon_key, amount, promotion_code=promotion_code)
+        print(f"[test-reward] promotionCode={promotion_code} anonKey={anon_key} result={result}")
+        self._respond(200, result, cors=True)
 
     def _respond(self, status: int, body: dict, cors: bool = False):
         payload = json.dumps(body).encode()
