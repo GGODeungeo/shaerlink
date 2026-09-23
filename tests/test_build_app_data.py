@@ -1,3 +1,8 @@
+import os
+
+import psycopg2
+import pytest
+
 import build_app_data as bad
 from build_app_data import (
     build_entry,
@@ -8,7 +13,11 @@ from build_app_data import (
     merge_unique,
     merge_with_previous,
     to_app_data,
+    upsert_products,
 )
+from sharelink_api import _load_dotenv
+
+_load_dotenv()  # module level - skipif below must see the real env, not a not-yet-loaded one
 
 
 def _entry(share_link, category="식품", review_count=0, discount_rate=51, is_all_time_low=False, **overrides):
@@ -231,3 +240,96 @@ def test_build_home_subset_ignores_missing_taca_item_id():
     result = build_home_subset(data, pool_size=10)
     assert result[0]["shareLink"] == "no-id-here"
     assert "tacaItemId" not in result[0]
+
+
+@pytest.fixture
+def db_conn():
+    if not os.environ.get("PRODUCTS_DB_DATABASE_URL"):
+        pytest.skip("PRODUCTS_DB_DATABASE_URL not set - skipping live DB test")
+    connection = psycopg2.connect(os.environ["PRODUCTS_DB_DATABASE_URL"])
+    yield connection
+    with connection.cursor() as cur:
+        cur.execute("delete from products where source = 'test'")
+    connection.commit()
+    connection.close()
+
+
+def test_upsert_products_inserts_then_updates_on_conflict(db_conn):
+    entry = {
+        "tacaItemId": 999999,
+        "shareLink": "https://toss.im/_m/test-upsert",
+        "name": "테스트 상품",
+        "price": 1000,
+        "discountRate": 60,
+        "imageUrl": "https://example.com/a.png",
+        "category": "식품",
+        "reviewCount": 5,
+    }
+
+    upsert_products(db_conn, [entry], source="test")
+
+    with db_conn.cursor() as cur:
+        cur.execute(
+            "select name, price, review_count from products where source = 'test' and source_item_id = %s",
+            (str(entry["tacaItemId"]),),
+        )
+        row = cur.fetchone()
+    assert row == ("테스트 상품", 1000, 5)
+
+    updated = {**entry, "price": 900, "reviewCount": 10}
+    upsert_products(db_conn, [updated], source="test")
+
+    with db_conn.cursor() as cur:
+        cur.execute(
+            "select count(*), price, review_count from products where source = 'test' and source_item_id = %s"
+            " group by price, review_count",
+            (str(entry["tacaItemId"]),),
+        )
+        count, price, review_count = cur.fetchone()
+    assert (count, price, review_count) == (1, 900, 10)  # 새 행이 아니라 덮어써짐
+
+
+def test_upsert_products_maps_optional_fields(db_conn):
+    entry = {
+        "tacaItemId": 999998,
+        "shareLink": "https://toss.im/_m/test-optional",
+        "name": "최저가 테스트",
+        "price": 500,
+        "discountRate": 90,
+        "imageUrl": "https://example.com/b.png",
+        "category": "뷰티",
+        "reviewCount": 1,
+        "isAllTimeLow": True,
+        "dealEndsAt": "2026-12-31T23:59:59+09:00",
+    }
+
+    upsert_products(db_conn, [entry], source="test")
+
+    with db_conn.cursor() as cur:
+        cur.execute(
+            "select is_all_time_low, deal_ends_at is not null from products"
+            " where source = 'test' and source_item_id = %s",
+            (str(entry["tacaItemId"]),),
+        )
+        row = cur.fetchone()
+    assert row == (True, True)
+
+
+def test_upsert_products_skips_entries_without_taca_item_id(db_conn):
+    legacy_entry = {
+        # tacaItemId 없음 - 백필 이전부터 merge_with_previous로 이어져 온 레거시 항목
+        "shareLink": "https://toss.im/_m/test-no-id",
+        "name": "레거시 항목",
+        "price": 100,
+        "discountRate": 55,
+        "imageUrl": "https://example.com/c.png",
+        "category": "식품",
+        "reviewCount": 0,
+    }
+
+    upsert_products(db_conn, [legacy_entry], source="test")  # 에러 없이 그냥 건너뜀
+
+    with db_conn.cursor() as cur:
+        cur.execute("select count(*) from products where source = 'test'")
+        count = cur.fetchone()[0]
+    assert count == 0

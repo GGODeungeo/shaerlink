@@ -4,6 +4,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+import psycopg2
+from psycopg2.extras import execute_values
+
 from sharelink_api import (
     ShareLinkAPIError,
     get_access_token,
@@ -32,6 +35,7 @@ LINK_CACHE_PATH = Path("link_cache.json")
 # home screen actually draws from, not the full catalog.
 HOME_POOL_SIZE = 20
 CAROUSEL_MIN_DISCOUNT = 80
+DEFAULT_SOURCE = "sharelink"
 
 
 def load_link_cache() -> dict:
@@ -103,6 +107,65 @@ def to_app_data(
         slim.append(entry)
     slim.sort(key=lambda p: -p["discountRate"])
     return slim
+
+
+def upsert_products(conn, data: list, source: str = DEFAULT_SOURCE) -> None:
+    """app_data 엔트리 리스트를 products 테이블에 upsert한다. (source,
+    source_item_id) 충돌 시 UPDATE - 매일 실행되는 배치라 이게 정상 경로다.
+
+    tacaItemId가 없는 엔트리(백필 이전부터 merge_with_previous로 계속
+    이어져 온 레거시 항목)는 건너뛴다 - source_item_id가 PK라 안정적인
+    값 없이는 upsert 자체가 성립하지 않는다. 새로 받아오는 항목은 항상
+    tacaItemId가 있으므로 매일 이 레거시 항목 비중은 줄어든다."""
+    skipped = sum(1 for entry in data if "tacaItemId" not in entry)
+    if skipped:
+        print(f"upsert_products: tacaItemId 없는 항목 {skipped}개 건너뜀", file=sys.stderr)
+
+    rows = [
+        (
+            source,
+            str(entry["tacaItemId"]),
+            entry["shareLink"],
+            entry["name"],
+            entry["price"],
+            entry["discountRate"],
+            entry["imageUrl"],
+            entry["category"],
+            entry.get("reviewCount", 0),
+            entry.get("isAllTimeLow", False),
+            entry.get("dealEndsAt"),
+        )
+        for entry in data
+        if "tacaItemId" in entry
+    ]
+    if not rows:
+        return
+
+    with conn.cursor() as cur:
+        execute_values(
+            cur,
+            """
+            insert into products (
+                source, source_item_id, share_link, name, price,
+                discount_rate, image_url, category, review_count,
+                is_all_time_low, deal_ends_at, updated_at
+            ) values %s
+            on conflict (source, source_item_id) do update set
+                share_link = excluded.share_link,
+                name = excluded.name,
+                price = excluded.price,
+                discount_rate = excluded.discount_rate,
+                image_url = excluded.image_url,
+                category = excluded.category,
+                review_count = excluded.review_count,
+                is_all_time_low = excluded.is_all_time_low,
+                deal_ends_at = excluded.deal_ends_at,
+                updated_at = now()
+            """,
+            rows,
+            template="(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, now())",
+        )
+    conn.commit()
 
 
 def merge_with_previous(data: list, previous: list) -> list:
@@ -265,7 +328,17 @@ def main():
     HOME_DATA_PATH.write_text(
         json.dumps(home_data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
     )
-    print(f"완료: {APP_DATA_PATH} ({len(data)}개 상품), {HOME_DATA_PATH} ({len(home_data)}개 상품)")
+
+    db_url = os.environ.get("PRODUCTS_DB_DATABASE_URL")
+    if db_url:
+        connection = psycopg2.connect(db_url)
+        try:
+            upsert_products(connection, data)
+        finally:
+            connection.close()
+        print(f"완료: {APP_DATA_PATH} ({len(data)}개), {HOME_DATA_PATH} ({len(home_data)}개), DB upsert ({len(data)}개)")
+    else:
+        print(f"완료: {APP_DATA_PATH} ({len(data)}개 상품), {HOME_DATA_PATH} ({len(home_data)}개 상품) - PRODUCTS_DB_DATABASE_URL 없어서 DB는 건너뜀")
 
 
 if __name__ == "__main__":
