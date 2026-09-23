@@ -12,6 +12,9 @@ import webhook
 from webhook import (
     _verify_signature,
     _within_clock_skew,
+    build_products_query,
+    decode_cursor,
+    encode_cursor,
     grant_click_reward,
     grant_reward,
     is_reward_eligible,
@@ -203,3 +206,52 @@ def test_is_reward_eligible_rejects_already_processed_order():
 
 def test_is_reward_eligible_rejects_missing_partner_ref_id():
     assert not is_reward_eligible(_purchase_event(partnerRefId=None), 5000, set())
+
+
+def test_encode_decode_cursor_roundtrip():
+    row = {"sort_value": 42, "source": "sharelink", "source_item_id": "abc"}
+    cursor = encode_cursor(row)
+    assert decode_cursor(cursor) == (42, "sharelink", "abc")
+
+
+def test_build_products_query_by_category_first_page():
+    sql, params = build_products_query(
+        category="식품", search=None, sort="recommend", cursor=None, limit=20
+    )
+    assert "category = %s" in sql
+    assert "order by review_count desc" in sql
+    assert params == ["식품", 20]
+
+
+def test_build_products_query_by_category_with_cursor():
+    cursor = encode_cursor({"sort_value": 100, "source": "sharelink", "source_item_id": "x"})
+    sql, params = build_products_query(
+        category="식품", search=None, sort="recommend", cursor=cursor, limit=20
+    )
+    assert "review_count, source, source_item_id) < (%s, %s, %s)" in sql
+    assert params == ["식품", 100, "sharelink", "x", 20]
+
+
+def test_build_products_query_by_search_uses_ilike():
+    sql, params = build_products_query(
+        category=None, search="세탁", sort="price", cursor=None, limit=20
+    )
+    assert "name ilike %s" in sql
+    assert "order by price asc" in sql
+    assert params == ["%세탁%", 20]
+
+
+def test_build_products_query_price_sort_cursor_uses_greater_than():
+    cursor = encode_cursor({"sort_value": 5000, "source": "sharelink", "source_item_id": "y"})
+    sql, params = build_products_query(
+        category=None, search="세탁", sort="price", cursor=cursor, limit=20
+    )
+    assert "price, source, source_item_id) > (%s, %s, %s)" in sql
+    assert params == ["%세탁%", 5000, "sharelink", "y", 20]
+
+
+def test_build_products_query_rejects_unknown_sort():
+    import pytest
+
+    with pytest.raises(ValueError):
+        build_products_query(category="식품", search=None, sort="bogus", cursor=None, limit=20)

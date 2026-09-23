@@ -12,6 +12,7 @@ import hmac
 import http.client
 import json
 import os
+import psycopg2
 import ssl
 import tempfile
 import urllib.parse
@@ -24,6 +25,15 @@ MAX_CLOCK_SKEW = timedelta(minutes=5)
 PRODUCTS_JSON_PATH = Path(__file__).resolve().parent.parent / "app-data" / "products.json"
 PRODUCTS_HOME_JSON_PATH = Path(__file__).resolve().parent.parent / "app-data" / "products-home.json"
 PROMOTION_API_HOST = "apps-in-toss-api.toss.im"
+PRODUCTS_DB_URL_ENV = "PRODUCTS_DB_DATABASE_URL"
+
+# 클라이언트(App.tsx)의 기존 SORT_OPTIONS와 동일한 3종만 지원.
+# (컬럼명, 방향) - 방향은 정렬 컬럼과 커서 타이브레이커 컬럼 모두에 동일하게 적용된다.
+SORT_COLUMNS = {
+    "recommend": ("review_count", "desc"),
+    "discount": ("discount_rate", "desc"),
+    "price": ("price", "asc"),
+}
 
 # ponytail: in-memory only - resets on cold start / differs per instance, so a
 # retried webhook hitting a fresh instance can still double-grant. Move to a
@@ -149,6 +159,54 @@ def issue_tracked_link(taca_item_id: int, anon_key: str) -> str:
     origin = link["originUrl"]
     sep = "&" if "?" in origin else "?"
     return f"{origin}{sep}partner_ref_id={urllib.parse.quote(anon_key, safe='')}"
+
+
+def encode_cursor(row: dict) -> str:
+    payload = json.dumps([row["sort_value"], row["source"], row["source_item_id"]])
+    return base64.urlsafe_b64encode(payload.encode()).decode()
+
+
+def decode_cursor(cursor: str) -> tuple:
+    payload = base64.urlsafe_b64decode(cursor.encode()).decode()
+    sort_value, source, source_item_id = json.loads(payload)
+    return sort_value, source, source_item_id
+
+
+def build_products_query(
+    category: str | None, search: str | None, sort: str, cursor: str | None, limit: int
+) -> tuple:
+    """category XOR search 중 하나로 필터링해서 (SQL, params)를 만든다.
+    OFFSET 없이 keyset 방식 - 정렬 컬럼과 타이브레이커(source,
+    source_item_id)를 같은 방향으로 묶어서 튜플 비교한다."""
+    if sort not in SORT_COLUMNS:
+        raise ValueError(f"unknown sort: {sort}")
+    column, direction = SORT_COLUMNS[sort]
+    comparator = "<" if direction == "desc" else ">"
+
+    where_clauses = []
+    params: list = []
+    if category is not None:
+        where_clauses.append("category = %s")
+        params.append(category)
+    if search is not None:
+        where_clauses.append("name ilike %s")
+        params.append(f"%{search}%")
+
+    if cursor is not None:
+        sort_value, cur_source, cur_source_item_id = decode_cursor(cursor)
+        where_clauses.append(
+            f"({column}, source, source_item_id) {comparator} (%s, %s, %s)"
+        )
+        params.extend([sort_value, cur_source, cur_source_item_id])
+
+    where_sql = " and ".join(where_clauses)
+    sql = (
+        f"select * from products where {where_sql} "
+        f"order by {column} {direction}, source {direction}, source_item_id {direction} "
+        f"limit %s"
+    )
+    params.append(limit)
+    return sql, params
 
 
 class handler(BaseHTTPRequestHandler):
