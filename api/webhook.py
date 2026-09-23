@@ -209,12 +209,92 @@ def build_products_query(
     return sql, params
 
 
+def _row_to_product(row: tuple, columns: list) -> dict:
+    record = dict(zip(columns, row))
+    product = {
+        "tacaItemId": record["source_item_id"],
+        "shareLink": record["share_link"],
+        "name": record["name"],
+        "price": record["price"],
+        "discountRate": record["discount_rate"],
+        "imageUrl": record["image_url"],
+        "category": record["category"],
+        "reviewCount": record["review_count"],
+        "isAllTimeLow": record["is_all_time_low"],
+    }
+    if record["deal_ends_at"] is not None:
+        product["dealEndsAt"] = record["deal_ends_at"].isoformat()
+    return product
+
+
+def fetch_products_page(
+    conn, category: str | None, search: str | None, sort: str, cursor: str | None, limit: int
+) -> dict:
+    sql, params = build_products_query(category, search, sort, cursor, limit)
+    column, _direction = SORT_COLUMNS[sort]
+    with conn.cursor() as cur:
+        cur.execute(sql, params)
+        columns = [desc[0] for desc in cur.description]
+        rows = cur.fetchall()
+
+    items = [_row_to_product(row, columns) for row in rows]
+
+    next_cursor = None
+    if len(rows) == limit:
+        last = dict(zip(columns, rows[-1]))
+        next_cursor = encode_cursor({
+            "sort_value": last[column],
+            "source": last["source"],
+            "source_item_id": last["source_item_id"],
+        })
+
+    return {"items": items, "nextCursor": next_cursor}
+
+
+def fetch_home_products(conn) -> list:
+    """카테고리별 상위 20 + 역대최저가 상위 20 + 캐러셀 후보(할인 80%+) 상위
+    20을 합쳐 review_count 순으로 반환한다 - build_home_subset()의 SQL 버전."""
+    sql = """
+        with category_top as (
+            select *, row_number() over (partition by category order by review_count desc) as rn
+            from products
+        ),
+        all_time_low_top as (
+            select *, row_number() over (order by review_count desc) as rn
+            from products where is_all_time_low
+        ),
+        carousel_top as (
+            select *, row_number() over (order by review_count desc) as rn
+            from products where discount_rate >= 80
+        )
+        select distinct on (share_link) *
+        from (
+            select * from category_top where rn <= 20
+            union all
+            select * from all_time_low_top where rn <= 20
+            union all
+            select * from carousel_top where rn <= 20
+        ) combined
+        order by share_link, review_count desc
+    """
+    with conn.cursor() as cur:
+        cur.execute(sql)
+        columns = [desc[0] for desc in cur.description]
+        rows = cur.fetchall()
+    return [_row_to_product(row, columns) for row in rows]
+
+
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path.startswith("/api/products/home"):
-            self._handle_products_request(PRODUCTS_HOME_JSON_PATH)
-        elif self.path.startswith("/api/products"):
-            self._handle_products_request(PRODUCTS_JSON_PATH)
+        path = urllib.parse.urlparse(self.path).path
+        if path == "/api/products/home":
+            self._handle_home_products_request()
+        elif path == "/api/products":
+            query = urllib.parse.urlparse(self.path).query
+            if urllib.parse.parse_qs(query):
+                self._handle_products_page_request()
+            else:
+                self._handle_products_request(PRODUCTS_JSON_PATH)
         else:
             self.send_response(404)
             self.end_headers()
@@ -246,6 +326,59 @@ class handler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         self.wfile.write(payload)
+
+    def _handle_home_products_request(self):
+        db_url = os.environ.get(PRODUCTS_DB_URL_ENV)
+        if not db_url:
+            self._respond(500, {"error": "PRODUCTS_DB_DATABASE_URL not configured"}, cors=True)
+            return
+        conn = psycopg2.connect(db_url)
+        try:
+            items = fetch_home_products(conn)
+        finally:
+            conn.close()
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Cache-Control", "public, max-age=300")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
+        self.wfile.write(json.dumps(items).encode())
+
+    def _handle_products_page_request(self):
+        db_url = os.environ.get(PRODUCTS_DB_URL_ENV)
+        if not db_url:
+            self._respond(500, {"error": "PRODUCTS_DB_DATABASE_URL not configured"}, cors=True)
+            return
+
+        query = urllib.parse.urlparse(self.path).query
+        parsed = urllib.parse.parse_qs(query)
+        category = parsed.get("category", [None])[0]
+        search = parsed.get("search", [None])[0]
+        sort = parsed.get("sort", ["recommend"])[0]
+        cursor = parsed.get("cursor", [None])[0]
+        limit = int(parsed.get("limit", ["20"])[0])
+
+        if not category and not search:
+            self._respond(400, {"error": "category or search is required"}, cors=True)
+            return
+        if category and search:
+            self._respond(400, {"error": "category and search are mutually exclusive"}, cors=True)
+            return
+
+        conn = psycopg2.connect(db_url)
+        try:
+            result = fetch_products_page(conn, category, search, sort, cursor, limit)
+        except ValueError as e:
+            self._respond(400, {"error": str(e)}, cors=True)
+            return
+        finally:
+            conn.close()
+
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
+        self.wfile.write(json.dumps({"items": result["items"], "nextCursor": result["nextCursor"]}).encode())
 
     def _handle_order_event(self):
         content_length = int(self.headers.get("Content-Length", 0))

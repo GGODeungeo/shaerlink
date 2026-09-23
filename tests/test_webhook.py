@@ -15,6 +15,7 @@ from webhook import (
     build_products_query,
     decode_cursor,
     encode_cursor,
+    fetch_products_page,
     grant_click_reward,
     grant_reward,
     is_reward_eligible,
@@ -255,3 +256,75 @@ def test_build_products_query_rejects_unknown_sort():
 
     with pytest.raises(ValueError):
         build_products_query(category="식품", search=None, sort="bogus", cursor=None, limit=20)
+
+
+class _FakeCursor:
+    def __init__(self, rows, columns):
+        self._rows = rows
+        self.description = [(c,) for c in columns]
+
+    def execute(self, sql, params):
+        self.executed = (sql, params)
+
+    def fetchall(self):
+        return self._rows
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        pass
+
+
+class _FakeConn:
+    def __init__(self, rows, columns):
+        self._cursor = _FakeCursor(rows, columns)
+
+    def cursor(self):
+        return self._cursor
+
+
+def test_fetch_products_page_maps_rows_to_dicts_and_builds_next_cursor():
+    columns = [
+        "source", "source_item_id", "share_link", "name", "price",
+        "discount_rate", "image_url", "category", "review_count",
+        "is_all_time_low", "deal_ends_at", "updated_at",
+    ]
+    row = (
+        "sharelink", "123", "https://toss.im/x", "상품", 1000, 60,
+        "https://img", "식품", 7, False, None, None,
+    )
+    conn = _FakeConn(rows=[row], columns=columns)
+
+    result = fetch_products_page(
+        conn, category="식품", search=None, sort="recommend", cursor=None, limit=1
+    )
+
+    assert result["items"] == [{
+        "tacaItemId": "123",
+        "shareLink": "https://toss.im/x",
+        "name": "상품",
+        "price": 1000,
+        "discountRate": 60,
+        "imageUrl": "https://img",
+        "category": "식품",
+        "reviewCount": 7,
+        "isAllTimeLow": False,
+    }]
+    assert result["nextCursor"] is not None  # limit(1)만큼 꽉 찼으니 다음 페이지 있음
+
+
+def test_fetch_products_page_no_next_cursor_when_fewer_than_limit():
+    columns = [
+        "source", "source_item_id", "share_link", "name", "price",
+        "discount_rate", "image_url", "category", "review_count",
+        "is_all_time_low", "deal_ends_at", "updated_at",
+    ]
+    conn = _FakeConn(rows=[], columns=columns)
+
+    result = fetch_products_page(
+        conn, category="식품", search=None, sort="recommend", cursor=None, limit=20
+    )
+
+    assert result["items"] == []
+    assert result["nextCursor"] is None
