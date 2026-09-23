@@ -2,7 +2,7 @@
 name = "shaerlink-webhook"
 version = "0.1.0"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = ["psycopg2-binary"]
 
 [tool.vercel]
 entrypoint = "api.webhook:handler"
