@@ -2,9 +2,13 @@ import base64
 import hashlib
 import hmac
 import json
+import os
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+import psycopg2
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "api"))
 
@@ -15,12 +19,16 @@ from webhook import (
     build_products_query,
     decode_cursor,
     encode_cursor,
+    fetch_home_products,
     fetch_products_page,
     grant_click_reward,
     grant_reward,
     is_reward_eligible,
     issue_tracked_link,
 )
+from sharelink_api import _load_dotenv
+
+_load_dotenv()  # module level - skipif가 실제 env를 봐야 한다 (지연 로딩 전에 읽으면 오탐)
 
 SECRET = "test-secret"
 
@@ -328,3 +336,41 @@ def test_fetch_products_page_no_next_cursor_when_fewer_than_limit():
 
     assert result["items"] == []
     assert result["nextCursor"] is None
+
+
+@pytest.fixture
+def db_conn():
+    if not os.environ.get("PRODUCTS_DB_DATABASE_URL"):
+        pytest.skip("PRODUCTS_DB_DATABASE_URL not set - skipping live DB test")
+    connection = psycopg2.connect(os.environ["PRODUCTS_DB_DATABASE_URL"])
+    yield connection
+    with connection.cursor() as cur:
+        cur.execute("delete from products where source = 'test'")
+    connection.commit()
+    connection.close()
+
+
+def test_fetch_home_products_includes_global_top_review_items_even_when_category_cutoff_excludes_them(db_conn):
+    # 21개를 전부 같은 카테고리에 넣어서 카테고리별 top-20 컷오프(rn<=20)가
+    # 21번째 항목을 잘라내게 만든다. review_count를 실제 운영 데이터보다
+    # 훨씬 크게 잡아서(9999999대) 이 21개가 항상 전역 상위 30위 안에 들도록
+    # 보장한다 - 실 운영 테이블에 어떤 데이터가 있든 이 테스트 결과가
+    # 흔들리지 않는다.
+    base_review_count = 9_999_999
+    with db_conn.cursor() as cur:
+        for i in range(21):
+            cur.execute(
+                """
+                insert into products (
+                    source, source_item_id, share_link, name, price,
+                    discount_rate, image_url, category, review_count, updated_at
+                ) values ('test', %s, %s, %s, 1000, 60, 'https://example.com/x.png', 'test-category', %s, now())
+                """,
+                (f"batch-{i}", f"https://test.example/item-{i}", f"테스트 상품 {i}", base_review_count - i),
+            )
+    db_conn.commit()
+
+    items = fetch_home_products(db_conn)
+
+    share_links = {p["shareLink"] for p in items}
+    assert "https://test.example/item-20" in share_links  # 카테고리 내 21번째(최저) - 카테고리 top-20에서는 잘림

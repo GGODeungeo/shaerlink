@@ -253,7 +253,9 @@ def fetch_products_page(
 
 def fetch_home_products(conn) -> list:
     """카테고리별 상위 20 + 역대최저가 상위 20 + 캐러셀 후보(할인 80%+) 상위
-    20을 합쳐 review_count 순으로 반환한다 - build_home_subset()의 SQL 버전."""
+    20 + 전역 리뷰순 상위 30(카테고리 무관 - PopularRanking/TodaysPickEvent가
+    이 배열에서 직접 정렬·slice하므로 여기 없으면 두 화면에서 빠질 수 있음)을
+    합쳐 review_count 순으로 반환한다."""
     sql = """
         with category_top as (
             select *, row_number() over (partition by category order by review_count desc) as rn
@@ -266,6 +268,10 @@ def fetch_home_products(conn) -> list:
         carousel_top as (
             select *, row_number() over (order by review_count desc) as rn
             from products where discount_rate >= 80
+        ),
+        global_top as (
+            select *, row_number() over (order by review_count desc) as rn
+            from products
         )
         select distinct on (share_link) *
         from (
@@ -274,6 +280,8 @@ def fetch_home_products(conn) -> list:
             select * from all_time_low_top where rn <= 20
             union all
             select * from carousel_top where rn <= 20
+            union all
+            select * from global_top where rn <= 30
         ) combined
         order by share_link, review_count desc
     """
