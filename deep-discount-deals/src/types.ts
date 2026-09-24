@@ -10,3 +10,5 @@ export type Product = {
   isAllTimeLow?: boolean;
   tacaItemId?: number;
 };
+
+export type SortKey = 'recommend' | 'discount' | 'price';
