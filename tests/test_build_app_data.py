@@ -6,7 +6,6 @@ import pytest
 import build_app_data as bad
 from build_app_data import (
     build_entry,
-    build_home_subset,
     category_name,
     flag_all_time_lows,
     is_deep_discount,
@@ -18,23 +17,6 @@ from build_app_data import (
 from sharelink_api import _load_dotenv
 
 _load_dotenv()  # module level - skipif below must see the real env, not a not-yet-loaded one
-
-
-def _entry(share_link, category="식품", review_count=0, discount_rate=51, is_all_time_low=False, **overrides):
-    # tacaItemId deliberately omitted by default - app_data entries carried
-    # forward from before the tacaItemId backfill don't have one, and
-    # build_home_subset must not choke on that (unlike merge_unique, which
-    # keys on tacaItemId and does require it).
-    entry = {
-        "shareLink": share_link,
-        "category": category,
-        "reviewCount": review_count,
-        "discountRate": discount_rate,
-    }
-    if is_all_time_low:
-        entry["isAllTimeLow"] = True
-    entry.update(overrides)
-    return entry
 
 
 def test_is_deep_discount_threshold():
@@ -202,44 +184,6 @@ def test_to_app_data_reuses_cached_link_instead_of_reissuing(monkeypatch):
     result = to_app_data([product], {}, "publisher-id", "token", link_cache)
 
     assert result[0]["shareLink"] == "https://toss.im/_m/cached"
-
-
-def test_build_home_subset_caps_each_category_to_pool_size():
-    food = [_entry(f"food-{i}", category="식품", review_count=i) for i in range(5)]
-    data = food
-    result = build_home_subset(data, pool_size=3)
-    assert {p["shareLink"] for p in result} == {"food-4", "food-3", "food-2"}
-
-
-def test_build_home_subset_includes_all_time_low_and_carousel_pools():
-    ordinary = _entry("ordinary", category="식품", discount_rate=51)
-    all_time_low = _entry("cheapest-ever", category="식품", discount_rate=55, is_all_time_low=True)
-    deep_discount = _entry("huge-sale", category="식품", discount_rate=90)
-    data = [ordinary, all_time_low, deep_discount]
-
-    result = build_home_subset(data, pool_size=10)
-
-    share_links = {p["shareLink"] for p in result}
-    assert share_links == {"ordinary", "cheapest-ever", "huge-sale"}
-
-
-def test_build_home_subset_dedupes_by_share_link_not_taca_item_id():
-    # A category-shelf pool and the all-time-low pool can both pick up the
-    # same product; entries carried over from before the tacaItemId backfill
-    # have no tacaItemId at all, so dedup must key on shareLink instead.
-    popular_and_cheapest = _entry("dup", category="식품", review_count=100, discount_rate=55, is_all_time_low=True)
-    data = [popular_and_cheapest]
-
-    result = build_home_subset(data, pool_size=10)
-
-    assert [p["shareLink"] for p in result] == ["dup"]
-
-
-def test_build_home_subset_ignores_missing_taca_item_id():
-    data = [_entry("no-id-here", category="식품", review_count=1)]
-    result = build_home_subset(data, pool_size=10)
-    assert result[0]["shareLink"] == "no-id-here"
-    assert "tacaItemId" not in result[0]
 
 
 @pytest.fixture

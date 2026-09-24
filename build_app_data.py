@@ -28,13 +28,7 @@ CATEGORY_DEPTH = 3
 # or replace this with paginated fetching if it ever needs to go much higher.
 MAX_SHIPPED_ITEMS = 4000
 APP_DATA_PATH = Path("app-data/products.json")
-HOME_DATA_PATH = Path("app-data/products-home.json")
 LINK_CACHE_PATH = Path("link_cache.json")
-# Mirrors the client's own pool sizes (App.tsx SHELF_POOL_SIZE,
-# TopDealsCarousel POOL_SIZE) - the home subset only needs to cover what the
-# home screen actually draws from, not the full catalog.
-HOME_POOL_SIZE = 20
-CAROUSEL_MIN_DISCOUNT = 80
 DEFAULT_SOURCE = "sharelink"
 
 
@@ -224,36 +218,6 @@ def flag_all_time_lows(data: list, history: dict) -> None:
             entry["isAllTimeLow"] = True
 
 
-def build_home_subset(data: list, pool_size: int = HOME_POOL_SIZE) -> list:
-    """Small first-paint subset for the home screen: the same top-N-by-review
-    pools the client itself would slice down to per category shelf / all-time-low
-    shelf / top-deals carousel, pre-trimmed server-side so the home screen
-    doesn't have to wait on the full catalog to render. Order doesn't matter -
-    the client re-sorts and re-shuffles everything it renders anyway."""
-    by_category: dict = {}
-    for p in data:
-        by_category.setdefault(p["category"], []).append(p)
-
-    pools = []
-    for items in by_category.values():
-        pools.append(sorted(items, key=lambda p: -p["reviewCount"])[:pool_size])
-
-    all_time_low = [p for p in data if p.get("isAllTimeLow")]
-    pools.append(sorted(all_time_low, key=lambda p: -p["reviewCount"])[:pool_size])
-
-    carousel_pool = [p for p in data if p["discountRate"] >= CAROUSEL_MIN_DISCOUNT]
-    pools.append(sorted(carousel_pool, key=lambda p: -p["reviewCount"])[:pool_size])
-
-    # Dedupe by shareLink, not tacaItemId - app_data entries carried forward
-    # across quota-cutoff runs (merge_with_previous) can predate the
-    # tacaItemId backfill and not have one, but shareLink is always present.
-    seen: dict = {}
-    for pool in pools:
-        for p in pool:
-            seen.setdefault(p["shareLink"], p)
-    return list(seen.values())
-
-
 def main():
     # Optional: python3 build_app_data.py 1.5 caps growth at 1.5x today's
     # starting count, stopping early instead of running until the daily quota
@@ -324,11 +288,6 @@ def main():
         json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
     )
 
-    home_data = build_home_subset(data)
-    HOME_DATA_PATH.write_text(
-        json.dumps(home_data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
-    )
-
     db_url = os.environ.get("PRODUCTS_DB_DATABASE_URL")
     if db_url:
         connection = psycopg2.connect(db_url)
@@ -336,9 +295,9 @@ def main():
             upsert_products(connection, data)
         finally:
             connection.close()
-        print(f"완료: {APP_DATA_PATH} ({len(data)}개), {HOME_DATA_PATH} ({len(home_data)}개), DB upsert ({len(data)}개)")
+        print(f"완료: {APP_DATA_PATH} ({len(data)}개), DB upsert ({len(data)}개)")
     else:
-        print(f"완료: {APP_DATA_PATH} ({len(data)}개 상품), {HOME_DATA_PATH} ({len(home_data)}개 상품) - PRODUCTS_DB_DATABASE_URL 없어서 DB는 건너뜀")
+        print(f"완료: {APP_DATA_PATH} ({len(data)}개 상품) - PRODUCTS_DB_DATABASE_URL 없어서 DB는 건너뜀")
 
 
 if __name__ == "__main__":
