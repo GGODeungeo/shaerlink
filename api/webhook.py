@@ -292,11 +292,26 @@ def fetch_home_products(conn) -> list:
     return [_row_to_product(row, columns) for row in rows]
 
 
+def fetch_products_by_ids(conn, share_links: list) -> list:
+    """찜/최근본처럼 임의의 shareLink 목록으로 정확히 그 상품들만 조회한다.
+    순서는 보장하지 않음 - 호출 측(App.tsx)이 로컬에 저장된 순서대로
+    재배열한다. 존재하지 않는 shareLink는 결과에서 조용히 빠진다."""
+    if not share_links:
+        return []
+    with conn.cursor() as cur:
+        cur.execute("select * from products where share_link = any(%s)", (share_links,))
+        columns = [desc[0] for desc in cur.description]
+        rows = cur.fetchall()
+    return [_row_to_product(row, columns) for row in rows]
+
+
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         path = urllib.parse.urlparse(self.path).path
         if path == "/api/products/home":
             self._handle_home_products_request()
+        elif path == "/api/products/batch":
+            self._handle_products_batch_request()
         elif path == "/api/products":
             query = urllib.parse.urlparse(self.path).query
             if urllib.parse.parse_qs(query):
@@ -351,6 +366,32 @@ class handler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         self.wfile.write(json.dumps(items).encode())
+
+    def _handle_products_batch_request(self):
+        db_url = os.environ.get(PRODUCTS_DB_URL_ENV)
+        if not db_url:
+            self._respond(500, {"error": "PRODUCTS_DB_DATABASE_URL not configured"}, cors=True)
+            return
+
+        query = urllib.parse.urlparse(self.path).query
+        parsed = urllib.parse.parse_qs(query)
+        ids_param = parsed.get("ids", [""])[0]
+        share_links = [s for s in ids_param.split(",") if s]
+        if not share_links:
+            self._respond(400, {"error": "ids is required"}, cors=True)
+            return
+
+        conn = psycopg2.connect(db_url)
+        try:
+            items = fetch_products_by_ids(conn, share_links)
+        finally:
+            conn.close()
+
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
+        self.wfile.write(json.dumps({"items": items}).encode())
 
     def _handle_products_page_request(self):
         db_url = os.environ.get(PRODUCTS_DB_URL_ENV)
