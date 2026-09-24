@@ -6,17 +6,18 @@ import { PurchaseSheet } from './PurchaseSheet';
 import { Bag, Heart, Search } from './components/icons';
 import { useFavorites } from './useFavorites';
 import { useRecentlyViewed } from './useRecentlyViewed';
+import { usePaginatedProducts } from './usePaginatedProducts';
 import { dedupeByImage } from './dedupeByImage';
 import { dailyShuffle } from './dailyShuffle';
 import { TodaysPickEvent } from './TodaysPickEvent';
 import { PopularRanking } from './PopularRanking';
 import { BannerAd } from './BannerAd';
 import { PushOptInCard } from './PushOptInCard';
-import type { Product } from './types';
+import type { Product, SortKey } from './types';
 import './App.css';
 
-const DATA_URL = 'https://shaerlink.vercel.app/api/products';
 const HOME_DATA_URL = 'https://shaerlink.vercel.app/api/products/home';
+const PRODUCTS_BATCH_URL = 'https://shaerlink.vercel.app/api/products/batch';
 
 const CATEGORY_EMOJI: Record<string, string> = {
   '식품': '🍎',
@@ -57,8 +58,6 @@ type LoadState =
   | { status: 'error' }
   | { status: 'ready'; products: Product[] };
 
-type SortKey = 'recommend' | 'discount' | 'price';
-
 const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: 'recommend', label: '추천순' },
   { key: 'discount', label: '할인율순' },
@@ -66,6 +65,7 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
 ];
 
 const PAGE_SIZE = 20;
+const SEARCH_DEBOUNCE_MS = 300;
 
 function sortProducts(products: Product[], sort: SortKey) {
   return [...products].sort((a, b) => {
@@ -76,29 +76,35 @@ function sortProducts(products: Product[], sort: SortKey) {
 }
 
 function App() {
-  const [state, setState] = useState<LoadState>({ status: 'loading' });
+  const [homeState, setHomeState] = useState<LoadState>({ status: 'loading' });
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sort, setSort] = useState<SortKey>('recommend');
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [viewingFavorites, setViewingFavorites] = useState(false);
   const [viewingEvent, setViewingEvent] = useState(false);
   const [viewingRecentlyViewed, setViewingRecentlyViewed] = useState(false);
   const [viewingRanking, setViewingRanking] = useState(false);
+  const [favoriteItems, setFavoriteItems] = useState<Product[]>([]);
+  const [recentItems, setRecentItems] = useState<Product[]>([]);
   const { favorites, toggleFavorite } = useFavorites();
   const { recentIds, recordView, removeView, clearAll } = useRecentlyViewed();
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(search.trim()), SEARCH_DEBOUNCE_MS);
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  const isSearching = debouncedSearch.length > 0;
+  const categoryState = usePaginatedProducts({ category: selectedCategory ?? undefined, sort });
+  const searchState = usePaginatedProducts({ search: isSearching ? debouncedSearch : undefined, sort });
 
   const handleSelectProduct = (product: Product) => {
     recordView(product.shareLink);
     setSelectedProduct(product);
   };
-
-  const recentProducts = (() => {
-    if (state.status !== 'ready') return [];
-    const productByLink = new Map(state.products.map((p) => [p.shareLink, p]));
-    return recentIds.map((id) => productByLink.get(id)).filter((p): p is Product => p !== undefined);
-  })();
 
   const selectCategory = (label: string) => {
     setSelectedCategory(label);
@@ -126,7 +132,7 @@ function App() {
   };
 
   const openRecentlyViewedPage = () => {
-    Analytics.click({ log_name: 'recently_viewed_nav_click', item_count: recentProducts.length });
+    Analytics.click({ log_name: 'recently_viewed_nav_click', item_count: recentIds.length });
     setViewingRecentlyViewed(true);
     setViewingFavorites(false);
     setViewingEvent(false);
@@ -153,23 +159,58 @@ function App() {
       return res.json();
     });
 
-  // Loads the small home-screen subset first so the home screen paints
-  // immediately regardless of how large the full catalog gets, then quietly
-  // swaps in the full catalog once it arrives (needed for search / category
-  // "전체보기" - if the user reaches those before it lands, they briefly see
-  // just the home subset's coverage, which self-corrects a moment later).
-  const fetchProducts = () => {
+  const fetchHomeProducts = () => {
     fetchJson(HOME_DATA_URL)
-      .then((products) => {
-        setState({ status: 'ready', products });
-        fetchJson(DATA_URL)
-          .then((products) => setState({ status: 'ready', products }))
-          .catch(() => {});
-      })
-      .catch(() => setState({ status: 'error' }));
+      .then((products) => setHomeState({ status: 'ready', products }))
+      .catch(() => setHomeState({ status: 'error' }));
   };
 
-  useEffect(fetchProducts, []);
+  useEffect(fetchHomeProducts, []);
+
+  // 찜 화면에 들어갈 때 스냅샷을 한 번만 가져온다. 화면 안에서 찜 해제는
+  // favorites Set 변화를 렌더 시점에 바로 필터링해 즉시 반영하고, 여기서
+  // 다시 fetch하지 않는다 - 안 그러면 매 토글마다 네트워크 왕복이 생겨
+  // 카드가 사라지는 게 한 박자 늦게 보인다. (이 화면 안에서는 찜 추가가
+  // 불가능하므로 - 항상 isFavorite=true로 렌더 - 스냅샷 이후의 축소만
+  // 반영하면 충분하다.)
+  useEffect(() => {
+    if (!viewingFavorites) return;
+    const ids = [...favorites];
+    if (ids.length === 0) {
+      setFavoriteItems([]);
+      return;
+    }
+    fetch(`${PRODUCTS_BATCH_URL}?ids=${ids.map(encodeURIComponent).join(',')}`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data: { items: Product[] }) => setFavoriteItems(data.items))
+      .catch(() => setFavoriteItems([]));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewingFavorites]);
+
+  // 최근본도 찜과 동일한 이유로 진입 시 스냅샷만 가져오고, 화면 안에서의
+  // 개별 삭제/전체삭제는 아래 렌더에서 recentIds로 다시 필터링해 즉시
+  // 반영한다.
+  useEffect(() => {
+    if (!viewingRecentlyViewed) return;
+    if (recentIds.length === 0) {
+      setRecentItems([]);
+      return;
+    }
+    fetch(`${PRODUCTS_BATCH_URL}?ids=${recentIds.map(encodeURIComponent).join(',')}`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((data: { items: Product[] }) => {
+        const byLink = new Map(data.items.map((p) => [p.shareLink, p]));
+        setRecentItems(recentIds.map((id) => byLink.get(id)).filter((p): p is Product => p !== undefined));
+      })
+      .catch(() => setRecentItems([]));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewingRecentlyViewed]);
 
   // 주요 기능(앱 상세 화면 바로가기)이 intoss://hidden-deals?view=favorites 같은
   // 링크로 특정 화면을 바로 열 수 있게 한다.
@@ -218,8 +259,8 @@ function App() {
   }, []);
 
   const retry = () => {
-    setState({ status: 'loading' });
-    fetchProducts();
+    setHomeState({ status: 'loading' });
+    fetchHomeProducts();
   };
 
   return (
@@ -241,9 +282,9 @@ function App() {
           </div>
         </header>
 
-        {state.status === 'loading' && <p className="state-message">불러오는 중...</p>}
+        {homeState.status === 'loading' && <p className="state-message">불러오는 중...</p>}
 
-        {state.status === 'error' && (
+        {homeState.status === 'error' && (
           <div className="state-message">
             <p>상품을 불러오지 못했어요.</p>
             <button type="button" className="retry-button" onClick={retry}>
@@ -252,20 +293,7 @@ function App() {
           </div>
         )}
 
-        {state.status === 'ready' && (() => {
-          const isSearching = search.trim().length > 0;
-          const filteredProducts = isSearching
-            ? state.products.filter((p) => p.name.toLowerCase().includes(search.trim().toLowerCase()))
-            : state.products;
-
-          if (filteredProducts.length === 0) {
-            return (
-              <p className="state-message">
-                {isSearching ? '검색 결과가 없어요.' : '지금은 조건에 맞는 상품이 없어요.'}
-              </p>
-            );
-          }
-
+        {homeState.status === 'ready' && (() => {
           const sortRow = (
             <div className="sort-row">
               <div className="sort-bar__group" role="group" aria-label="정렬">
@@ -286,13 +314,20 @@ function App() {
           );
 
           if (isSearching) {
-            const sorted = sortProducts(filteredProducts, sort);
-            const visible = sorted.slice(0, visibleCount);
+            if (searchState.status === 'loading') {
+              return <p className="state-message">불러오는 중...</p>;
+            }
+            if (searchState.status === 'error') {
+              return <p className="state-message">검색 결과를 불러오지 못했어요.</p>;
+            }
+            if (searchState.items.length === 0) {
+              return <p className="state-message">검색 결과가 없어요.</p>;
+            }
             return (
               <>
                 {sortRow}
                 <div className="product-grid">
-                  {visible.map((product) => (
+                  {searchState.items.map((product) => (
                     <ProductCard
                       key={product.shareLink}
                       product={product}
@@ -302,12 +337,8 @@ function App() {
                     />
                   ))}
                 </div>
-                {visible.length < sorted.length && (
-                  <button
-                    type="button"
-                    className="load-more-button"
-                    onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
-                  >
+                {searchState.hasMore && (
+                  <button type="button" className="load-more-button" onClick={searchState.loadMore}>
                     더보기
                   </button>
                 )}
@@ -318,7 +349,7 @@ function App() {
           if (viewingEvent) {
             return (
               <TodaysPickEvent
-                products={state.products}
+                products={homeState.products}
                 onSelect={handleSelectProduct}
                 favorites={favorites}
                 onToggleFavorite={toggleFavorite}
@@ -327,6 +358,7 @@ function App() {
           }
 
           if (viewingRecentlyViewed) {
+            const recentProducts = recentItems.filter((p) => recentIds.includes(p.shareLink));
             const sortedRecent = sortProducts(recentProducts, sort);
             const visibleRecent = sortedRecent.slice(0, visibleCount);
             return (
@@ -381,14 +413,14 @@ function App() {
           if (viewingRanking) {
             return (
               <PopularRanking
-                products={state.products}
+                products={homeState.products}
                 onSelect={handleSelectProduct}
               />
             );
           }
 
           if (viewingFavorites) {
-            const favoriteProducts = state.products.filter((p) => favorites.has(p.shareLink));
+            const favoriteProducts = favoriteItems.filter((p) => favorites.has(p.shareLink));
             const sortedFavorites = sortProducts(favoriteProducts, sort);
             const visibleFavorites = sortedFavorites.slice(0, visibleCount);
             return (
@@ -424,11 +456,11 @@ function App() {
             );
           }
 
-          const groups = dailyShuffle(groupByCategory(filteredProducts), 'category-order');
+          const groups = dailyShuffle(groupByCategory(homeState.products), 'category-order');
 
           if (selectedCategory === null) {
             const allTimeLowProducts = dailyShuffle(
-              dedupeByImage(sortProducts(state.products.filter((p) => p.isAllTimeLow), 'recommend')).slice(
+              dedupeByImage(sortProducts(homeState.products.filter((p) => p.isAllTimeLow), 'recommend')).slice(
                 0,
                 SHELF_POOL_SIZE
               ),
@@ -437,7 +469,7 @@ function App() {
 
             return (
               <>
-                <TopDealsCarousel products={state.products} onSelect={handleSelectProduct} />
+                <TopDealsCarousel products={homeState.products} onSelect={handleSelectProduct} />
 
                 <p className="daily-update-notice">매일 아침 10시, 더 많은 특가가 추가돼요</p>
 
@@ -544,9 +576,43 @@ function App() {
             );
           }
 
-          const activeGroup = groups.find((g) => g.label === selectedCategory) ?? groups[0];
-          const sortedActive = sortProducts(activeGroup?.products ?? [], sort);
-          const visibleActive = sortedActive.slice(0, visibleCount);
+          const activeGroup = groups.find((g) => g.label === selectedCategory);
+
+          if (categoryState.status === 'loading') {
+            return (
+              <>
+                <nav className="category-tabs" aria-label="카테고리">
+                  {groups.map((group) => (
+                    <button
+                      key={group.label}
+                      type="button"
+                      className={
+                        group.label === activeGroup?.label
+                          ? 'category-tabs__item category-tabs__item--active'
+                          : 'category-tabs__item'
+                      }
+                      onClick={() => {
+                        Analytics.click({ log_name: 'category_tab_click', category: group.label });
+                        selectCategory(group.label);
+                      }}
+                    >
+                      {group.label}
+                    </button>
+                  ))}
+                </nav>
+                <p className="state-message">불러오는 중...</p>
+              </>
+            );
+          }
+
+          if (categoryState.status === 'error') {
+            return <p className="state-message">카테고리 상품을 불러오지 못했어요.</p>;
+          }
+
+          if (categoryState.items.length === 0) {
+            return <p className="state-message">지금은 조건에 맞는 상품이 없어요.</p>;
+          }
+
           return (
             <>
               <nav className="category-tabs" aria-label="카테고리">
@@ -572,7 +638,7 @@ function App() {
               {sortRow}
 
               <div className="product-grid">
-                {visibleActive.map((product) => (
+                {categoryState.items.map((product) => (
                   <ProductCard
                     key={product.shareLink}
                     product={product}
@@ -582,12 +648,8 @@ function App() {
                   />
                 ))}
               </div>
-              {visibleActive.length < sortedActive.length && (
-                <button
-                  type="button"
-                  className="load-more-button"
-                  onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
-                >
+              {categoryState.hasMore && (
+                <button type="button" className="load-more-button" onClick={categoryState.loadMore}>
                   더보기
                 </button>
               )}
@@ -621,7 +683,7 @@ function App() {
           <span className="quick-nav-pill__label">찜</span>
           {favorites.size > 0 && <span className="quick-nav-pill__badge">{favorites.size}</span>}
         </button>
-        {recentProducts.length > 0 && (
+        {recentIds.length > 0 && (
           <button type="button" className="quick-nav-pill__item" onClick={openRecentlyViewedPage}>
             <Bag size={18} />
             <span className="quick-nav-pill__label">최근본</span>
