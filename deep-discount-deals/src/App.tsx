@@ -94,6 +94,15 @@ function App() {
   const { favorites, toggleFavorite } = useFavorites();
   const { recentIds, recordView, removeView, clearAll } = useRecentlyViewed();
   const { submitted: reviewSubmitted, markSubmitted: markReviewSubmitted } = useReviewPrompt();
+  const [showReviewPrompt, setShowReviewPrompt] = useState(false);
+
+  // 앱 켜자마자 바로 안 뜨게 - 25초 정도 둘러본 뒤 1회만 팝업으로 띄운다.
+  // 껐다 켜면(세션 재시작) 다시 뜰 수 있지만, 같은 세션 안에서는 한 번만.
+  useEffect(() => {
+    if (reviewSubmitted) return;
+    const timer = setTimeout(() => setShowReviewPrompt(true), 25_000);
+    return () => clearTimeout(timer);
+  }, [reviewSubmitted]);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search.trim()), SEARCH_DEBOUNCE_MS);
@@ -478,8 +487,6 @@ function App() {
 
                 <PushOptInCard />
 
-                {!reviewSubmitted && <ReviewPromptCard onSubmitted={markReviewSubmitted} />}
-
                 <div className="payback-banner">
                   <span className="payback-banner__emoji tf">💸</span>
                   <span className="payback-banner__text">
@@ -698,6 +705,16 @@ function App() {
 
       {selectedProduct && (
         <PurchaseSheet product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+      )}
+
+      {showReviewPrompt && !reviewSubmitted && (
+        <ReviewPromptCard
+          onSubmitted={() => {
+            markReviewSubmitted();
+            setShowReviewPrompt(false);
+          }}
+          onClose={() => setShowReviewPrompt(false)}
+        />
       )}
     </div>
   );

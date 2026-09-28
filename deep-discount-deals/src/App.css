@@ -706,24 +706,51 @@
   word-break: keep-all;
 }
 
-.review-prompt-card {
+.review-prompt-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.review-prompt-sheet {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  margin: var(--space-3) var(--space-3) 0;
-  padding: var(--space-3);
+  padding: var(--space-5) var(--space-4) var(--space-4);
   border-radius: 16px;
   background: var(--color-bg);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.review-prompt-card__title {
+.review-prompt-sheet__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  background: none;
+  color: var(--color-text-subtle);
+  cursor: pointer;
+}
+
+.review-prompt-sheet__title {
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-subtitle);
   color: var(--color-text-strong);
 }
 
-.review-prompt-card__textarea {
+.review-prompt-sheet__textarea {
   min-height: 72px;
   padding: var(--space-2);
   border: 1px solid var(--color-bg-canvas);
@@ -734,16 +761,16 @@
   resize: none;
 }
 
-.review-prompt-card__textarea::placeholder {
+.review-prompt-sheet__textarea::placeholder {
   color: var(--color-text-subtle);
 }
 
-.review-prompt-card__error {
+.review-prompt-sheet__error {
   font-size: var(--font-size-caption);
   color: var(--color-danger);
 }
 
-.review-prompt-card__submit {
+.review-prompt-sheet__submit {
   min-height: 44px;
   padding: 0 var(--space-4);
   border: none;
@@ -755,7 +782,7 @@
   cursor: pointer;
 }
 
-.review-prompt-card__submit:disabled {
+.review-prompt-sheet__submit:disabled {
   background: var(--color-bg-canvas);
   color: var(--color-text-disabled);
   cursor: default;
