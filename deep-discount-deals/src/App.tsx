@@ -478,7 +478,7 @@ function App() {
                 <div className="payback-banner">
                   <span className="payback-banner__emoji tf">💸</span>
                   <span className="payback-banner__text">
-                    <span className="payback-banner__title">5,000원 이상 구매하고 500원 페이백</span>
+                    <span className="payback-banner__title">실 결제 5,000원 이상 구매하고 500원 페이백</span>
                     <span className="payback-banner__subtitle">지금 진행 중인 프로모션이에요, 페이백 받으세요</span>
                   </span>
                 </div>
