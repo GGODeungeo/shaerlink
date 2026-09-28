@@ -32,6 +32,13 @@ DDL_STATEMENTS = [
     create index if not exists products_review_count_idx
         on products (review_count desc)
     """,
+    """
+    create table if not exists app_reviews (
+        anon_key   text primary key,
+        body       text not null,
+        created_at timestamptz not null default now()
+    )
+    """,
 ]
 
 

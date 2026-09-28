@@ -36,3 +36,15 @@ def test_init_db_is_idempotent(conn):
         "discount_rate", "image_url", "category", "review_count",
         "is_all_time_low", "deal_ends_at", "updated_at",
     }
+
+
+def test_init_db_creates_app_reviews_table(conn):
+    init_db(conn)
+
+    with conn.cursor() as cur:
+        cur.execute(
+            "select column_name from information_schema.columns where table_name = 'app_reviews'"
+        )
+        columns = {row[0] for row in cur.fetchall()}
+
+    assert columns == {"anon_key", "body", "created_at"}
