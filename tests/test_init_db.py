@@ -38,13 +38,13 @@ def test_init_db_is_idempotent(conn):
     }
 
 
-def test_init_db_creates_app_reviews_table(conn):
+def test_init_db_creates_push_rewards_table(conn):
     init_db(conn)
 
     with conn.cursor() as cur:
         cur.execute(
-            "select column_name from information_schema.columns where table_name = 'app_reviews'"
+            "select column_name from information_schema.columns where table_name = 'push_rewards'"
         )
         columns = {row[0] for row in cur.fetchall()}
 
-    assert columns == {"anon_key", "body", "created_at"}
+    assert columns == {"anon_key", "created_at"}

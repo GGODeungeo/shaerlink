@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Analytics, Notification } from '@apps-in-toss/web-framework';
 import { ChevronRight } from './components/icons';
+import { getAnonKey } from './trackedLink';
 
 const TEMPLATE_CODE = 'hidden-deals-DAILY_DEAL_PUSH';
 const STORAGE_KEY = 'hidden-deals:push-agreement-status';
+const PUSH_REWARD_URL = 'https://shaerlink.vercel.app/api/push-reward';
 
 type Status = 'asked' | null;
 
@@ -23,6 +25,22 @@ function writeStatus() {
   }
 }
 
+/** Best-effort reward grant for a brand-new push agreement - never throws,
+ * doesn't block the opt-in UI (same spirit as trackedLink's click reward). */
+async function grantPushReward() {
+  try {
+    const anonKey = await getAnonKey();
+    if (!anonKey) return;
+    await fetch(PUSH_REWARD_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ anonKey }),
+    });
+  } catch {
+    // best-effort - a failed grant must not break the opt-in flow
+  }
+}
+
 export function PushOptInCard() {
   const [status, setStatus] = useState<Status>(readStatus);
 
@@ -35,6 +53,7 @@ export function PushOptInCard() {
       options: { templateCode: TEMPLATE_CODE },
       onEvent: ({ type }) => {
         Analytics.click({ log_name: 'push_opt_in_result', result: type });
+        if (type === 'newAgreement') grantPushReward();
         writeStatus();
         setStatus('asked');
       },

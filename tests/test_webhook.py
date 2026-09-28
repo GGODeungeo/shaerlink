@@ -26,7 +26,7 @@ from webhook import (
     grant_reward,
     is_reward_eligible,
     issue_tracked_link,
-    submit_review,
+    record_push_reward,
 )
 from sharelink_api import _load_dotenv
 
@@ -411,30 +411,30 @@ def test_fetch_home_products_includes_global_top_review_items_even_when_category
 
 
 @pytest.fixture
-def review_db_conn():
+def push_reward_db_conn():
     if not os.environ.get("PRODUCTS_DB_DATABASE_URL"):
         pytest.skip("PRODUCTS_DB_DATABASE_URL not set - skipping live DB test")
     connection = psycopg2.connect(os.environ["PRODUCTS_DB_DATABASE_URL"])
     yield connection
     with connection.cursor() as cur:
-        cur.execute("delete from app_reviews where anon_key like 'test-%'")
+        cur.execute("delete from push_rewards where anon_key like 'test-%'")
     connection.commit()
     connection.close()
 
 
-def test_submit_review_inserts_once_and_ignores_repeat(review_db_conn):
-    first = submit_review(review_db_conn, "test-anon-1", "이 앱 정말 좋아요 잘쓰고있어요")
+def test_record_push_reward_inserts_once_and_ignores_repeat(push_reward_db_conn):
+    first = record_push_reward(push_reward_db_conn, "test-anon-1")
     assert first is True
 
-    with review_db_conn.cursor() as cur:
-        cur.execute("select body from app_reviews where anon_key = %s", ("test-anon-1",))
-        row = cur.fetchone()
-    assert row == ("이 앱 정말 좋아요 잘쓰고있어요",)
+    with push_reward_db_conn.cursor() as cur:
+        cur.execute("select count(*) from push_rewards where anon_key = %s", ("test-anon-1",))
+        count = cur.fetchone()[0]
+    assert count == 1
 
-    second = submit_review(review_db_conn, "test-anon-1", "다른 내용으로 다시 제출")
+    second = record_push_reward(push_reward_db_conn, "test-anon-1")
     assert second is False
 
-    with review_db_conn.cursor() as cur:
-        cur.execute("select count(*) from app_reviews where anon_key = %s", ("test-anon-1",))
+    with push_reward_db_conn.cursor() as cur:
+        cur.execute("select count(*) from push_rewards where anon_key = %s", ("test-anon-1",))
         count = cur.fetchone()[0]
     assert count == 1

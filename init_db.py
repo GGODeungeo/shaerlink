@@ -33,9 +33,8 @@ DDL_STATEMENTS = [
         on products (review_count desc)
     """,
     """
-    create table if not exists app_reviews (
+    create table if not exists push_rewards (
         anon_key   text primary key,
-        body       text not null,
         created_at timestamptz not null default now()
     )
     """,
