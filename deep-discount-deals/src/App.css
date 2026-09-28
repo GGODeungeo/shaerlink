@@ -706,6 +706,61 @@
   word-break: keep-all;
 }
 
+.review-prompt-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: var(--space-3) var(--space-3) 0;
+  padding: var(--space-3);
+  border-radius: 16px;
+  background: var(--color-bg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.review-prompt-card__title {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-subtitle);
+  color: var(--color-text-strong);
+}
+
+.review-prompt-card__textarea {
+  min-height: 72px;
+  padding: var(--space-2);
+  border: 1px solid var(--color-bg-canvas);
+  border-radius: 10px;
+  background: var(--color-bg-canvas);
+  font-size: var(--font-size-body-small);
+  color: var(--color-text-strong);
+  resize: none;
+}
+
+.review-prompt-card__textarea::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.review-prompt-card__error {
+  font-size: var(--font-size-caption);
+  color: var(--color-danger);
+}
+
+.review-prompt-card__submit {
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: none;
+  border-radius: 10px;
+  background: var(--brand-primary);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-subtitle);
+  cursor: pointer;
+}
+
+.review-prompt-card__submit:disabled {
+  background: var(--color-bg-canvas);
+  color: var(--color-text-disabled);
+  cursor: default;
+}
+
 .payback-banner {
   display: flex;
   align-items: center;

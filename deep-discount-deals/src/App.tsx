@@ -13,6 +13,8 @@ import { TodaysPickEvent } from './TodaysPickEvent';
 import { PopularRanking } from './PopularRanking';
 import { BannerAd } from './BannerAd';
 import { PushOptInCard } from './PushOptInCard';
+import { ReviewPromptCard } from './ReviewPromptCard';
+import { useReviewPrompt } from './useReviewPrompt';
 import type { Product, SortKey } from './types';
 import './App.css';
 
@@ -91,6 +93,7 @@ function App() {
   const [recentItems, setRecentItems] = useState<Product[]>([]);
   const { favorites, toggleFavorite } = useFavorites();
   const { recentIds, recordView, removeView, clearAll } = useRecentlyViewed();
+  const { submitted: reviewSubmitted, markSubmitted: markReviewSubmitted } = useReviewPrompt();
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search.trim()), SEARCH_DEBOUNCE_MS);
@@ -474,6 +477,8 @@ function App() {
                 <p className="daily-update-notice">매일 아침 10시, 더 많은 특가가 추가돼요</p>
 
                 <PushOptInCard />
+
+                {!reviewSubmitted && <ReviewPromptCard onSubmitted={markReviewSubmitted} />}
 
                 <div className="payback-banner">
                   <span className="payback-banner__emoji tf">💸</span>

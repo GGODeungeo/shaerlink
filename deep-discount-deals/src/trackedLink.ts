@@ -14,7 +14,7 @@ async function resolveAnonKey(): Promise<string | null> {
   }
 }
 
-function getAnonKey(): Promise<string | null> {
+export function getAnonKey(): Promise<string | null> {
   if (!anonKeyPromise) anonKeyPromise = resolveAnonKey();
   return anonKeyPromise;
 }
