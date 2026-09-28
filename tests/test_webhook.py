@@ -26,6 +26,7 @@ from webhook import (
     grant_reward,
     is_reward_eligible,
     issue_tracked_link,
+    submit_review,
 )
 from sharelink_api import _load_dotenv
 
@@ -407,3 +408,33 @@ def test_fetch_home_products_includes_global_top_review_items_even_when_category
 
     share_links = {p["shareLink"] for p in items}
     assert "https://test.example/item-20" in share_links  # 카테고리 내 21번째(최저) - 카테고리 top-20에서는 잘림
+
+
+@pytest.fixture
+def review_db_conn():
+    if not os.environ.get("PRODUCTS_DB_DATABASE_URL"):
+        pytest.skip("PRODUCTS_DB_DATABASE_URL not set - skipping live DB test")
+    connection = psycopg2.connect(os.environ["PRODUCTS_DB_DATABASE_URL"])
+    yield connection
+    with connection.cursor() as cur:
+        cur.execute("delete from app_reviews where anon_key like 'test-%'")
+    connection.commit()
+    connection.close()
+
+
+def test_submit_review_inserts_once_and_ignores_repeat(review_db_conn):
+    first = submit_review(review_db_conn, "test-anon-1", "이 앱 정말 좋아요 잘쓰고있어요")
+    assert first is True
+
+    with review_db_conn.cursor() as cur:
+        cur.execute("select body from app_reviews where anon_key = %s", ("test-anon-1",))
+        row = cur.fetchone()
+    assert row == ("이 앱 정말 좋아요 잘쓰고있어요",)
+
+    second = submit_review(review_db_conn, "test-anon-1", "다른 내용으로 다시 제출")
+    assert second is False
+
+    with review_db_conn.cursor() as cur:
+        cur.execute("select count(*) from app_reviews where anon_key = %s", ("test-anon-1",))
+        count = cur.fetchone()[0]
+    assert count == 1

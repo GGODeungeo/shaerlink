@@ -302,6 +302,20 @@ def fetch_products_by_ids(conn, share_links: list) -> list:
     return [_row_to_product(row, columns) for row in rows]
 
 
+def submit_review(conn, anon_key: str, body: str) -> bool:
+    """app_reviews에 (anon_key, body)를 넣는다. 이미 같은 anon_key로 제출한
+    적이 있으면 조용히 무시(ON CONFLICT DO NOTHING) - anon_key가 PK라 이게
+    "한 사람당 한 번"을 강제하는 전부다. 실제로 새로 삽입됐으면 True."""
+    with conn.cursor() as cur:
+        cur.execute(
+            "insert into app_reviews (anon_key, body) values (%s, %s) on conflict (anon_key) do nothing",
+            (anon_key, body),
+        )
+        inserted = cur.rowcount == 1
+    conn.commit()
+    return inserted
+
+
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         path = urllib.parse.urlparse(self.path).path
@@ -320,6 +334,8 @@ class handler(BaseHTTPRequestHandler):
             self._handle_link_request()
         elif self.path.startswith("/api/test-reward"):
             self._handle_test_reward_request()
+        elif self.path.startswith("/api/review"):
+            self._handle_review_request()
         else:
             self._handle_order_event()
 
@@ -487,6 +503,42 @@ class handler(BaseHTTPRequestHandler):
         result = grant_reward(anon_key, amount, promotion_code=promotion_code)
         print(f"[test-reward] promotionCode={promotion_code} anonKey={anon_key} result={result}")
         self._respond(200, result, cors=True)
+
+    def _handle_review_request(self):
+        db_url = os.environ.get(PRODUCTS_DB_URL_ENV)
+        if not db_url:
+            self._respond(500, {"error": "PRODUCTS_DB_DATABASE_URL not configured"}, cors=True)
+            return
+
+        content_length = int(self.headers.get("Content-Length", 0))
+        try:
+            body = json.loads(self.rfile.read(content_length) or b"{}")
+            anon_key = str(body["anonKey"])
+            text = str(body["text"])
+        except (json.JSONDecodeError, KeyError, ValueError):
+            self._respond(400, {"error": "anonKey and text are required"}, cors=True)
+            return
+
+        if len(text.strip()) < 10:
+            self._respond(400, {"error": "text must be at least 10 characters"}, cors=True)
+            return
+
+        conn = psycopg2.connect(db_url)
+        try:
+            is_new = submit_review(conn, anon_key, text)
+        finally:
+            conn.close()
+
+        if is_new:
+            review_promotion_code = os.environ.get("REVIEW_PROMOTION_CODE")
+            if review_promotion_code:
+                try:
+                    result = grant_reward(anon_key, 20, promotion_code=review_promotion_code)
+                    print(f"[review-reward] anonKey={anon_key} result={result}")
+                except Exception as e:
+                    print(f"[review-reward] failed for anonKey={anon_key}: {e}")
+
+        self._respond(200, {"received": True}, cors=True)
 
     def _respond(self, status: int, body: dict, cors: bool = False):
         payload = json.dumps(body).encode()
