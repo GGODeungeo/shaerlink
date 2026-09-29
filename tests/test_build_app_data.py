@@ -34,6 +34,36 @@ def test_merge_unique_dedupes_by_taca_item_id_keeping_first_occurrence():
     assert next(r for r in result if r["tacaItemId"] == 1)["displayName"] == "A"
 
 
+def test_dedupe_by_name_keeps_cheapest_when_names_match_exactly():
+    data = [
+        {"name": "지퍼 멀티 크로스백, 블랙, 1개", "price": 8800},
+        {"name": "지퍼 멀티 크로스백, 블랙, 1개", "price": 5880},
+        {"name": "지퍼 멀티 크로스백, 블랙, 1개", "price": 8900},
+    ]
+    result = bad.dedupe_by_name(data)
+    assert len(result) == 1
+    assert result[0]["price"] == 5880
+
+
+def test_dedupe_by_name_merges_same_words_in_different_order():
+    data = [
+        {"name": "크리스찬딘 오드퍼퓸 포 옴므, 젠틀브리즈, 50ml, 1개", "price": 14800},
+        {"name": "크리스찬딘 포 옴므 오드퍼퓸, 젠틀브리즈, 50ml, 1개", "price": 8890},
+    ]
+    result = bad.dedupe_by_name(data)
+    assert len(result) == 1
+    assert result[0]["price"] == 8890
+
+
+def test_dedupe_by_name_leaves_distinct_products_untouched():
+    data = [
+        {"name": "나폴리가든 남성 캐주얼 벨트, 브라운, 125cm, 1개", "price": 9305},
+        {"name": "나폴리가든 남성 캐주얼 벨트, 브라운+블랙, 125cm, 1개", "price": 12894},
+    ]
+    result = bad.dedupe_by_name(data)
+    assert len(result) == 2
+
+
 def test_category_name_resolves_matching_id_and_falls_back():
     product = {"categoryIds": [999, 5]}
     assert category_name(product, {5: ("식품", 1)}) == "식품"

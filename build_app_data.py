@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -162,6 +163,20 @@ def upsert_products(conn, data: list, source: str = DEFAULT_SOURCE) -> None:
     conn.commit()
 
 
+def dedupe_by_name(data: list) -> list:
+    """같은 상품을 서로 다른 판매자가 각자 다른 tacaItemId로 올려 값도
+    다르게 매겨진 채 중복 등록되는 경우가 있다 - 이름의 단어 구성이 완전히
+    같으면(순서만 바뀐 경우 포함) 같은 상품으로 보고 최저가만 남긴다.
+    단어 하나라도 다르면(색상·사이즈 등 진짜 다른 옵션) 건드리지 않는다."""
+    best: dict[tuple, dict] = {}
+    for entry in data:
+        key = tuple(sorted(re.findall(r"\w+", entry["name"])))
+        current = best.get(key)
+        if current is None or entry["price"] < current["price"]:
+            best[key] = entry
+    return list(best.values())
+
+
 def merge_with_previous(data: list, previous: list) -> list:
     """Unions a partial run's results with the prior snapshot instead of
     replacing it - used when a quota cutoff meant some categories were never
@@ -279,6 +294,8 @@ def main():
     if quota_hit and APP_DATA_PATH.exists():
         previous = json.loads(APP_DATA_PATH.read_text(encoding="utf-8"))
         data = merge_with_previous(data, previous)
+
+    data = dedupe_by_name(data)
 
     flag_all_time_lows(data, load_price_history())
     data = data[:MAX_SHIPPED_ITEMS]
