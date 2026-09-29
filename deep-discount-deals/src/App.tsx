@@ -10,6 +10,7 @@ import { usePaginatedProducts } from './usePaginatedProducts';
 import { dedupeByImage } from './dedupeByImage';
 import { dailyShuffle } from './dailyShuffle';
 import { TodaysPickEvent } from './TodaysPickEvent';
+import { AutumnDealsEvent } from './AutumnDealsEvent';
 import { PopularRanking } from './PopularRanking';
 import { BannerAd } from './BannerAd';
 import { PushOptInCard } from './PushOptInCard';
@@ -87,6 +88,7 @@ function App() {
   const [viewingEvent, setViewingEvent] = useState(false);
   const [viewingRecentlyViewed, setViewingRecentlyViewed] = useState(false);
   const [viewingRanking, setViewingRanking] = useState(false);
+  const [viewingAutumn, setViewingAutumn] = useState(false);
   const [favoriteItems, setFavoriteItems] = useState<Product[]>([]);
   const [recentItems, setRecentItems] = useState<Product[]>([]);
   const { favorites, toggleFavorite } = useFavorites();
@@ -111,6 +113,7 @@ function App() {
     setViewingEvent(false);
     setViewingRecentlyViewed(false);
     setViewingRanking(false);
+    setViewingAutumn(false);
     setVisibleCount(PAGE_SIZE);
   };
 
@@ -120,12 +123,23 @@ function App() {
     setViewingEvent(false);
     setViewingRecentlyViewed(false);
     setViewingRanking(false);
+    setViewingAutumn(false);
     setVisibleCount(PAGE_SIZE);
   };
 
   const openEvent = () => {
     setViewingEvent(true);
     setViewingFavorites(false);
+    setViewingRecentlyViewed(false);
+    setViewingRanking(false);
+    setViewingAutumn(false);
+  };
+
+  const openAutumn = () => {
+    Analytics.click({ log_name: 'autumn_event_tile_click' });
+    setViewingAutumn(true);
+    setViewingFavorites(false);
+    setViewingEvent(false);
     setViewingRecentlyViewed(false);
     setViewingRanking(false);
   };
@@ -136,6 +150,7 @@ function App() {
     setViewingFavorites(false);
     setViewingEvent(false);
     setViewingRanking(false);
+    setViewingAutumn(false);
     setVisibleCount(PAGE_SIZE);
   };
 
@@ -149,6 +164,7 @@ function App() {
     setViewingFavorites(false);
     setViewingEvent(false);
     setViewingRecentlyViewed(false);
+    setViewingAutumn(false);
     setVisibleCount(PAGE_SIZE);
   };
 
@@ -227,6 +243,9 @@ function App() {
     } else if (view === 'ranking') {
       Analytics.click({ log_name: 'deep_link_open', view });
       setViewingRanking(true);
+    } else if (view === 'autumn') {
+      Analytics.click({ log_name: 'deep_link_open', view });
+      setViewingAutumn(true);
     }
   }, []);
 
@@ -235,7 +254,12 @@ function App() {
   // 돌아오게 만든다 - 화면에 직접 그린 뒤로가기 버튼과 중복 노출되지 않도록
   // 자체 버튼은 두지 않는다.
   const isSubView =
-    selectedCategory !== null || viewingFavorites || viewingEvent || viewingRecentlyViewed || viewingRanking;
+    selectedCategory !== null ||
+    viewingFavorites ||
+    viewingEvent ||
+    viewingRecentlyViewed ||
+    viewingRanking ||
+    viewingAutumn;
   const wasSubView = useRef(false);
 
   useEffect(() => {
@@ -252,6 +276,7 @@ function App() {
       setViewingEvent(false);
       setViewingRecentlyViewed(false);
       setViewingRanking(false);
+      setViewingAutumn(false);
     };
     window.addEventListener('popstate', goHome);
     return () => window.removeEventListener('popstate', goHome);
@@ -418,6 +443,17 @@ function App() {
             );
           }
 
+          if (viewingAutumn) {
+            return (
+              <AutumnDealsEvent
+                products={homeState.products}
+                onSelect={handleSelectProduct}
+                favorites={favorites}
+                onToggleFavorite={toggleFavorite}
+              />
+            );
+          }
+
           if (viewingFavorites) {
             const favoriteProducts = favoriteItems.filter((p) => favorites.has(p.shareLink));
             const sortedFavorites = sortProducts(favoriteProducts, sort);
@@ -530,6 +566,10 @@ function App() {
                   >
                     <span className="category-grid__emoji tf">🎉</span>
                     <span className="category-grid__label">오늘의 특가 이벤트</span>
+                  </button>
+                  <button type="button" className="category-grid__item" onClick={openAutumn}>
+                    <span className="category-grid__emoji tf">🍂</span>
+                    <span className="category-grid__label">가을특가</span>
                   </button>
                 </div>
 
