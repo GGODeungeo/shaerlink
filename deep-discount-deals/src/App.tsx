@@ -10,7 +10,7 @@ import { usePaginatedProducts } from './usePaginatedProducts';
 import { dedupeByImage } from './dedupeByImage';
 import { dailyShuffle } from './dailyShuffle';
 import { TodaysPickEvent } from './TodaysPickEvent';
-import { AutumnDealsEvent } from './AutumnDealsEvent';
+import { AutumnDealsEvent, isAutumnDealsActive } from './AutumnDealsEvent';
 import { PopularRanking } from './PopularRanking';
 import { BannerAd } from './BannerAd';
 import { PushOptInCard } from './PushOptInCard';
@@ -243,7 +243,7 @@ function App() {
     } else if (view === 'ranking') {
       Analytics.click({ log_name: 'deep_link_open', view });
       setViewingRanking(true);
-    } else if (view === 'autumn') {
+    } else if (view === 'autumn' && isAutumnDealsActive()) {
       Analytics.click({ log_name: 'deep_link_open', view });
       setViewingAutumn(true);
     }
@@ -567,10 +567,12 @@ function App() {
                     <span className="category-grid__emoji tf">🎉</span>
                     <span className="category-grid__label">오늘의 특가 이벤트</span>
                   </button>
-                  <button type="button" className="category-grid__item" onClick={openAutumn}>
-                    <span className="category-grid__emoji tf">🍂</span>
-                    <span className="category-grid__label">가을특가</span>
-                  </button>
+                  {isAutumnDealsActive() && (
+                    <button type="button" className="category-grid__item" onClick={openAutumn}>
+                      <span className="category-grid__emoji tf">🍂</span>
+                      <span className="category-grid__label">가을특가</span>
+                    </button>
+                  )}
                 </div>
 
                 {groups.map((group) => (
@@ -708,6 +710,12 @@ function App() {
           <span className="tf quick-nav-pill__icon">🏠</span>
           <span className="quick-nav-pill__label">홈</span>
         </button>
+        {isAutumnDealsActive() && (
+          <button type="button" className="quick-nav-pill__item" onClick={openAutumn}>
+            <span className="tf quick-nav-pill__icon">🍂</span>
+            <span className="quick-nav-pill__label">가을</span>
+          </button>
+        )}
         <button type="button" className="quick-nav-pill__item" onClick={openRanking}>
           <span className="tf quick-nav-pill__icon">👑</span>
           <span className="quick-nav-pill__label">랭킹</span>
