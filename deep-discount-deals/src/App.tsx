@@ -482,7 +482,15 @@ function App() {
             );
           }
 
-          const groups = dailyShuffle(groupByCategory(homeState.products), 'category-order');
+          const categoriesWithProducts = groupByCategory(homeState.products);
+          const allCategories = dailyShuffle(
+            Object.keys(CATEGORY_EMOJI).map((label) => ({
+              label,
+              products: categoriesWithProducts.find((g) => g.label === label)?.products ?? [],
+            })),
+            'category-order'
+          );
+          const groups = allCategories.filter((g) => g.products.length > 0);
 
           if (selectedCategory === null) {
             const allTimeLowProducts = dailyShuffle(
@@ -530,7 +538,7 @@ function App() {
                 )}
 
                 <div className="category-grid">
-                  {groups.map((group) => (
+                  {allCategories.map((group) => (
                     <button
                       key={group.label}
                       type="button"
@@ -593,13 +601,13 @@ function App() {
             );
           }
 
-          const activeGroup = groups.find((g) => g.label === selectedCategory);
+          const activeGroup = allCategories.find((g) => g.label === selectedCategory);
 
           if (categoryState.status === 'loading') {
             return (
               <>
                 <nav className="category-tabs" aria-label="카테고리">
-                  {groups.map((group) => (
+                  {allCategories.map((group) => (
                     <button
                       key={group.label}
                       type="button"
@@ -633,7 +641,7 @@ function App() {
           return (
             <>
               <nav className="category-tabs" aria-label="카테고리">
-                {groups.map((group) => (
+                {allCategories.map((group) => (
                   <button
                     key={group.label}
                     type="button"
