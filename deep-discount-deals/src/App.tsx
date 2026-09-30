@@ -132,6 +132,7 @@ function App() {
   };
 
   const openEvent = () => {
+    Analytics.click({ log_name: 'event_grid_tile_click' });
     setViewingEvent(true);
     setViewingFavorites(false);
     setViewingRecentlyViewed(false);
@@ -545,17 +546,6 @@ function App() {
                       <span className="category-grid__label">{group.label}</span>
                     </button>
                   ))}
-                  <button
-                    type="button"
-                    className="category-grid__item"
-                    onClick={() => {
-                      Analytics.click({ log_name: 'event_grid_tile_click' });
-                      openEvent();
-                    }}
-                  >
-                    <span className="category-grid__emoji tf">🎉</span>
-                    <span className="category-grid__label">오늘의 특가 이벤트</span>
-                  </button>
                 </div>
 
                 {groups.map((group) => (
@@ -701,6 +691,10 @@ function App() {
         <button type="button" className="quick-nav-pill__item" onClick={openRanking}>
           <span className="tf quick-nav-pill__icon">👑</span>
           <span className="quick-nav-pill__label">랭킹</span>
+        </button>
+        <button type="button" className="quick-nav-pill__item" onClick={openEvent}>
+          <span className="tf quick-nav-pill__icon">🎉</span>
+          <span className="quick-nav-pill__label">이벤트</span>
         </button>
         <button
           type="button"
