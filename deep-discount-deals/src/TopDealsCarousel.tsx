@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Analytics } from '@apps-in-toss/web-framework';
 import { dedupeByImage } from './dedupeByImage';
+import { groupPackVariants } from './groupPackVariants';
 import { savingsAmount } from './savings';
 import type { Product } from './types';
 
@@ -20,10 +21,12 @@ export function TopDealsCarousel({
 
   const pool = useMemo(
     () =>
-      dedupeByImage(
-        [...products]
-          .filter((p) => p.discountRate >= POOL_MIN_DISCOUNT)
-          .sort((a, b) => b.reviewCount - a.reviewCount)
+      groupPackVariants(
+        dedupeByImage(
+          [...products]
+            .filter((p) => p.discountRate >= POOL_MIN_DISCOUNT)
+            .sort((a, b) => b.reviewCount - a.reviewCount)
+        )
       ).slice(0, POOL_SIZE),
     [products]
   );

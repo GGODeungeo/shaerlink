@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Analytics, Device, Share } from '@apps-in-toss/web-framework';
 import { Close } from './components/icons';
 import { savingsAmount } from './savings';
@@ -16,28 +17,31 @@ export function PurchaseSheet({
 }) {
   useLockBodyScroll();
 
-  const [title] = product.name.split(', ');
-  const reviews = reviewCountLabel(product.reviewCount);
+  const [active, setActive] = useState(product);
+  const options = product.variants ?? [];
+
+  const [title] = active.name.split(', ');
+  const reviews = reviewCountLabel(active.reviewCount);
 
   const handleConfirm = async () => {
     Analytics.click({
       log_name: 'purchase_cta_click',
-      product_name: product.name,
-      product_category: product.category,
-      discount_rate: product.discountRate,
-      price: product.price,
+      product_name: active.name,
+      product_category: active.category,
+      discount_rate: active.discountRate,
+      price: active.price,
     });
     onClose();
     await requestReviewOnce();
-    Device.openURL(await getTrackedPurchaseUrl(product));
+    Device.openURL(await getTrackedPurchaseUrl(active));
   };
 
   const handleShare = async () => {
     Analytics.click({
       log_name: 'share_button_click',
-      product_name: product.name,
-      product_category: product.category,
-      discount_rate: product.discountRate,
+      product_name: active.name,
+      product_category: active.category,
+      discount_rate: active.discountRate,
     });
     try {
       const link = await Share.createLink({
@@ -45,7 +49,7 @@ export function PurchaseSheet({
         ogImageUrl: 'https://static.toss.im/appsintoss/61293/06a91316-51e4-4209-892a-28b136d4436a.png',
       });
       await Share.sendMessage({
-        message: `${title} ${product.discountRate}% 특가!\n반값 이상 특가를 숨은특가에서 확인해보세요.\n${link}`,
+        message: `${title} ${active.discountRate}% 특가!\n반값 이상 특가를 숨은특가에서 확인해보세요.\n${link}`,
       });
     } catch {
       // 사용자가 공유 시트를 취소했거나 네트워크 오류 - 조용히 무시
@@ -60,15 +64,34 @@ export function PurchaseSheet({
         </button>
 
         <div className="purchase-sheet__product">
-          <img src={product.imageUrl} alt={title} className="purchase-sheet__image" />
+          <img src={active.imageUrl} alt={title} className="purchase-sheet__image" />
           <div className="purchase-sheet__info">
-            <span className="purchase-sheet__discount">{product.discountRate}% 특가</span>
-            <span className="purchase-sheet__price">{product.price.toLocaleString()}원</span>
-            <span className="purchase-sheet__savings">▼ {savingsAmount(product).toLocaleString()}원 아껴요</span>
+            <span className="purchase-sheet__discount">{active.discountRate}% 특가</span>
+            <span className="purchase-sheet__price">{active.price.toLocaleString()}원</span>
+            <span className="purchase-sheet__savings">▼ {savingsAmount(active).toLocaleString()}원 아껴요</span>
             <span className="purchase-sheet__name">{title}</span>
             {reviews && <span className="purchase-sheet__reviews">{reviews}</span>}
           </div>
         </div>
+
+        {options.length > 1 && (
+          <div className="purchase-sheet__variants">
+            {options
+              .slice()
+              .sort((a, b) => a.price - b.price)
+              .map((option) => (
+                <button
+                  key={option.shareLink}
+                  type="button"
+                  className="purchase-sheet__variant"
+                  data-active={option.shareLink === active.shareLink}
+                  onClick={() => setActive(option)}
+                >
+                  {option.name.split(', ').pop()} · {option.price.toLocaleString()}원
+                </button>
+              ))}
+          </div>
+        )}
 
         <button type="button" className="purchase-sheet__cta" onClick={handleConfirm}>
           토스쇼핑에서 구매하기

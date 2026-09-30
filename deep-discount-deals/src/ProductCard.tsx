@@ -123,6 +123,9 @@ export function ProductCard({
       {reviews && <div className="product-card__reviews">{reviews}</div>}
       <div className="product-card__title">{title}</div>
       {specs.length > 0 && <div className="product-card__specs">{specs.join(' · ')}</div>}
+      {product.variants && product.variants.length > 1 && (
+        <div className="product-card__variant-count">외 {product.variants.length - 1}개 옵션</div>
+      )}
     </div>
   );
 }

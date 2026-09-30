@@ -1,27 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Analytics, Notification } from '@apps-in-toss/web-framework';
-import { ChevronRight } from './components/icons';
+import { useLockBodyScroll } from './useLockBodyScroll';
 import { getAnonKey } from './trackedLink';
 
 const TEMPLATE_CODE = 'hidden-deals-DAILY_DEAL_PUSH';
-const STORAGE_KEY = 'hidden-deals:push-agreement-status';
+const STORAGE_KEY = 'hidden-deals:push-agreement-asked';
 const PUSH_REWARD_URL = 'https://shaerlink.vercel.app/api/push-reward';
+const OPEN_DELAY_MS = 1200;
 
-type Status = 'asked' | null;
-
-function readStatus(): Status {
+function alreadyAsked(): boolean {
   try {
-    return localStorage.getItem(STORAGE_KEY) === 'asked' ? 'asked' : null;
+    return localStorage.getItem(STORAGE_KEY) === '1';
   } catch {
-    return null;
+    return false;
   }
 }
 
-function writeStatus() {
+function markAsked() {
   try {
-    localStorage.setItem(STORAGE_KEY, 'asked');
+    localStorage.setItem(STORAGE_KEY, '1');
   } catch {
-    // 저장 공간이 없거나 접근이 막힌 환경 - 이번 세션에는 다시 물어봐도 무해함
+    // 저장 공간이 없거나 접근이 막힌 환경 - 다음에 다시 물어봐도 무해함
   }
 }
 
@@ -41,38 +40,55 @@ async function grantPushReward() {
   }
 }
 
-export function PushOptInCard() {
-  const [status, setStatus] = useState<Status>(readStatus);
+/** Asks once, shortly after the app opens, whether to receive deal push
+ * notifications - a small confirm dialog instead of a persistent home-screen
+ * card. Whatever the user picks, it's marked asked and never shown again. */
+export function PushOptInPrompt() {
+  const [open, setOpen] = useState(false);
 
-  if (status === 'asked') return null;
-  if (!Notification.requestAgreement.isSupported()) return null;
+  useEffect(() => {
+    if (alreadyAsked() || !Notification.requestAgreement.isSupported()) return;
+    const timer = setTimeout(() => setOpen(true), OPEN_DELAY_MS);
+    return () => clearTimeout(timer);
+  }, []);
 
-  const handleClick = () => {
-    Analytics.click({ log_name: 'push_opt_in_card_click' });
+  useLockBodyScroll();
+
+  if (!open) return null;
+
+  const close = () => {
+    markAsked();
+    setOpen(false);
+  };
+
+  const handleAgree = () => {
+    Analytics.click({ log_name: 'push_opt_in_prompt_click' });
     Notification.requestAgreement({
       options: { templateCode: TEMPLATE_CODE },
       onEvent: ({ type }) => {
         Analytics.click({ log_name: 'push_opt_in_result', result: type });
         if (type === 'newAgreement') grantPushReward();
-        writeStatus();
-        setStatus('asked');
+        close();
       },
-      onError: () => {
-        // 사용자가 동의 화면 자체를 닫았거나 일시적 오류 - 다음에 다시 물어봄
-      },
+      onError: close,
     });
   };
 
   return (
-    <button type="button" className="push-opt-in-card" onClick={handleClick}>
-      <span className="push-opt-in-card__emoji tf">🔔</span>
-      <span className="push-opt-in-card__text">
-        <span className="push-opt-in-card__title">특가 알림 받기</span>
-        <span className="push-opt-in-card__subtitle">매일 저녁 7시, 반값 이상 특가를 가장 먼저 알려드려요</span>
-      </span>
-      <span className="push-opt-in-card__chevron">
-        <ChevronRight size={18} />
-      </span>
-    </button>
+    <div className="push-opt-in-backdrop">
+      <div className="push-opt-in-dialog">
+        <span className="push-opt-in-dialog__emoji tf">🔔</span>
+        <span className="push-opt-in-dialog__title">특가 알림 받으시겠습니까?</span>
+        <span className="push-opt-in-dialog__subtitle">매일 저녁 7시, 반값 이상 특가를 가장 먼저 알려드려요</span>
+        <div className="push-opt-in-dialog__actions">
+          <button type="button" className="push-opt-in-dialog__decline" onClick={close}>
+            다음에요
+          </button>
+          <button type="button" className="push-opt-in-dialog__accept" onClick={handleAgree}>
+            받을게요
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

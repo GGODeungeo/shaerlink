@@ -3,17 +3,20 @@ import { Analytics } from '@apps-in-toss/web-framework';
 import { ProductCard } from './ProductCard';
 import { TopDealsCarousel } from './TopDealsCarousel';
 import { PurchaseSheet } from './PurchaseSheet';
+import { InfiniteScrollTrigger } from './InfiniteScrollTrigger';
 import { Bag, Heart, Search } from './components/icons';
 import { useFavorites } from './useFavorites';
 import { useRecentlyViewed } from './useRecentlyViewed';
 import { usePaginatedProducts } from './usePaginatedProducts';
 import { dedupeByImage } from './dedupeByImage';
+import { groupPackVariants } from './groupPackVariants';
 import { dailyShuffle } from './dailyShuffle';
 import { TodaysPickEvent } from './TodaysPickEvent';
 import { AutumnDealsEvent, isAutumnDealsActive } from './AutumnDealsEvent';
 import { PopularRanking } from './PopularRanking';
 import { BannerAd } from './BannerAd';
-import { PushOptInCard } from './PushOptInCard';
+import { PushOptInPrompt } from './PushOptInCard';
+import { useShowOnce } from './useShowOnce';
 import type { Product, SortKey } from './types';
 import './App.css';
 
@@ -98,6 +101,7 @@ function App() {
     return () => clearTimeout(timer);
   }, [search]);
 
+  const showPaybackBanner = useShowOnce('hidden-deals:payback-banner-seen');
   const isSearching = debouncedSearch.length > 0;
   const categoryState = usePaginatedProducts({ category: selectedCategory ?? undefined, sort });
   const searchState = usePaginatedProducts({ search: isSearching ? debouncedSearch : undefined, sort });
@@ -351,7 +355,7 @@ function App() {
               <>
                 {sortRow}
                 <div className="product-grid">
-                  {searchState.items.map((product) => (
+                  {groupPackVariants(searchState.items).map((product) => (
                     <ProductCard
                       key={product.shareLink}
                       product={product}
@@ -361,11 +365,7 @@ function App() {
                     />
                   ))}
                 </div>
-                {searchState.hasMore && (
-                  <button type="button" className="load-more-button" onClick={searchState.loadMore}>
-                    더보기
-                  </button>
-                )}
+                {searchState.hasMore && <InfiniteScrollTrigger onIntersect={searchState.loadMore} />}
               </>
             );
           }
@@ -383,7 +383,7 @@ function App() {
 
           if (viewingRecentlyViewed) {
             const recentProducts = recentItems.filter((p) => recentIds.includes(p.shareLink));
-            const sortedRecent = sortProducts(recentProducts, sort);
+            const sortedRecent = groupPackVariants(sortProducts(recentProducts, sort));
             const visibleRecent = sortedRecent.slice(0, visibleCount);
             return (
               <>
@@ -420,13 +420,7 @@ function App() {
                       ))}
                     </div>
                     {visibleRecent.length < sortedRecent.length && (
-                      <button
-                        type="button"
-                        className="load-more-button"
-                        onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
-                      >
-                        더보기
-                      </button>
+                      <InfiniteScrollTrigger onIntersect={() => setVisibleCount((count) => count + PAGE_SIZE)} />
                     )}
                   </>
                 )}
@@ -456,7 +450,7 @@ function App() {
 
           if (viewingFavorites) {
             const favoriteProducts = favoriteItems.filter((p) => favorites.has(p.shareLink));
-            const sortedFavorites = sortProducts(favoriteProducts, sort);
+            const sortedFavorites = groupPackVariants(sortProducts(favoriteProducts, sort));
             const visibleFavorites = sortedFavorites.slice(0, visibleCount);
             return (
               <>
@@ -477,13 +471,7 @@ function App() {
                       ))}
                     </div>
                     {visibleFavorites.length < sortedFavorites.length && (
-                      <button
-                        type="button"
-                        className="load-more-button"
-                        onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
-                      >
-                        더보기
-                      </button>
+                      <InfiniteScrollTrigger onIntersect={() => setVisibleCount((count) => count + PAGE_SIZE)} />
                     )}
                   </>
                 )}
@@ -495,10 +483,9 @@ function App() {
 
           if (selectedCategory === null) {
             const allTimeLowProducts = dailyShuffle(
-              dedupeByImage(sortProducts(homeState.products.filter((p) => p.isAllTimeLow), 'recommend')).slice(
-                0,
-                SHELF_POOL_SIZE
-              ),
+              groupPackVariants(
+                dedupeByImage(sortProducts(homeState.products.filter((p) => p.isAllTimeLow), 'recommend'))
+              ).slice(0, SHELF_POOL_SIZE),
               'all-time-low'
             ).slice(0, SHELF_SIZE);
 
@@ -508,15 +495,15 @@ function App() {
 
                 <p className="daily-update-notice">매일 아침 10시, 더 많은 특가가 추가돼요</p>
 
-                <PushOptInCard />
-
-                <div className="payback-banner">
-                  <span className="payback-banner__emoji tf">💸</span>
-                  <span className="payback-banner__text">
-                    <span className="payback-banner__title">실 결제 5,000원 이상 구매하고 500원 페이백</span>
-                    <span className="payback-banner__subtitle">지금 진행 중인 프로모션이에요, 페이백 받으세요</span>
-                  </span>
-                </div>
+                {showPaybackBanner && (
+                  <div className="payback-banner">
+                    <span className="payback-banner__emoji tf">💸</span>
+                    <span className="payback-banner__text">
+                      <span className="payback-banner__title">실 결제 5,000원 이상 구매하고 500원 페이백</span>
+                      <span className="payback-banner__subtitle">지금 진행 중인 프로모션이에요, 페이백 받으세요</span>
+                    </span>
+                  </div>
+                )}
 
                 {allTimeLowProducts.length > 0 && (
                   <div className="category-shelf">
@@ -567,12 +554,6 @@ function App() {
                     <span className="category-grid__emoji tf">🎉</span>
                     <span className="category-grid__label">오늘의 특가 이벤트</span>
                   </button>
-                  {isAutumnDealsActive() && (
-                    <button type="button" className="category-grid__item" onClick={openAutumn}>
-                      <span className="category-grid__emoji tf">🍂</span>
-                      <span className="category-grid__label">가을특가</span>
-                    </button>
-                  )}
                 </div>
 
                 {groups.map((group) => (
@@ -595,7 +576,10 @@ function App() {
                     </div>
                     <div className="category-shelf__list">
                       {dailyShuffle(
-                        dedupeByImage(sortProducts(group.products, 'recommend')).slice(0, SHELF_POOL_SIZE),
+                        groupPackVariants(dedupeByImage(sortProducts(group.products, 'recommend'))).slice(
+                          0,
+                          SHELF_POOL_SIZE
+                        ),
                         `shelf-${group.label}`
                       )
                         .slice(0, SHELF_SIZE)
@@ -679,7 +663,7 @@ function App() {
               {sortRow}
 
               <div className="product-grid">
-                {categoryState.items.map((product) => (
+                {groupPackVariants(categoryState.items).map((product) => (
                   <ProductCard
                     key={product.shareLink}
                     product={product}
@@ -689,11 +673,7 @@ function App() {
                   />
                 ))}
               </div>
-              {categoryState.hasMore && (
-                <button type="button" className="load-more-button" onClick={categoryState.loadMore}>
-                  더보기
-                </button>
-              )}
+              {categoryState.hasMore && <InfiniteScrollTrigger onIntersect={categoryState.loadMore} />}
             </>
           );
         })()}
@@ -741,6 +721,8 @@ function App() {
       {selectedProduct && (
         <PurchaseSheet product={selectedProduct} onClose={() => setSelectedProduct(null)} />
       )}
+
+      <PushOptInPrompt />
     </div>
   );
 }

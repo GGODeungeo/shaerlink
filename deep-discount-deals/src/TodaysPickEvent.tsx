@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ProductCard } from './ProductCard';
 import { dedupeByImage } from './dedupeByImage';
+import { groupPackVariants } from './groupPackVariants';
 import type { Product } from './types';
 
 const EVENT_HOUR = 9;
@@ -40,8 +41,8 @@ export function TodaysPickEvent({
     return () => clearInterval(timer);
   }, [unlocked]);
 
-  const eventProducts = dedupeByImage(
-    [...products].sort((a, b) => b.reviewCount - a.reviewCount)
+  const eventProducts = groupPackVariants(
+    dedupeByImage([...products].sort((a, b) => b.reviewCount - a.reviewCount))
   ).slice(0, EVENT_SIZE);
 
   return (

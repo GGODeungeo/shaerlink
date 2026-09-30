@@ -1,4 +1,5 @@
 import { dedupeByImage } from './dedupeByImage';
+import { groupPackVariants } from './groupPackVariants';
 import { pickReason } from './pickReason';
 import { reviewCountLabel } from './reviewCount';
 import { savingsAmount } from './savings';
@@ -13,8 +14,8 @@ export function PopularRanking({
   products: Product[];
   onSelect: (product: Product) => void;
 }) {
-  const ranked = dedupeByImage(
-    [...products].sort((a, b) => b.reviewCount - a.reviewCount)
+  const ranked = groupPackVariants(
+    dedupeByImage([...products].sort((a, b) => b.reviewCount - a.reviewCount))
   ).slice(0, RANKING_SIZE);
 
   return (
@@ -46,6 +47,9 @@ export function PopularRanking({
                     <span className="reason-card__price">{product.price.toLocaleString()}원</span>
                     <span className="reason-card__savings">▼ {savingsAmount(product).toLocaleString()}원 절약</span>
                     {reviews && <span className="reason-card__reviews">{reviews}</span>}
+                    {product.variants && product.variants.length > 1 && (
+                      <span className="reason-card__variant-count">외 {product.variants.length - 1}개 옵션</span>
+                    )}
                   </div>
                 </div>
               </button>
