@@ -5,12 +5,13 @@ import { useEffect } from 'react';
  * 화면이 같이 움직여 보이는 문제를 막는다 - 열려있는 동안 body 스크롤을
  * 잠그고, 닫히면 원래 값으로 복원한다.
  */
-export function useLockBodyScroll() {
+export function useLockBodyScroll(enabled = true) {
   useEffect(() => {
+    if (!enabled) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = previousOverflow;
     };
-  }, []);
+  }, [enabled]);
 }

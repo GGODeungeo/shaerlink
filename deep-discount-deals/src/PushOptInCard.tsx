@@ -52,7 +52,7 @@ export function PushOptInPrompt() {
     return () => clearTimeout(timer);
   }, []);
 
-  useLockBodyScroll();
+  useLockBodyScroll(open);
 
   if (!open) return null;
 
