@@ -294,21 +294,23 @@ function App() {
   return (
     <div className="canvas bg-canvas">
       <div className="page-container">
-        <header className="page-header">
-          <div className="page-header__row">
-            <h1>반값 이상 특가</h1>
-          </div>
-          <div className="search-bar">
-            <Search size={18} />
-            <input
-              type="text"
-              className="search-bar__input"
-              placeholder="상품명으로 검색"
-              value={search}
-              onChange={(e) => { setSearch(e.target.value); setVisibleCount(PAGE_SIZE); }}
-            />
-          </div>
-        </header>
+        {!viewingAutumn && !viewingRanking && (
+          <header className="page-header">
+            <div className="page-header__row">
+              <h1>반값 이상 특가</h1>
+            </div>
+            <div className="search-bar">
+              <Search size={18} />
+              <input
+                type="text"
+                className="search-bar__input"
+                placeholder="상품명으로 검색"
+                value={search}
+                onChange={(e) => { setSearch(e.target.value); setVisibleCount(PAGE_SIZE); }}
+              />
+            </div>
+          </header>
+        )}
 
         {homeState.status === 'loading' && <p className="state-message">불러오는 중...</p>}
 
