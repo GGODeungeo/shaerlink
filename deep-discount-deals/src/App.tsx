@@ -11,7 +11,6 @@ import { usePaginatedProducts } from './usePaginatedProducts';
 import { dedupeByImage } from './dedupeByImage';
 import { groupProductVariants } from './groupProductVariants';
 import { dailyShuffle } from './dailyShuffle';
-import { TodaysPickEvent } from './TodaysPickEvent';
 import { AutumnDealsEvent, isAutumnDealsActive } from './AutumnDealsEvent';
 import { PopularRanking } from './PopularRanking';
 import { BannerAd } from './BannerAd';
@@ -88,7 +87,6 @@ function App() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [viewingFavorites, setViewingFavorites] = useState(false);
-  const [viewingEvent, setViewingEvent] = useState(false);
   const [viewingRecentlyViewed, setViewingRecentlyViewed] = useState(false);
   const [viewingRanking, setViewingRanking] = useState(false);
   const [viewingAutumn, setViewingAutumn] = useState(false);
@@ -114,7 +112,6 @@ function App() {
   const selectCategory = (label: string) => {
     setSelectedCategory(label);
     setViewingFavorites(false);
-    setViewingEvent(false);
     setViewingRecentlyViewed(false);
     setViewingRanking(false);
     setViewingAutumn(false);
@@ -124,27 +121,16 @@ function App() {
   const openFavorites = () => {
     Analytics.click({ log_name: 'favorites_nav_click', favorite_count: favorites.size });
     setViewingFavorites(true);
-    setViewingEvent(false);
     setViewingRecentlyViewed(false);
     setViewingRanking(false);
     setViewingAutumn(false);
     setVisibleCount(PAGE_SIZE);
   };
 
-  const openEvent = () => {
-    Analytics.click({ log_name: 'event_grid_tile_click' });
-    setViewingEvent(true);
-    setViewingFavorites(false);
-    setViewingRecentlyViewed(false);
-    setViewingRanking(false);
-    setViewingAutumn(false);
-  };
-
   const openAutumn = () => {
     Analytics.click({ log_name: 'autumn_event_tile_click' });
     setViewingAutumn(true);
     setViewingFavorites(false);
-    setViewingEvent(false);
     setViewingRecentlyViewed(false);
     setViewingRanking(false);
   };
@@ -153,7 +139,6 @@ function App() {
     Analytics.click({ log_name: 'recently_viewed_nav_click', item_count: recentIds.length });
     setViewingRecentlyViewed(true);
     setViewingFavorites(false);
-    setViewingEvent(false);
     setViewingRanking(false);
     setViewingAutumn(false);
     setVisibleCount(PAGE_SIZE);
@@ -167,7 +152,6 @@ function App() {
     Analytics.click({ log_name: 'ranking_teaser_click' });
     setViewingRanking(true);
     setViewingFavorites(false);
-    setViewingEvent(false);
     setViewingRecentlyViewed(false);
     setViewingAutumn(false);
     setVisibleCount(PAGE_SIZE);
@@ -239,9 +223,6 @@ function App() {
     if (view === 'favorites') {
       Analytics.click({ log_name: 'deep_link_open', view });
       setViewingFavorites(true);
-    } else if (view === 'event') {
-      Analytics.click({ log_name: 'deep_link_open', view });
-      setViewingEvent(true);
     } else if (view === 'recent') {
       Analytics.click({ log_name: 'deep_link_open', view });
       setViewingRecentlyViewed(true);
@@ -254,14 +235,13 @@ function App() {
     }
   }, []);
 
-  // 서브뷰(카테고리 상세/찜/이벤트/최근본)에 들어갈 때 history entry를 하나
+  // 서브뷰(카테고리 상세/찜/최근본)에 들어갈 때 history entry를 하나
   // 쌓아서, 플랫폼 자체 상단 뒤로가기 버튼 및 스와이프 제스처가 홈으로
   // 돌아오게 만든다 - 화면에 직접 그린 뒤로가기 버튼과 중복 노출되지 않도록
   // 자체 버튼은 두지 않는다.
   const isSubView =
     selectedCategory !== null ||
     viewingFavorites ||
-    viewingEvent ||
     viewingRecentlyViewed ||
     viewingRanking ||
     viewingAutumn;
@@ -278,7 +258,6 @@ function App() {
     const goHome = () => {
       setSelectedCategory(null);
       setViewingFavorites(false);
-      setViewingEvent(false);
       setViewingRecentlyViewed(false);
       setViewingRanking(false);
       setViewingAutumn(false);
@@ -370,17 +349,6 @@ function App() {
                 </div>
                 {searchState.hasMore && <InfiniteScrollTrigger onIntersect={searchState.loadMore} />}
               </>
-            );
-          }
-
-          if (viewingEvent) {
-            return (
-              <TodaysPickEvent
-                products={homeState.products}
-                onSelect={handleSelectProduct}
-                favorites={favorites}
-                onToggleFavorite={toggleFavorite}
-              />
             );
           }
 
@@ -699,10 +667,6 @@ function App() {
         <button type="button" className="quick-nav-pill__item" onClick={openRanking}>
           <span className="tf quick-nav-pill__icon">👑</span>
           <span className="quick-nav-pill__label">랭킹</span>
-        </button>
-        <button type="button" className="quick-nav-pill__item" onClick={openEvent}>
-          <span className="tf quick-nav-pill__icon">🎉</span>
-          <span className="quick-nav-pill__label">이벤트</span>
         </button>
         <button
           type="button"

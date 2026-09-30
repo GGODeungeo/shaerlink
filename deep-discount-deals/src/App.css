@@ -541,27 +541,6 @@
   word-break: keep-all;
 }
 
-.event-page__locked {
-  margin: var(--space-6) var(--space-3) 0;
-  padding: var(--space-6) 0;
-  border-radius: 16px;
-  background: var(--color-bg-canvas);
-  text-align: center;
-}
-
-.event-page__countdown {
-  margin: 0;
-  font-size: var(--font-size-title);
-  font-weight: var(--font-weight-title);
-  color: var(--color-text-strong);
-}
-
-.event-page__locked-hint {
-  margin: var(--space-1) 0 0;
-  font-size: var(--font-size-body-small);
-  color: var(--color-text-subtle);
-}
-
 .reason-list {
   display: flex;
   flex-direction: column;
