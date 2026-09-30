@@ -87,7 +87,7 @@ export function PurchaseSheet({
                   data-active={option.shareLink === active.shareLink}
                   onClick={() => setActive(option)}
                 >
-                  {option.name.split(', ').pop()} · {option.price.toLocaleString()}원
+                  {option.name.split(', ').slice(1).join(', ')} · {option.price.toLocaleString()}원
                 </button>
               ))}
           </div>

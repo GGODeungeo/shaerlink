@@ -1,6 +1,6 @@
 import { ProductCard } from './ProductCard';
 import { dedupeByImage } from './dedupeByImage';
-import { groupPackVariants } from './groupPackVariants';
+import { groupProductVariants } from './groupProductVariants';
 import type { Product } from './types';
 
 const AUTUMN_CATEGORIES = ['패션의류잡화', '식품'];
@@ -19,7 +19,7 @@ export function AutumnDealsEvent({
   favorites: Set<string>;
   onToggleFavorite: (shareLink: string) => void;
 }) {
-  const autumnProducts = groupPackVariants(
+  const autumnProducts = groupProductVariants(
     dedupeByImage(
       products
         .filter((p) => AUTUMN_CATEGORIES.includes(p.category))

@@ -9,7 +9,7 @@ import { useFavorites } from './useFavorites';
 import { useRecentlyViewed } from './useRecentlyViewed';
 import { usePaginatedProducts } from './usePaginatedProducts';
 import { dedupeByImage } from './dedupeByImage';
-import { groupPackVariants } from './groupPackVariants';
+import { groupProductVariants } from './groupProductVariants';
 import { dailyShuffle } from './dailyShuffle';
 import { TodaysPickEvent } from './TodaysPickEvent';
 import { AutumnDealsEvent, isAutumnDealsActive } from './AutumnDealsEvent';
@@ -355,7 +355,7 @@ function App() {
               <>
                 {sortRow}
                 <div className="product-grid">
-                  {groupPackVariants(searchState.items).map((product) => (
+                  {groupProductVariants(searchState.items).map((product) => (
                     <ProductCard
                       key={product.shareLink}
                       product={product}
@@ -383,7 +383,7 @@ function App() {
 
           if (viewingRecentlyViewed) {
             const recentProducts = recentItems.filter((p) => recentIds.includes(p.shareLink));
-            const sortedRecent = groupPackVariants(sortProducts(recentProducts, sort));
+            const sortedRecent = groupProductVariants(sortProducts(recentProducts, sort));
             const visibleRecent = sortedRecent.slice(0, visibleCount);
             return (
               <>
@@ -450,7 +450,7 @@ function App() {
 
           if (viewingFavorites) {
             const favoriteProducts = favoriteItems.filter((p) => favorites.has(p.shareLink));
-            const sortedFavorites = groupPackVariants(sortProducts(favoriteProducts, sort));
+            const sortedFavorites = groupProductVariants(sortProducts(favoriteProducts, sort));
             const visibleFavorites = sortedFavorites.slice(0, visibleCount);
             return (
               <>
@@ -483,7 +483,7 @@ function App() {
 
           if (selectedCategory === null) {
             const allTimeLowProducts = dailyShuffle(
-              groupPackVariants(
+              groupProductVariants(
                 dedupeByImage(sortProducts(homeState.products.filter((p) => p.isAllTimeLow), 'recommend'))
               ).slice(0, SHELF_POOL_SIZE),
               'all-time-low'
@@ -576,7 +576,7 @@ function App() {
                     </div>
                     <div className="category-shelf__list">
                       {dailyShuffle(
-                        groupPackVariants(dedupeByImage(sortProducts(group.products, 'recommend'))).slice(
+                        groupProductVariants(dedupeByImage(sortProducts(group.products, 'recommend'))).slice(
                           0,
                           SHELF_POOL_SIZE
                         ),
@@ -663,7 +663,7 @@ function App() {
               {sortRow}
 
               <div className="product-grid">
-                {groupPackVariants(categoryState.items).map((product) => (
+                {groupProductVariants(categoryState.items).map((product) => (
                   <ProductCard
                     key={product.shareLink}
                     product={product}

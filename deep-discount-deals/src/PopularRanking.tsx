@@ -1,5 +1,5 @@
 import { dedupeByImage } from './dedupeByImage';
-import { groupPackVariants } from './groupPackVariants';
+import { groupProductVariants } from './groupProductVariants';
 import { pickReason } from './pickReason';
 import { reviewCountLabel } from './reviewCount';
 import { savingsAmount } from './savings';
@@ -14,7 +14,7 @@ export function PopularRanking({
   products: Product[];
   onSelect: (product: Product) => void;
 }) {
-  const ranked = groupPackVariants(
+  const ranked = groupProductVariants(
     dedupeByImage([...products].sort((a, b) => b.reviewCount - a.reviewCount))
   ).slice(0, RANKING_SIZE);
 

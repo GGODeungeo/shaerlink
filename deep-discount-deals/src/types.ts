@@ -9,7 +9,7 @@ export type Product = {
   dealEndsAt?: string;
   isAllTimeLow?: boolean;
   tacaItemId?: number;
-  /** 같은 상품의 박스/개수만 다른 다른 리스팅들 - groupPackVariants가 붙인다. */
+  /** 같은 상품의 색상/용량/수량만 다른 리스팅들 - groupProductVariants가 붙인다. */
   variants?: Product[];
 };
 
