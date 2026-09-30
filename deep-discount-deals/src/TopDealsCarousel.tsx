@@ -107,7 +107,6 @@ export function TopDealsCarousel({
         onTouchEnd={handleTouchEnd}
       >
         <div className="carousel__image-wrap">
-          <img src={product.imageUrl} alt="" className="carousel__image-backdrop" aria-hidden="true" />
           <img
             src={product.imageUrl}
             alt={title}
@@ -121,13 +120,15 @@ export function TopDealsCarousel({
           <div className="carousel__overlay">
             <span className="carousel__discount">{product.discountRate}% 특가</span>
             <span className="carousel__name">{title}</span>
-            <span className="carousel__price">
-              {product.price.toLocaleString()}원
-              <span className="carousel__savings"> · {savingsAmount(product).toLocaleString()}원 아껴요</span>
-            </span>
+            <span className="carousel__price">{product.price.toLocaleString()}원</span>
+            <span className="carousel__savings">▼ {savingsAmount(product).toLocaleString()}원 아껴요</span>
           </div>
           {topDeals.length > 1 && (
-            <span className="carousel__counter">{index + 1} | {topDeals.length}</span>
+            <div className="carousel__dots" role="tablist" aria-label="다른 특가 보기">
+              {topDeals.map((deal, i) => (
+                <span key={deal.shareLink} className="carousel__dot" data-active={i === index} />
+              ))}
+            </div>
           )}
         </div>
       </button>
