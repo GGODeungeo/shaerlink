@@ -15,7 +15,6 @@ import { AutumnDealsEvent, isAutumnDealsActive } from './AutumnDealsEvent';
 import { PopularRanking } from './PopularRanking';
 import { BannerAd } from './BannerAd';
 import { PushOptInPrompt } from './PushOptInCard';
-import { useShowOnce } from './useShowOnce';
 import type { Product, SortKey } from './types';
 import './App.css';
 
@@ -99,7 +98,6 @@ function App() {
     return () => clearTimeout(timer);
   }, [search]);
 
-  const showPaybackBanner = useShowOnce('hidden-deals:payback-banner-seen');
   const isSearching = debouncedSearch.length > 0;
   const categoryState = usePaginatedProducts({ category: selectedCategory ?? undefined, sort });
   const searchState = usePaginatedProducts({ search: isSearching ? debouncedSearch : undefined, sort });
@@ -473,16 +471,6 @@ function App() {
                 <TopDealsCarousel products={homeState.products} onSelect={handleSelectProduct} />
 
                 <p className="daily-update-notice">매일 아침 10시, 더 많은 특가가 추가돼요</p>
-
-                {showPaybackBanner && (
-                  <div className="payback-banner">
-                    <span className="payback-banner__emoji tf">💸</span>
-                    <span className="payback-banner__text">
-                      <span className="payback-banner__title">실 결제 5,000원 이상 구매하고 500원 페이백</span>
-                      <span className="payback-banner__subtitle">지금 진행 중인 프로모션이에요, 페이백 받으세요</span>
-                    </span>
-                  </div>
-                )}
 
                 {allTimeLowProducts.length > 0 && (
                   <div className="category-shelf">
