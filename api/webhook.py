@@ -468,7 +468,10 @@ class handler(BaseHTTPRequestHandler):
             conn.close()
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
-        self.send_header("Cache-Control", "public, max-age=300")
+        # fetch_trending_keywords.py가 수동/비정기로 돌아가는 데이터라, home의
+        # 자동 파이프라인용 300s 캐시를 그대로 쓰면 수동 갱신 직후에도 한동안
+        # 옛 스냅샷(빈 배열 포함)이 떠 있어 디버깅에 혼선을 준다 - 짧게 잡는다.
+        self.send_header("Cache-Control", "public, max-age=60")
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         self.wfile.write(json.dumps(items).encode())
