@@ -6,7 +6,7 @@ import { getAnonKey } from './trackedLink';
 const TEMPLATE_CODE = 'hidden-deals-DAILY_DEAL_PUSH';
 const STORAGE_KEY = 'hidden-deals:push-agreement-asked';
 const PUSH_REWARD_URL = 'https://shaerlink.vercel.app/api/push-reward';
-const OPEN_DELAY_MS = 1200;
+const OPEN_DELAY_MS = 800;
 
 function alreadyAsked(): boolean {
   try {
@@ -40,16 +40,28 @@ async function grantPushReward() {
   }
 }
 
-/** Asks once, shortly after the app opens, whether to receive deal push
- * notifications - a small confirm dialog instead of a persistent home-screen
- * card. Whatever the user picks, it's marked asked and never shown again. */
+/** Asks once, shortly after the user starts browsing, whether to receive deal
+ * push notifications - a small confirm dialog instead of a persistent
+ * home-screen card. Whatever the user picks, it's marked asked and never
+ * shown again.
+ *
+ * Gated on the first scroll rather than a timer from mount: review rejected
+ * an earlier version for popping up immediately on entry, before the user
+ * had done anything. */
 export function PushOptInPrompt() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (alreadyAsked() || !Notification.requestAgreement.isSupported()) return;
-    const timer = setTimeout(() => setOpen(true), OPEN_DELAY_MS);
-    return () => clearTimeout(timer);
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const onFirstScroll = () => {
+      timer = setTimeout(() => setOpen(true), OPEN_DELAY_MS);
+    };
+    window.addEventListener('scroll', onFirstScroll, { once: true, passive: true });
+    return () => {
+      window.removeEventListener('scroll', onFirstScroll);
+      if (timer) clearTimeout(timer);
+    };
   }, []);
 
   useLockBodyScroll(open);
