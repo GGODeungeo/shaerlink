@@ -22,6 +22,7 @@ from webhook import (
     fetch_home_products,
     fetch_products_by_ids,
     fetch_products_page,
+    fetch_trending_keywords,
     grant_click_reward,
     grant_reward,
     is_reward_eligible,
@@ -370,6 +371,37 @@ def test_fetch_products_by_ids_maps_rows_to_dicts():
 def test_fetch_products_by_ids_returns_empty_list_without_querying_when_no_ids():
     result = fetch_products_by_ids(None, [])  # conn=None이어도 에러 없어야 함 - 쿼리 자체를 안 함
     assert result == []
+
+
+def test_fetch_trending_keywords_joins_keyword_fields_onto_the_product():
+    columns = [
+        "keyword", "search_change_percent", "source", "source_item_id", "share_link",
+        "name", "price", "discount_rate", "image_url", "category", "review_count",
+        "is_all_time_low", "deal_ends_at", "updated_at",
+    ]
+    row = (
+        "애슐리볶음밥", 470.0, "test", "tk-1", "https://toss.im/x", "상품", 1000, 60,
+        "https://img", "식품", 7, False, None, None,
+    )
+    conn = _FakeConn(rows=[row], columns=columns)
+
+    result = fetch_trending_keywords(conn)
+
+    assert result == [{
+        "keyword": "애슐리볶음밥",
+        "searchChangePercent": 470.0,
+        "product": {
+            "tacaItemId": "tk-1",
+            "shareLink": "https://toss.im/x",
+            "name": "상품",
+            "price": 1000,
+            "discountRate": 60,
+            "imageUrl": "https://img",
+            "category": "식품",
+            "reviewCount": 7,
+            "isAllTimeLow": False,
+        },
+    }]
 
 
 @pytest.fixture

@@ -13,6 +13,7 @@ import { groupProductVariants } from './groupProductVariants';
 import { dailyShuffle } from './dailyShuffle';
 import { AutumnDealsEvent, isAutumnDealsActive } from './AutumnDealsEvent';
 import { PopularRanking } from './PopularRanking';
+import { TrendingKeywords } from './TrendingKeywords';
 import { BannerAd } from './BannerAd';
 import { PushOptInPrompt } from './PushOptInCard';
 import type { Product, SortKey } from './types';
@@ -471,6 +472,8 @@ function App() {
                 <TopDealsCarousel products={homeState.products} onSelect={handleSelectProduct} />
 
                 <p className="daily-update-notice">매일 아침 10시, 더 많은 특가가 추가돼요</p>
+
+                <TrendingKeywords onSelect={handleSelectProduct} />
 
                 {allTimeLowProducts.length > 0 && (
                   <div className="category-shelf">

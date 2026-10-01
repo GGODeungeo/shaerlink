@@ -302,6 +302,35 @@ def fetch_products_by_ids(conn, share_links: list) -> list:
     return [_row_to_product(row, columns) for row in rows]
 
 
+def fetch_trending_keywords(conn, limit: int = 10) -> list:
+    """trending_keywords를 products와 조인해서 랭크순으로 반환한다.
+    fetch_trending_keywords.py가 채워 넣은 테이블이 비어 있으면(매칭된
+    키워드가 하나도 없었던 경우) 빈 리스트를 반환 - 홈 화면이 섹션을 숨긴다."""
+    sql = """
+        select tk.keyword, tk.search_change_percent, p.*
+        from trending_keywords tk
+        join products p using (share_link)
+        order by tk.rank
+        limit %s
+    """
+    with conn.cursor() as cur:
+        cur.execute(sql, (limit,))
+        columns = [desc[0] for desc in cur.description]
+        rows = cur.fetchall()
+
+    product_columns = columns[2:]
+    items = []
+    for row in rows:
+        keyword, search_change_percent = row[0], row[1]
+        product = _row_to_product(row[2:], product_columns)
+        items.append({
+            "keyword": keyword,
+            "searchChangePercent": float(search_change_percent),
+            "product": product,
+        })
+    return items
+
+
 def record_push_reward(conn, anon_key: str) -> bool:
     """push_rewards에 anon_key를 넣는다. 이미 지급받은 적이 있으면 조용히
     무시(ON CONFLICT DO NOTHING) - anon_key가 PK라 이게 "한 사람당 한 번"을
@@ -325,6 +354,8 @@ class handler(BaseHTTPRequestHandler):
             self._handle_products_batch_request()
         elif path == "/api/products":
             self._handle_products_page_request()
+        elif path == "/api/trending-keywords":
+            self._handle_trending_keywords_request()
         else:
             self.send_response(404)
             self.end_headers()
@@ -424,6 +455,23 @@ class handler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         self.wfile.write(json.dumps({"items": result["items"], "nextCursor": result["nextCursor"]}).encode())
+
+    def _handle_trending_keywords_request(self):
+        db_url = os.environ.get(PRODUCTS_DB_URL_ENV)
+        if not db_url:
+            self._respond(500, {"error": "PRODUCTS_DB_DATABASE_URL not configured"}, cors=True)
+            return
+        conn = psycopg2.connect(db_url)
+        try:
+            items = fetch_trending_keywords(conn)
+        finally:
+            conn.close()
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Cache-Control", "public, max-age=300")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
+        self.wfile.write(json.dumps(items).encode())
 
     def _handle_order_event(self):
         content_length = int(self.headers.get("Content-Length", 0))

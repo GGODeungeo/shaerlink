@@ -322,6 +322,43 @@
   flex: 0 0 140px;
 }
 
+.trending-keywords__list {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding: 0 var(--space-3);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.trending-keywords__list::-webkit-scrollbar {
+  display: none;
+}
+
+.trending-keywords__chip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: none;
+  border-radius: 999px;
+  background: var(--color-bg-canvas);
+  color: var(--color-text-strong);
+  font-size: var(--font-size-body-small);
+  white-space: nowrap;
+  cursor: pointer;
+  word-break: keep-all;
+}
+
+.trending-keywords__chip-percent {
+  color: var(--color-danger);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-subtitle);
+}
+
 .recently-viewed-page__header {
   display: flex;
   align-items: center;

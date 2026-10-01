@@ -38,6 +38,15 @@ DDL_STATEMENTS = [
         created_at timestamptz not null default now()
     )
     """,
+    """
+    create table if not exists trending_keywords (
+        rank                  integer not null primary key,
+        keyword               text not null,
+        search_change_percent numeric not null,
+        share_link            text not null,
+        updated_at            timestamptz not null default now()
+    )
+    """,
 ]
 
 
