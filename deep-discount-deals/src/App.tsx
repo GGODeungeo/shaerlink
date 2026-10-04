@@ -19,6 +19,13 @@ import { PushOptInPrompt } from './PushOptInCard';
 import type { Product, SortKey } from './types';
 import './App.css';
 
+// 브라우저의 기본 history scroll restoration이 popstate(뒤로가기)에서 우리
+// 수동 복원 로직과 경쟁해 덮어쓰는 걸 막는다 - 스크롤 위치는 전부 아래
+// currentView 기반 로직이 책임진다.
+if ('scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
+
 const HOME_DATA_URL = 'https://shaerlink.vercel.app/api/products/home';
 const PRODUCTS_BATCH_URL = 'https://shaerlink.vercel.app/api/products/batch';
 
@@ -247,7 +254,9 @@ function App() {
   const wasSubView = useRef(false);
 
   // 화면 전환 때마다(홈->랭킹, 랭킹->찜 같은 서브뷰 간 전환 포함) 이전 화면의
-  // 스크롤 위치가 그대로 남아있던 문제 - 뷰가 바뀔 때마다 맨 위로 되돌린다.
+  // 스크롤 위치가 그대로 새 화면에 남아있던 문제 - 뷰별로 스크롤 위치를
+  // 기억해뒀다가, 떠날 때 저장하고 돌아올 때 복원한다(처음 들어가는 뷰는
+  // 저장된 게 없으니 자연히 맨 위).
   const currentView = viewingFavorites
     ? 'favorites'
     : viewingRecentlyViewed
@@ -260,8 +269,23 @@ function App() {
             ? `category:${selectedCategory}`
             : 'home';
 
+  const scrollPositions = useRef<Record<string, number>>({});
+  const lastScrollY = useRef(0);
+  const previousView = useRef(currentView);
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const onScroll = () => {
+      lastScrollY.current = window.scrollY;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (previousView.current === currentView) return;
+    scrollPositions.current[previousView.current] = lastScrollY.current;
+    previousView.current = currentView;
+    window.scrollTo(0, scrollPositions.current[currentView] ?? 0);
   }, [currentView]);
 
   useEffect(() => {
