@@ -302,7 +302,7 @@ def fetch_products_by_ids(conn, share_links: list) -> list:
     return [_row_to_product(row, columns) for row in rows]
 
 
-def fetch_trending_keywords(conn, limit: int = 10) -> list:
+def fetch_trending_keywords(conn, limit: int = 15) -> list:
     """trending_keywords를 products와 조인해서 랭크순으로 반환한다.
     fetch_trending_keywords.py가 채워 넣은 테이블이 비어 있으면(매칭된
     키워드가 하나도 없었던 경우) 빈 리스트를 반환 - 홈 화면이 섹션을 숨긴다."""
