@@ -246,6 +246,24 @@ function App() {
     viewingAutumn;
   const wasSubView = useRef(false);
 
+  // 화면 전환 때마다(홈->랭킹, 랭킹->찜 같은 서브뷰 간 전환 포함) 이전 화면의
+  // 스크롤 위치가 그대로 남아있던 문제 - 뷰가 바뀔 때마다 맨 위로 되돌린다.
+  const currentView = viewingFavorites
+    ? 'favorites'
+    : viewingRecentlyViewed
+      ? 'recent'
+      : viewingRanking
+        ? 'ranking'
+        : viewingAutumn
+          ? 'autumn'
+          : selectedCategory
+            ? `category:${selectedCategory}`
+            : 'home';
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentView]);
+
   useEffect(() => {
     if (isSubView && !wasSubView.current) {
       window.history.pushState({ hiddenDealsSubView: true }, '');
