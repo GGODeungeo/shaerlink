@@ -387,6 +387,39 @@
   font-weight: var(--font-weight-subtitle);
 }
 
+.trending-list__more {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.trending-list__more--open {
+  grid-template-rows: 1fr;
+}
+
+.trending-list__more-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.trending-list__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: 100%;
+  min-height: 44px;
+  margin-top: var(--space-1);
+  border: none;
+  background: none;
+  color: var(--color-text-subtle);
+  font-size: var(--font-size-caption);
+  cursor: pointer;
+}
+
 @keyframes trending-live-pulse {
   0%,
   100% {
@@ -404,6 +437,9 @@
     animation: none;
   }
   .trending-list__row {
+    transition: none;
+  }
+  .trending-list__more {
     transition: none;
   }
 }
