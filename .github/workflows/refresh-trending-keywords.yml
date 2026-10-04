@@ -1,0 +1,26 @@
+name: Refresh trending keywords
+
+on:
+  schedule:
+    # 매일 아침 10시 KST(=01:00 UTC) - 상품 데이터 갱신 시각과 맞춤
+    - cron: '0 1 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run trending keywords ingestion
+        env:
+          TOSS_BUSINESS_COOKIE: ${{ secrets.TOSS_BUSINESS_COOKIE }}
+          PRODUCTS_DB_DATABASE_URL: ${{ secrets.PRODUCTS_DB_DATABASE_URL }}
+        run: python3 fetch_trending_keywords.py

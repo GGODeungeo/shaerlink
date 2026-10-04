@@ -322,38 +322,52 @@
   flex: 0 0 140px;
 }
 
-.trending-ticker {
+.trending-live-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: var(--space-1);
+  border-radius: 50%;
+  background: var(--color-danger);
+  animation: trending-live-pulse 1.5s ease-in-out infinite;
+}
+
+.trending-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+  padding: 0 var(--space-3);
+}
+
+.trending-list__row {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  width: calc(100% - var(--space-3) * 2);
-  margin: var(--space-3) var(--space-3) 0;
   min-height: 44px;
   padding: 0 var(--space-3);
   border: none;
-  border-radius: 12px;
-  background: var(--color-bg-canvas);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-text-strong);
   cursor: pointer;
-  overflow: hidden;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-.trending-ticker__rank {
+.trending-list__row--active {
+  background: var(--color-bg-canvas);
+  box-shadow: inset 0 0 0 1px var(--color-danger);
+}
+
+.trending-list__rank {
   flex: 0 0 auto;
+  width: 18px;
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-subtitle);
   color: var(--color-text-subtle);
 }
 
-.trending-ticker__row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  flex: 1;
-  min-width: 0;
-  animation: trending-ticker-in 0.3s ease;
-}
-
-.trending-ticker__keyword {
+.trending-list__keyword {
   flex: 1;
   min-width: 0;
   text-align: left;
@@ -365,27 +379,31 @@
   white-space: nowrap;
 }
 
-.trending-ticker__percent {
+.trending-list__percent {
   flex: 0 0 auto;
   color: var(--color-danger);
   font-size: var(--font-size-caption);
   font-weight: var(--font-weight-subtitle);
 }
 
-@keyframes trending-ticker-in {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
+@keyframes trending-live-pulse {
+  0%,
+  100% {
     opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .trending-ticker__row {
+  .trending-live-dot {
     animation: none;
+  }
+  .trending-list__row {
+    transition: none;
   }
 }
 
