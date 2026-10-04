@@ -361,10 +361,11 @@
 
 .trending-list__rank {
   flex: 0 0 auto;
-  width: 18px;
+  width: 28px;
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-subtitle);
   color: var(--color-text-subtle);
+  white-space: nowrap;
 }
 
 .trending-list__keyword {
