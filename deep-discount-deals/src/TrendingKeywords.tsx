@@ -9,7 +9,6 @@ const COLLAPSED_COUNT = 5;
 
 type TrendingItem = {
   keyword: string;
-  searchChangePercent: number;
   product: Product;
 };
 
@@ -35,18 +34,16 @@ function TrendingRow({
     >
       <span className="trending-list__rank">{String(rank).padStart(2, '0')}</span>
       <span className="trending-list__keyword">{item.keyword}</span>
-      <span className="trending-list__percent">▲{Math.round(item.searchChangePercent)}%</span>
     </button>
   );
 }
 
-/** "요즘 많이 찾는 상품" - 토스 검색 급상승 키워드 중 우리 카탈로그와 매칭된
- * 것만 순위 리스트로 보여준다. 실제 데이터는 하루 한 번(크론) 갱신되지만,
- * 한 줄씩 훑는 하이라이트 애니메이션으로 "계속 갱신되고 있다"는 느낌을 준다
- * - 순위 자체를 뒤섞거나 가짜 숫자를 보여주진 않는다. 기본 5개만 보이고,
- * "더보기"를 누르면 나머지가 펼쳐진다(다시 누르면 접힘). 매칭이 하나도
- * 없으면(흔함 - 트렌드 키워드 대부분은 우리가 안 파는 상품명) 섹션 자체를
- * 숨긴다. */
+/** "요즘 많이 찾는 상품" - ShareLink 베스트셀러 API 순위(딥디스카운트만)를
+ * 그대로 보여준다. 실제 데이터는 하루 한 번(수동 실행) 갱신되지만, 한
+ * 줄씩 훑는 하이라이트 애니메이션으로 "계속 갱신되고 있다"는 느낌을 준다 -
+ * 순위 자체를 뒤섞거나 가짜 숫자를 보여주진 않는다. 기본 5개만 보이고,
+ * "더보기"를 누르면 나머지가 펼쳐진다(다시 누르면 접힘). 데이터가 하나도
+ * 없으면 섹션 자체를 숨긴다. */
 export function TrendingKeywords({ onSelect }: { onSelect: (product: Product) => void }) {
   const [items, setItems] = useState<TrendingItem[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);

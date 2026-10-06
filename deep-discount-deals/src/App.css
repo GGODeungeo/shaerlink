@@ -380,13 +380,6 @@
   white-space: nowrap;
 }
 
-.trending-list__percent {
-  flex: 0 0 auto;
-  color: var(--color-danger);
-  font-size: var(--font-size-caption);
-  font-weight: var(--font-weight-subtitle);
-}
-
 .trending-list__more {
   display: grid;
   grid-template-rows: 0fr;

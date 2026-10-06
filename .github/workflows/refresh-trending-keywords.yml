@@ -1,9 +1,12 @@
 name: Refresh trending keywords
 
 on:
-  schedule:
-    # 매일 아침 10시 KST(=01:00 UTC) - 상품 데이터 갱신 시각과 맞춤
-    - cron: '0 1 * * *'
+  # Schedule trigger disabled: now calls the ShareLink API directly (same
+  # pipeline as refresh-data.yml) instead of the cookie-authenticated Toss
+  # Business dashboard, so it's bound by the same IP allowlist - GitHub-hosted
+  # runners can't call it. Re-enable once this runs from a fixed-IP host.
+  # schedule:
+  #   - cron: '0 1 * * *'
   workflow_dispatch: {}
 
 jobs:
@@ -21,6 +24,8 @@ jobs:
 
       - name: Run trending keywords ingestion
         env:
-          TOSS_BUSINESS_COOKIE: ${{ secrets.TOSS_BUSINESS_COOKIE }}
+          SHARELINK_ACCESS_KEY: ${{ secrets.SHARELINK_ACCESS_KEY }}
+          SHARELINK_SECRET_KEY: ${{ secrets.SHARELINK_SECRET_KEY }}
+          SHARELINK_PUBLISHER_ID: ${{ secrets.SHARELINK_PUBLISHER_ID }}
           PRODUCTS_DB_DATABASE_URL: ${{ secrets.PRODUCTS_DB_DATABASE_URL }}
         run: python3 fetch_trending_keywords.py

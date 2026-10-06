@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 import os
 import re
@@ -83,23 +85,34 @@ def build_entry(product: dict, category_map: dict) -> dict:
     return entry
 
 
+def build_entry_with_link(
+    product: dict, category_map: dict, token: str, publisher_id: str, link_cache: dict
+) -> dict | None:
+    """상품 하나를 app-data 엔트리로 만들고 shareLink를 채운다(캐시 우선,
+    없으면 발급). 링크 발급 실패 시 None - 호출 측이 건너뛴다.
+    to_app_data와 fetch_trending_keywords.top_selling_entries가 공유한다."""
+    entry = build_entry(product, category_map)
+    taca_id = str(product["tacaItemId"])
+    share_link = link_cache.get(taca_id)
+    if share_link is None:
+        try:
+            share_link = issue_link(token, product["tacaItemId"], publisher_id)
+        except Exception as e:
+            print(f"링크 발급 실패, 건너뜀: {entry['name']} ({e})", file=sys.stderr)
+            return None
+        link_cache[taca_id] = share_link
+    entry["shareLink"] = share_link
+    return entry
+
+
 def to_app_data(
     products: list, category_map: dict, publisher_id: str, token: str, link_cache: dict
 ) -> list:
-    slim = []
-    for p in products:
-        entry = build_entry(p, category_map)
-        taca_id = str(p["tacaItemId"])
-        share_link = link_cache.get(taca_id)
-        if share_link is None:
-            try:
-                share_link = issue_link(token, p["tacaItemId"], publisher_id)
-            except Exception as e:
-                print(f"링크 발급 실패, 건너뜀: {entry['name']} ({e})", file=sys.stderr)
-                continue
-            link_cache[taca_id] = share_link
-        entry["shareLink"] = share_link
-        slim.append(entry)
+    slim = [
+        entry
+        for p in products
+        if (entry := build_entry_with_link(p, category_map, token, publisher_id, link_cache))
+    ]
     slim.sort(key=lambda p: -p["discountRate"])
     return slim
 

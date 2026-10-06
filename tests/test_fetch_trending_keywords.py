@@ -3,7 +3,9 @@ import os
 import psycopg2
 import pytest
 
-from fetch_trending_keywords import match_products, replace_trending_keywords
+import build_app_data as bad
+import fetch_trending_keywords as ftk
+from fetch_trending_keywords import replace_trending_keywords, top_selling_entries
 from sharelink_api import _load_dotenv
 
 _load_dotenv()
@@ -14,33 +16,45 @@ def db_conn():
     if not os.environ.get("PRODUCTS_DB_DATABASE_URL"):
         pytest.skip("PRODUCTS_DB_DATABASE_URL not set - skipping live DB test")
     connection = psycopg2.connect(os.environ["PRODUCTS_DB_DATABASE_URL"])
-    with connection.cursor() as cur:
-        cur.execute(
-            "insert into products "
-            "(source, source_item_id, share_link, name, price, discount_rate, image_url, category, review_count) "
-            "values ('test', 'tk-1', 'https://toss.im/_m/test-trending', '애슐리볶음밥 500g', 5000, 60, "
-            "'https://example.com/a.png', '식품', 10)"
-        )
-    connection.commit()
     yield connection
-    with connection.cursor() as cur:
-        cur.execute("delete from trending_keywords where share_link = 'https://toss.im/_m/test-trending'")
-        cur.execute("delete from products where source = 'test'")
-    connection.commit()
     connection.close()
 
 
-def test_match_products_keeps_keywords_found_in_catalog_and_drops_the_rest(db_conn):
-    keywords = [
-        {"rank": 1, "searchKeyword": "애슐리볶음밥", "searchChangePercent": 470.0},
-        {"rank": 2, "searchKeyword": "존재하지않는상품명xyz", "searchChangePercent": 10.0},
+def test_top_selling_entries_keeps_api_rank_order_and_drops_non_deep_discount(monkeypatch):
+    products = [
+        {"tacaItemId": 1, "displayName": "저할인", "displayPrice": 1000, "discountRate": 40, "thumbnailUrl": "https://a", "categoryIds": []},
+        {"tacaItemId": 2, "displayName": "1등", "displayPrice": 2000, "discountRate": 70, "thumbnailUrl": "https://b", "categoryIds": []},
+        {"tacaItemId": 3, "displayName": "2등", "displayPrice": 3000, "discountRate": 60, "thumbnailUrl": "https://c", "categoryIds": []},
     ]
+    monkeypatch.setattr(ftk, "get_top_level_category_map", lambda token: {})
+    monkeypatch.setattr(ftk, "get_best_selling_products", lambda token: products)
+    monkeypatch.setattr(ftk, "load_link_cache", lambda: {})
+    monkeypatch.setattr(ftk, "save_link_cache", lambda cache: None)
+    monkeypatch.setattr(bad, "issue_link", lambda token, taca_item_id, publisher_id: f"https://toss.im/_m/{taca_item_id}")
+    monkeypatch.setenv("SHARELINK_PUBLISHER_ID", "pub-1")
 
-    matched = match_products(db_conn, keywords)
+    entries = top_selling_entries("token", limit=15)
 
-    assert len(matched) == 1
-    assert matched[0]["keyword"] == "애슐리볶음밥"
-    assert matched[0]["share_link"] == "https://toss.im/_m/test-trending"
+    # order is the best-selling API's own order, not re-sorted by discount -
+    # and the 40%-off item is dropped since it's not a deep discount
+    assert [e["name"] for e in entries] == ["1등", "2등"]
+
+
+def test_top_selling_entries_respects_limit_after_filtering(monkeypatch):
+    products = [
+        {"tacaItemId": i, "displayName": f"상품{i}", "displayPrice": 1000, "discountRate": 60, "thumbnailUrl": "https://a", "categoryIds": []}
+        for i in range(1, 6)
+    ]
+    monkeypatch.setattr(ftk, "get_top_level_category_map", lambda token: {})
+    monkeypatch.setattr(ftk, "get_best_selling_products", lambda token: products)
+    monkeypatch.setattr(ftk, "load_link_cache", lambda: {})
+    monkeypatch.setattr(ftk, "save_link_cache", lambda cache: None)
+    monkeypatch.setattr(bad, "issue_link", lambda token, taca_item_id, publisher_id: f"https://toss.im/_m/{taca_item_id}")
+    monkeypatch.setenv("SHARELINK_PUBLISHER_ID", "pub-1")
+
+    entries = top_selling_entries("token", limit=3)
+
+    assert [e["name"] for e in entries] == ["상품1", "상품2", "상품3"]
 
 
 def test_replace_trending_keywords_clears_previous_snapshot(db_conn):
@@ -53,10 +67,10 @@ def test_replace_trending_keywords_clears_previous_snapshot(db_conn):
         original_rows = cur.fetchall()
 
     try:
-        stale = [{"rank": 99, "keyword": "stale", "search_change_percent": 1.0, "share_link": "https://toss.im/_m/test-trending"}]
+        stale = [{"name": "stale", "shareLink": "https://toss.im/_m/test-trending"}]
         replace_trending_keywords(db_conn, stale)
 
-        fresh = [{"rank": 1, "keyword": "애슐리볶음밥", "search_change_percent": 470.0, "share_link": "https://toss.im/_m/test-trending"}]
+        fresh = [{"name": "애슐리볶음밥", "shareLink": "https://toss.im/_m/test-trending"}]
         replace_trending_keywords(db_conn, fresh)
 
         with db_conn.cursor() as cur:
