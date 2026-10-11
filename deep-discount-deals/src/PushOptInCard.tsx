@@ -45,21 +45,27 @@ async function grantPushReward() {
  * home-screen card. Whatever the user picks, it's marked asked and never
  * shown again.
  *
- * Gated on the first scroll rather than a timer from mount: review rejected
- * an earlier version for popping up immediately on entry, before the user
- * had done anything. */
+ * Gated on the first real user gesture (touchmove/wheel) rather than a timer
+ * or the 'scroll' event: review rejected versions for popping up right on
+ * entry. 'scroll' also fires without the user - programmatic scrollTo on
+ * view restore and layout shifts while content loads - so it's not a
+ * gesture signal. */
 export function PushOptInPrompt() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (alreadyAsked() || !Notification.requestAgreement.isSupported()) return;
     let timer: ReturnType<typeof setTimeout> | undefined;
-    const onFirstScroll = () => {
+    const gestures = ['touchmove', 'wheel'] as const;
+    const onFirstGesture = () => {
+      // 한 화면 이상 직접 내려본 뒤에만 - 첫 터치 직후 뜨면 "진입 직후"로 보인다.
+      if (window.scrollY < window.innerHeight) return;
+      gestures.forEach((g) => window.removeEventListener(g, onFirstGesture));
       timer = setTimeout(() => setOpen(true), OPEN_DELAY_MS);
     };
-    window.addEventListener('scroll', onFirstScroll, { once: true, passive: true });
+    gestures.forEach((g) => window.addEventListener(g, onFirstGesture, { passive: true }));
     return () => {
-      window.removeEventListener('scroll', onFirstScroll);
+      gestures.forEach((g) => window.removeEventListener(g, onFirstGesture));
       if (timer) clearTimeout(timer);
     };
   }, []);
