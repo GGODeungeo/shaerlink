@@ -6,7 +6,23 @@ import { getAnonKey } from './trackedLink';
 const TEMPLATE_CODE = 'hidden-deals-DAILY_DEAL_PUSH';
 const STORAGE_KEY = 'hidden-deals:push-agreement-asked';
 const PUSH_REWARD_URL = 'https://shaerlink.vercel.app/api/push-reward';
+const VISITS_KEY = 'hidden-deals:visit-count';
 const OPEN_DELAY_MS = 800;
+
+/** 이번 진입을 세고 누적 방문 수를 돌려준다. 저장이 막힌 환경이면 0 -
+ * 그 경우 묻지 않는다(첫 방문으로 취급). */
+function countVisit(): number {
+  try {
+    const visits = Number(localStorage.getItem(VISITS_KEY) ?? '0') + 1;
+    localStorage.setItem(VISITS_KEY, String(visits));
+    return visits;
+  } catch {
+    return 0;
+  }
+}
+
+// 모듈 로드 = 앱 진입 1회. effect 안에서 세면 StrictMode 이중 실행에 두 번 센다.
+const VISITS = countVisit();
 
 function alreadyAsked(): boolean {
   try {
@@ -45,16 +61,16 @@ async function grantPushReward() {
  * home-screen card. Whatever the user picks, it's marked asked and never
  * shown again.
  *
- * Gated on the first real user gesture (touchmove/wheel) rather than a timer
- * or the 'scroll' event: review rejected versions for popping up right on
- * entry. 'scroll' also fires without the user - programmatic scrollTo on
- * view restore and layout shifts while content loads - so it's not a
- * gesture signal. */
+ * Never on the first visit: review rejected three versions for a sheet
+ * appearing right after entry - any scroll-based trigger fires within
+ * seconds when someone opens the app and starts scrolling. From the second
+ * visit on, it waits for a real gesture (touchmove/wheel - 'scroll' also
+ * fires from programmatic scrollTo and layout shifts) past one screen. */
 export function PushOptInPrompt() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (alreadyAsked() || !Notification.requestAgreement.isSupported()) return;
+    if (VISITS < 2 || alreadyAsked() || !Notification.requestAgreement.isSupported()) return;
     let timer: ReturnType<typeof setTimeout> | undefined;
     const gestures = ['touchmove', 'wheel'] as const;
     const onFirstGesture = () => {
