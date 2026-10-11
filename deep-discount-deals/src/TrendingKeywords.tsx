@@ -3,7 +3,8 @@ import { Analytics } from '@apps-in-toss/web-framework';
 import { ChevronDown, ChevronUp } from './components/icons';
 import type { Product } from './types';
 
-const TRENDING_KEYWORDS_URL = 'https://shaerlink.vercel.app/api/trending-keywords';
+// v=2: 퍼센트 배지 없는 신버전 표시 - 서버는 v 없는 구버전엔 빈 배열을 준다.
+const TRENDING_KEYWORDS_URL = 'https://shaerlink.vercel.app/api/trending-keywords?v=2';
 const SWEEP_INTERVAL_MS = 1200;
 const COLLAPSED_COUNT = 5;
 

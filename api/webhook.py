@@ -461,11 +461,19 @@ class handler(BaseHTTPRequestHandler):
         if not db_url:
             self._respond(500, {"error": "PRODUCTS_DB_DATABASE_URL not configured"}, cors=True)
             return
-        conn = psycopg2.connect(db_url)
-        try:
-            items = fetch_trending_keywords(conn)
-        finally:
-            conn.close()
+        # 출시된 구버전 앱은 searchChangePercent를 무조건 "▲N%"로 그리는데,
+        # 판매 순위로 바뀐 뒤엔 그 값이 항상 0이라 "▲0%"가 뜬다. 배지를 뺀
+        # 신버전만 ?v=2를 붙이므로, 그 외엔 빈 배열을 줘서 구버전에선 섹션
+        # 자체를 숨긴다(빈 배열이면 섹션을 안 그림).
+        query = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+        if query.get("v") != ["2"]:
+            items = []
+        else:
+            conn = psycopg2.connect(db_url)
+            try:
+                items = fetch_trending_keywords(conn)
+            finally:
+                conn.close()
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         # fetch_trending_keywords.py가 수동/비정기로 돌아가는 데이터라, home의

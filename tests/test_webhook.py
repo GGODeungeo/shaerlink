@@ -470,3 +470,23 @@ def test_record_push_reward_inserts_once_and_ignores_repeat(push_reward_db_conn)
         cur.execute("select count(*) from push_rewards where anon_key = %s", ("test-anon-1",))
         count = cur.fetchone()[0]
     assert count == 1
+
+
+def test_trending_keywords_endpoint_hides_list_from_old_clients_without_v2(monkeypatch):
+    """구버전 앱(?v=2 없음)은 "▲0%" 배지를 그리므로 빈 배열로 섹션을 숨긴다."""
+    import io
+
+    monkeypatch.setenv(webhook.PRODUCTS_DB_URL_ENV, "postgres://x")
+    monkeypatch.setattr(webhook.psycopg2, "connect", lambda url: type("C", (), {"close": lambda s: None})())
+    monkeypatch.setattr(webhook, "fetch_trending_keywords", lambda conn: [{"keyword": "k"}])
+
+    def call(path):
+        h = webhook.handler.__new__(webhook.handler)
+        h.path, h.wfile = path, io.BytesIO()
+        h.send_response = h.send_header = lambda *a: None
+        h.end_headers = lambda: None
+        h._handle_trending_keywords_request()
+        return json.loads(h.wfile.getvalue())
+
+    assert call("/api/trending-keywords") == []
+    assert call("/api/trending-keywords?v=2") == [{"keyword": "k"}]
