@@ -3,7 +3,6 @@ import { dedupeByImage } from './dedupeByImage';
 import { groupProductVariants } from './groupProductVariants';
 import type { Product } from './types';
 
-const AUTUMN_CATEGORIES = ['패션의류잡화', '식품'];
 const AUTUMN_DEALS_END = new Date('2026-10-31T00:00:00+09:00');
 
 export const isAutumnDealsActive = () => new Date() < AUTUMN_DEALS_END;
@@ -22,7 +21,8 @@ export function AutumnDealsEvent({
   const autumnProducts = groupProductVariants(
     dedupeByImage(
       products
-        .filter((p) => AUTUMN_CATEGORIES.includes(p.category))
+        // 서버(fetch_home_products)가 계절 키워드로 고른 상품에만 isAutumn을 붙인다.
+        .filter((p) => p.isAutumn)
         .sort((a, b) => b.discountRate - a.discountRate)
     )
   );

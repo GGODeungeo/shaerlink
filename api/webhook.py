@@ -219,6 +219,8 @@ def _row_to_product(row: tuple, columns: list) -> dict:
         "reviewCount": record["review_count"],
         "isAllTimeLow": record["is_all_time_low"],
     }
+    if record.get("is_autumn"):
+        product["isAutumn"] = True
     if record["deal_ends_at"] is not None:
         product["dealEndsAt"] = record["deal_ends_at"].isoformat()
     return product
@@ -248,11 +250,25 @@ def fetch_products_page(
     return {"items": items, "nextCursor": next_cursor}
 
 
+# 가을특가 탭에 넣을 "지금 계절에 맞는" 상품 기준 - 이름 키워드로 고르고,
+# 키워드에 걸려도 여름/무관 상품(반팔, 냉감, 양배추즙 등)은 뺀다.
+AUTUMN_CATEGORIES = ("패션의류잡화", "식품")
+AUTUMN_INCLUDE = (
+    "니트|가디건|자켓|재킷|점퍼|맨투맨|후드|코트|트렌치|플리스|기모|머플러|목도리|부츠|"
+    "바람막이|긴팔|스웨터|블루종|폴라|슬랙스|감귤|햇귤|햇밤|알밤|맛밤|군밤|사과|홍로|고구마|"
+    "대하|전어|꽃게|호박|버섯|송이|김장|배추|석류|유자|생강|대추|홍시|곶감|단감|오미자|"
+    "쌍화|도라지|호떡|어묵"
+)
+AUTUMN_EXCLUDE = "반팔|반바지|민소매|냉감|쿨링|메쉬|런닝|나시|여름|비타민|루테인|즙|사과맛"
+AUTUMN_LIMIT = 80
+
+
 def fetch_home_products(conn) -> list:
     """카테고리별 상위 20 + 역대최저가 상위 20 + 캐러셀 후보(할인 80%+) 상위
     20 + 전역 리뷰순 상위 30(카테고리 무관 - PopularRanking/TodaysPickEvent가
     이 배열에서 직접 정렬·slice하므로 여기 없으면 두 화면에서 빠질 수 있음)을
-    합쳐 review_count 순으로 반환한다."""
+    합쳐 review_count 순으로 반환한다. 가을특가 탭용 계절 상품(AUTUMN_*,
+    할인율순 상위 AUTUMN_LIMIT)도 섞고 isAutumn으로 표시한다."""
     sql = """
         with category_top as (
             select *, row_number() over (partition by category order by review_count desc) as rn
@@ -269,8 +285,15 @@ def fetch_home_products(conn) -> list:
         global_top as (
             select *, row_number() over (order by review_count desc) as rn
             from products
+        ),
+        autumn_top as (
+            select *, row_number() over (order by discount_rate desc, review_count desc) as rn
+            from products
+            where category = any(%(autumn_categories)s)
+              and name ~ %(autumn_include)s and name !~ %(autumn_exclude)s
         )
-        select distinct on (share_link) *
+        select distinct on (share_link) *,
+            share_link in (select share_link from autumn_top where rn <= %(autumn_limit)s) as is_autumn
         from (
             select * from category_top where rn <= 20
             union all
@@ -279,11 +302,19 @@ def fetch_home_products(conn) -> list:
             select * from carousel_top where rn <= 20
             union all
             select * from global_top where rn <= 30
+            union all
+            select * from autumn_top where rn <= %(autumn_limit)s
         ) combined
         order by share_link, review_count desc
     """
+    params = {
+        "autumn_categories": list(AUTUMN_CATEGORIES),
+        "autumn_include": AUTUMN_INCLUDE,
+        "autumn_exclude": AUTUMN_EXCLUDE,
+        "autumn_limit": AUTUMN_LIMIT,
+    }
     with conn.cursor() as cur:
-        cur.execute(sql)
+        cur.execute(sql, params)
         columns = [desc[0] for desc in cur.description]
         rows = cur.fetchall()
     return [_row_to_product(row, columns) for row in rows]
