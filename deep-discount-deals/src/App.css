@@ -1072,3 +1072,182 @@
   text-align: center;
   word-break: keep-all;
 }
+
+/* 가을특가 - 할인율 나열 대신 테마별 에디토리얼 섹션. 따뜻한 크림·
+   테라코타 톤은 이 탭 안에서만 쓴다. */
+.autumn {
+  --autumn-cream: #f6efe4;
+  --autumn-ink: #3a2a1d;
+  --autumn-accent: #a8481f;
+  padding-bottom: var(--space-6);
+}
+
+.autumn-hero {
+  margin: var(--space-2) var(--space-3) 0;
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  border-radius: 24px;
+  background: var(--autumn-cream);
+  color: var(--autumn-ink);
+}
+
+.autumn-hero__overline,
+.autumn-section__overline {
+  margin: 0;
+  color: var(--autumn-accent);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-subtitle);
+  letter-spacing: 0.08em;
+}
+
+.autumn-hero__title {
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-size-display);
+  font-weight: var(--font-weight-display);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  word-break: keep-all;
+}
+
+.autumn-hero__desc {
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-size-body-small);
+  line-height: 1.5;
+  color: var(--autumn-ink);
+  opacity: 0.8;
+  word-break: keep-all;
+}
+
+.autumn-hero__index {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.autumn-hero__chip {
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid rgba(58, 42, 29, 0.2);
+  border-radius: 999px;
+  background: var(--color-bg);
+  color: var(--autumn-ink);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-subtitle);
+  cursor: pointer;
+}
+
+.autumn-section {
+  margin-top: var(--space-6);
+  scroll-margin-top: var(--space-4);
+}
+
+.autumn-section__overline,
+.autumn-section__title,
+.autumn-section__desc {
+  margin-left: var(--space-4);
+  margin-right: var(--space-4);
+}
+
+.autumn-section__title {
+  margin-top: var(--space-1);
+  margin-bottom: 0;
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-title);
+  color: var(--color-text-strong);
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+}
+
+.autumn-section__desc {
+  margin-top: var(--space-1);
+  margin-bottom: 0;
+  font-size: var(--font-size-body-small);
+  color: var(--color-text-subtle);
+  word-break: keep-all;
+}
+
+.autumn-section__list {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding: 0 var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 var(--space-4);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.autumn-section__list::-webkit-scrollbar {
+  display: none;
+}
+
+.autumn-card {
+  flex: 0 0 156px;
+  scroll-snap-align: start;
+  cursor: pointer;
+}
+
+.autumn-card:active {
+  opacity: 0.85;
+}
+
+.autumn-card__image-wrap {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--autumn-cream);
+}
+
+.autumn-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.autumn-card__favorite {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: none;
+  color: var(--color-text-inverse);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+  cursor: pointer;
+}
+
+.autumn-card__favorite[data-active='true'] {
+  color: var(--color-danger);
+}
+
+.autumn-card__title {
+  display: -webkit-box;
+  margin-top: var(--space-2);
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: var(--font-size-body-small);
+  line-height: 1.4;
+  color: var(--color-text-default);
+  word-break: keep-all;
+}
+
+.autumn-card__price {
+  margin-top: var(--space-1);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-title);
+  color: var(--color-text-strong);
+}
+
+.autumn-card__rate {
+  margin-right: var(--space-1);
+  color: var(--autumn-accent);
+}
