@@ -1,11 +1,17 @@
 import { dedupeByImage } from './dedupeByImage';
 import { groupProductVariants } from './groupProductVariants';
-import { pickReason } from './pickReason';
 import { reviewCountLabel } from './reviewCount';
-import { savingsAmount } from './savings';
 import type { Product } from './types';
 
 const RANKING_SIZE = 30;
+
+/** 랭킹 = 리뷰(구매 후기) 많은 순. 홈 캐러셀이 이 목록과 겹치지 않게 같은
+ * 계산을 공유한다. */
+export function rankedProducts(products: Product[]): Product[] {
+  return groupProductVariants(
+    dedupeByImage([...products].sort((a, b) => b.reviewCount - a.reviewCount))
+  ).slice(0, RANKING_SIZE);
+}
 
 export function PopularRanking({
   products,
@@ -14,48 +20,43 @@ export function PopularRanking({
   products: Product[];
   onSelect: (product: Product) => void;
 }) {
-  const ranked = groupProductVariants(
-    dedupeByImage([...products].sort((a, b) => b.reviewCount - a.reviewCount))
-  ).slice(0, RANKING_SIZE);
+  const ranked = rankedProducts(products);
 
   return (
-    <div className="event-page">
-      <h2 className="event-page__title">이런 이유로 골랐어요</h2>
-      <p className="event-page__subtitle">가장 이득인 특가만 모았어요</p>
+    <div className="ranking">
+      <header className="ranking__header">
+        <p className="ranking__overline">RANKING</p>
+        <h2 className="ranking__title">많이 산 특가 순위</h2>
+        <p className="ranking__desc">구매 후기가 많은 순서로 30개를 골랐어요</p>
+      </header>
 
       {ranked.length === 0 ? (
         <p className="state-message">지금은 보여드릴 상품이 없어요.</p>
       ) : (
-        <div className="reason-list">
+        <ol className="ranking__list">
           {ranked.map((product, i) => {
             const [title] = product.name.split(', ');
             const reviews = reviewCountLabel(product.reviewCount);
             return (
-              <button
-                key={product.shareLink}
-                type="button"
-                className="reason-card"
-                onClick={() => onSelect(product)}
-              >
-                <div className="reason-card__rank">오늘의 추천 · {String(i + 1).padStart(2, '0')}</div>
-                <div className="reason-card__reason">✅ {pickReason(product)}</div>
-                <div className="reason-card__body">
-                  <img src={product.imageUrl} alt={title} className="reason-card__image" loading="lazy" />
-                  <div className="reason-card__info">
-                    <span className="reason-card__title">{title}</span>
-                    <span className="reason-card__discount">{product.discountRate}% 할인</span>
-                    <span className="reason-card__price">{product.price.toLocaleString()}원</span>
-                    <span className="reason-card__savings">▼ {savingsAmount(product).toLocaleString()}원 절약</span>
-                    {reviews && <span className="reason-card__reviews">{reviews}</span>}
-                    {product.variants && product.variants.length > 1 && (
-                      <span className="reason-card__variant-count">외 {product.variants.length - 1}개 옵션</span>
-                    )}
-                  </div>
-                </div>
-              </button>
+              <li key={product.shareLink}>
+                <button type="button" className="ranking-row" onClick={() => onSelect(product)}>
+                  <span className="ranking-row__rank" data-top={i < 3}>
+                    {i + 1}
+                  </span>
+                  <img src={product.imageUrl} alt={title} className="ranking-row__image" loading="lazy" />
+                  <span className="ranking-row__info">
+                    <span className="ranking-row__title">{title}</span>
+                    <span className="ranking-row__price">
+                      <span className="ranking-row__rate">{product.discountRate}%</span>
+                      {product.price.toLocaleString()}원
+                    </span>
+                    {reviews && <span className="ranking-row__reviews">{reviews}</span>}
+                  </span>
+                </button>
+              </li>
             );
           })}
-        </div>
+        </ol>
       )}
     </div>
   );

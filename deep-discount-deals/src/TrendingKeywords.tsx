@@ -72,10 +72,11 @@ export function TrendingKeywords({ onSelect }: { onSelect: (product: Product) =>
     <div className="category-shelf">
       <div className="category-shelf__header">
         <span className="category-shelf__title">
-          <span className="tf">🔥</span> 요즘 많이 찾는 상품
+          요즘 많이 찾는 상품
           <span className="trending-live-dot" aria-hidden="true" />
         </span>
       </div>
+      <p className="category-shelf__desc">지금 가장 많이 팔리는 순서예요</p>
       <div className="trending-list">
         {visible.map((item, i) => (
           <TrendingRow key={item.keyword} item={item} rank={i + 1} active={i === activeIndex} onSelect={onSelect} />

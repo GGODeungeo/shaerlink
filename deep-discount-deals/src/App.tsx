@@ -13,6 +13,7 @@ import { groupProductVariants } from './groupProductVariants';
 import { dailyShuffle } from './dailyShuffle';
 import { AutumnDealsEvent, isAutumnDealsActive } from './AutumnDealsEvent';
 import { PopularRanking } from './PopularRanking';
+import { HomeCuration } from './HomeCuration';
 import { TrendingKeywords } from './TrendingKeywords';
 import { BannerAd } from './BannerAd';
 import { PushOptInPrompt } from './PushOptInCard';
@@ -520,10 +521,9 @@ function App() {
                 {allTimeLowProducts.length > 0 && (
                   <div className="category-shelf">
                     <div className="category-shelf__header">
-                      <span className="category-shelf__title">
-                        <span className="tf">🔥</span> 역대 최저가 상품
-                      </span>
+                      <span className="category-shelf__title">역대 최저가</span>
                     </div>
+                    <p className="category-shelf__desc">지금까지 본 가격 중 가장 낮아요</p>
                     <div className="category-shelf__list">
                       {allTimeLowProducts.map((product) => (
                         <ProductCard
@@ -538,6 +538,12 @@ function App() {
                   </div>
                 )}
 
+                <div className="category-shelf">
+                  <div className="category-shelf__header">
+                    <span className="category-shelf__title">카테고리</span>
+                  </div>
+                  <p className="category-shelf__desc">관심 있는 분야의 특가를 모아 보세요</p>
+                </div>
                 <div className="category-grid">
                   {allCategories.map((group) => (
                     <button
@@ -557,45 +563,16 @@ function App() {
                   ))}
                 </div>
 
-                {groups.map((group) => (
-                  <div className="category-shelf" key={group.label}>
-                    <div className="category-shelf__header">
-                      <span className="category-shelf__title">
-                        <span className="tf">{CATEGORY_EMOJI[group.label] ?? DEFAULT_CATEGORY_EMOJI}</span>{' '}
-                        {group.label} 특가 순위
-                      </span>
-                      <button
-                        type="button"
-                        className="category-shelf__more"
-                        onClick={() => {
-                          Analytics.click({ log_name: 'category_shelf_more_click', category: group.label });
-                          selectCategory(group.label);
-                        }}
-                      >
-                        전체보기
-                      </button>
-                    </div>
-                    <div className="category-shelf__list">
-                      {dailyShuffle(
-                        groupProductVariants(dedupeByImage(sortProducts(group.products, 'recommend'))).slice(
-                          0,
-                          SHELF_POOL_SIZE
-                        ),
-                        `shelf-${group.label}`
-                      )
-                        .slice(0, SHELF_SIZE)
-                        .map((product) => (
-                          <ProductCard
-                            key={product.shareLink}
-                            product={product}
-                            onSelect={handleSelectProduct}
-                            isFavorite={favorites.has(product.shareLink)}
-                            onToggleFavorite={toggleFavorite}
-                          />
-                        ))}
-                    </div>
-                  </div>
-                ))}
+                <HomeCuration
+                  groups={groups}
+                  products={homeState.products}
+                  onSelect={handleSelectProduct}
+                  favorites={favorites}
+                  onToggleFavorite={toggleFavorite}
+                  onOpenCategory={selectCategory}
+                  onOpenRanking={openRanking}
+                  onOpenAutumn={openAutumn}
+                />
 
                 <BannerAd />
               </>

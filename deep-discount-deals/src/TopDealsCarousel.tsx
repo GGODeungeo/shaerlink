@@ -3,6 +3,7 @@ import { Analytics } from '@apps-in-toss/web-framework';
 import { dedupeByImage } from './dedupeByImage';
 import { groupProductVariants } from './groupProductVariants';
 import { savingsAmount } from './savings';
+import { rankedProducts } from './PopularRanking';
 import type { Product } from './types';
 
 const ROTATE_MS = 3500;
@@ -19,17 +20,19 @@ export function TopDealsCarousel({
 }) {
   const [brokenImages, setBrokenImages] = useState<Set<string>>(new Set());
 
-  const pool = useMemo(
-    () =>
+  const pool = useMemo(() => {
+    // 랭킹 탭 상위와 같은 상품이 캐러셀에 또 나오지 않게 뺀다.
+    const ranked = new Set(rankedProducts(products).map((p) => p.name.split(', ')[0]));
+    return (
       groupProductVariants(
         dedupeByImage(
           [...products]
-            .filter((p) => p.discountRate >= POOL_MIN_DISCOUNT)
+            .filter((p) => p.discountRate >= POOL_MIN_DISCOUNT && !ranked.has(p.name.split(', ')[0]))
             .sort((a, b) => b.reviewCount - a.reviewCount)
         )
-      ).slice(0, POOL_SIZE),
-    [products]
-  );
+      ).slice(0, POOL_SIZE)
+    );
+  }, [products]);
 
   const chunks = useMemo(() => {
     const result: Product[][] = [];
