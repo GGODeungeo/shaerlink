@@ -14,6 +14,7 @@ import { dailyShuffle } from './dailyShuffle';
 import { AutumnDealsEvent, isAutumnDealsActive } from './AutumnDealsEvent';
 import { PopularRanking } from './PopularRanking';
 import { HomeCuration } from './HomeCuration';
+import { BenefitWelcome, isBenefitTabEntry } from './BenefitWelcome';
 import { TrendingKeywords } from './TrendingKeywords';
 import { BannerAd } from './BannerAd';
 import { PushOptInPrompt } from './PushOptInCard';
@@ -88,6 +89,8 @@ function sortProducts(products: Product[], sort: SortKey) {
 
 function App() {
   const [homeState, setHomeState] = useState<LoadState>({ status: 'loading' });
+  // 혜택탭(프로모션)으로 들어온 세션은 홈 맨 위 캐러셀 대신 전용 첫 화면을 보여준다.
+  const [benefitEntry] = useState(isBenefitTabEntry);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [sort, setSort] = useState<SortKey>('recommend');
   const [search, setSearch] = useState('');
@@ -512,7 +515,11 @@ function App() {
 
             return (
               <>
-                <TopDealsCarousel products={homeState.products} onSelect={handleSelectProduct} />
+                {benefitEntry ? (
+                  <BenefitWelcome products={homeState.products} onSelect={handleSelectProduct} />
+                ) : (
+                  <TopDealsCarousel products={homeState.products} onSelect={handleSelectProduct} />
+                )}
 
                 <p className="daily-update-notice">매일 아침 10시, 더 많은 특가가 추가돼요</p>
 

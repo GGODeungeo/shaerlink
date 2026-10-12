@@ -56,6 +56,30 @@ async function grantPushReward() {
   }
 }
 
+/** 특가 알림 동의를 아직 안 물어봤고, 이 토스 앱 버전이 지원하는지. */
+export function canAskDealPush(): boolean {
+  return !alreadyAsked() && Notification.requestAgreement.isSupported();
+}
+
+/** 사용자가 직접 누른 버튼에서 특가 알림 동의를 요청한다(자동 팝업 아님).
+ * 결과와 상관없이 "물어봄"으로 기록해 자동 프롬프트가 다시 뜨지 않게 한다. */
+export function requestDealPush(source: string, onDone: () => void) {
+  Analytics.click({ log_name: 'push_opt_in_prompt_click', source });
+  const done = () => {
+    markAsked();
+    onDone();
+  };
+  Notification.requestAgreement({
+    options: { templateCode: TEMPLATE_CODE },
+    onEvent: ({ type }) => {
+      Analytics.click({ log_name: 'push_opt_in_result', result: type, source });
+      if (type === 'newAgreement') grantPushReward();
+      done();
+    },
+    onError: done,
+  });
+}
+
 /** Asks once, shortly after the user starts browsing, whether to receive deal
  * push notifications - a small confirm dialog instead of a persistent
  * home-screen card. Whatever the user picks, it's marked asked and never
@@ -95,18 +119,7 @@ export function PushOptInPrompt() {
     setOpen(false);
   };
 
-  const handleAgree = () => {
-    Analytics.click({ log_name: 'push_opt_in_prompt_click' });
-    Notification.requestAgreement({
-      options: { templateCode: TEMPLATE_CODE },
-      onEvent: ({ type }) => {
-        Analytics.click({ log_name: 'push_opt_in_result', result: type });
-        if (type === 'newAgreement') grantPushReward();
-        close();
-      },
-      onError: close,
-    });
-  };
+  const handleAgree = () => requestDealPush('auto_prompt', () => setOpen(false));
 
   return (
     <div className="push-opt-in-backdrop">
